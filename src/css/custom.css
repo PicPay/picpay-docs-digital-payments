@@ -1,0 +1,129 @@
+/* stylelint-disable docusaurus/copyright-header */
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #28a745;  /* #25c2a0; */
+  --ifm-color-primary-dark: rgb(33, 175, 144);
+  --ifm-color-primary-darker: rgb(31, 165, 136);
+  --ifm-color-primary-darkest: rgb(26, 136, 112);
+  --ifm-color-primary-light: rgb(70, 203, 174);
+  --ifm-color-primary-lighter: rgb(102, 212, 189);
+  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-code-font-size: 95%;
+
+  --ifm-alert-color: var(--ifm-font-color-base);
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgb(72, 77, 91);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+
+/* Markdown customizations */
+
+.markdown > table {
+  border-top: 3px solid #00ac4a;
+  box-shadow: 0px 1px 3px rgb(0 0 0 / 4%), 0px 3px 8px rgb(0 0 0 / 4%), 0px 0px 8px rgb(0 0 0 / 4%);
+  border-collapse: separate !important;
+  border-spacing: 0;
+  border-radius: 4px;
+  display: inline-table;
+}
+
+
+/* Admonition alerts customizations */
+
+.alert {
+  background-color: transparent;
+  border-color: var(--ifm-alert-border-color);
+  border-style: solid;
+  border-width: var(--ifm-alert-border-width);
+  border-radius: var(--ifm-alert-border-radius);
+  color: var(--ifm-alert-color);
+  padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
+}
+
+.admonition-icon {
+  display: inline-block;
+  vertical-align: sub;
+  margin-right: 0.5em;
+}
+
+.admonition-icon svg{
+  fill:var(--ifm-alert-background-color);
+}
+
+.admonition h5 {
+  text-transform: capitalize
+}
+
+/* Side menu customizations */
+
+.menu .menu__link.menu__link--active:not(.menu__link--sublist) {
+  border-left: 4px solid;
+  border-color: var(--ifm-color-primary);
+}
+
+
+/* ajustes do swagger */
+
+
+
+
+.swagger-ui table tr:nth-child(2n) {
+  background-color: transparent;
+}
+
+.swagger-ui table  {
+  border-color: transparent;
+}
+
+.swagger-ui table tr  {
+  border-top: transparent;
+}
+
+.swagger-ui code {
+  color: white;
+}
+
+.swagger-ui a {
+  background-color: transparent;
+  color: unset;
+}
+
+.swagger-ui .tab li {
+  margin-top: 0;
+}
+
+/*
+.swagger-ui > table th, table td {
+  border: none;
+}
+*/
+
+.swagger-ui table td {
+  border: none;
+}
+
+.swagger-ui table th {
+  border: none;
+}
+
+.swagger-ui pre {
+  background-color: unset;
+}
+
+.swagger-ui .responses-table {
+
+}
+
+/* ajustes do swagger - fim */
+
