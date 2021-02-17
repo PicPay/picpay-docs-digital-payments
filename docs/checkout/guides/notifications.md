@@ -48,7 +48,7 @@ curl -X GET \ https://appws.picpay.com/ecommerce/public/payments/{referenceId}/s
 
 _Exemplo de obtenção de status_
 
-### Situações de notificaçãoTRANSPLANTADO
+### Situações de notificação
 
 Seu e-commerce será notificado nas seguintes situações:
 

@@ -3,12 +3,12 @@ const path = require('path')
 module.exports = {
   title: 'PicPay',
   tagline: 'Documentação - Pagamentos Online',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
-  onBrokenLinks: 'throw',
+  url: 'https://mrcsvg.github.io',
+  baseUrl: '/poc-picpay-docs/',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.png',
-  organizationName: 'picpay', // Usually your GitHub org/user name.
+  organizationName: 'mrcsvg', // Usually your GitHub org/user name.
   projectName: 'poc-picpay-docs', // Usually your repo name.
   
  
@@ -37,7 +37,7 @@ module.exports = {
         },
         {to: 'blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/picpay/',
           label: 'GitHub',
           position: 'right',
         },
@@ -94,7 +94,7 @@ module.exports = {
             },
             {
               label: 'Github',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/picpay',
             },
           ],
         },
@@ -110,7 +110,7 @@ module.exports = {
           routeBasePath: '/', // Jogando pra home de docs
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/mrcsvg/poc-picpay-docs/',
         },
 
 
@@ -128,7 +128,8 @@ module.exports = {
   ],
 
   
-  plugins: [require.resolve('docusaurus-lunr-search')],
-
-
+  plugins: [
+    [ 
+      require.resolve('docusaurus-lunr-search'), { languages: ['pt'] }],
+    ]
 };
