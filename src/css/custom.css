@@ -17,6 +17,17 @@
   --ifm-code-font-size: 95%;
 
   --ifm-alert-color: var(--ifm-font-color-base);
+
+  --ifm-menu-color-hover: #28a745;
+  --ifm-menu-color-background-hover: transparent;
+
+  --ifm-font-family-base: "Nunito Sans", -apple-system, "San Francisco", blinkmacsystemfont, "Segoe UI", "Helvetica Neue", helvetica, arial, sans-serif;
+
+  --ifm-color-info: #7BD1F4;
+  --ifm-color-warning: #FAC942;
+  --ifm-navbar-search-input-background-color: transparent;
+
+
 }
 
 .docusaurus-highlight-code-line {
@@ -65,13 +76,87 @@
   text-transform: capitalize
 }
 
+
+/* Raio PicPay-zador */ 
+
+
+
+.navbar__search-input {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--ifm-navbar-search-input-background-color) var(--ifm-navbar-search-input-icon) no-repeat 0.75rem center / 1rem 1rem;
+  border-radius: 0.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  cursor: text;
+  color: var(--ifm-navbar-search-input-color);
+  display: inline-block;
+  font-size: 0.9rem;
+  line-height: 2rem;
+  padding: 0 0.5rem 0 2.25rem;
+  width: 12.5rem;
+
+  -webkit-transition: none;
+  transition: none;
+}
+
+.navbar__search-input:hover {
+  box-shadow: inset 0 0 0 1px #11c76f;
+  outline: 0;
+}
+
+.navbar__search-input:active {
+  box-shadow: inset 0 0 0 1px #11c76f;
+  outline: 0;
+}
+
+.searchbox__input:focus,
+.searchbox__input:active {
+  outline: 0;
+  box-shadow: inset 0 0 0 1px #11c76f;
+  background: #ffffff;
+}
+
+.algolia-autocomplete .ds-dropdown-menu {
+  box-shadow: 0 1px 0 0 #11c76f, 0 2px 3px 0 #11c76f;
+}
+
 /* Side menu customizations */
+
+.menu {
+  background-color: #F2F2F2;
+}
 
 .menu .menu__link.menu__link--active:not(.menu__link--sublist) {
   border-left: 4px solid;
   border-color: var(--ifm-color-primary);
+  color: #222222;
+  background-color: transparent;
 }
 
+
+.menu .menu__link:active {
+  color: #ffffff;
+  background-color: transparent;
+  background-size: 100% 100%;
+  color: #fff;
+}
+
+.menu .menu__link:hover {
+  color: #00ac4a;
+}
+
+.menu .menu__link {
+  color: #747474;
+  background-image: linear-gradient(#d9d9d9, #d9d9d9);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size .5s, color 450ms;
+}
+
+.footer__title {
+  color: var(--ifm-footer-title-color) !important;
+}
 
 /* ajustes do swagger */
 
@@ -97,6 +182,21 @@
 .swagger-ui a {
   background-color: transparent;
   color: unset;
+}
+
+.swagger-ui .title {
+  color: var(--ifm-font-color-base) !important;
+}
+
+.swagger-ui h1, h2, h3, h4, .model-title {
+  color: var(--ifm-font-color-base) !important;
+}
+
+
+
+.swagger-ui p {
+  background-color: transparent;
+  color: var(--ifm-font-color-base) !important;
 }
 
 .swagger-ui .tab li {

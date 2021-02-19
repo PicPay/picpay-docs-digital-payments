@@ -14,6 +14,23 @@ module.exports = {
  
 
   themeConfig: {
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: true,
+      respectPrefersColorScheme: true,
+      switchConfig: {
+        darkIcon: '🌙',
+        lightIcon: '\u2600',
+        // React inline style object
+        // see https://reactjs.org/docs/dom-elements.html#style
+        darkIconStyle: {
+          marginLeft: '2px',
+        },
+        lightIconStyle: {
+          marginLeft: '1px',
+        },
+      },
+    },
     navbar: {
      // title: 'PicPay',
       logo: {
@@ -43,6 +60,7 @@ module.exports = {
         },
       ],
     },
+
     footer: {
       style: 'dark',
       links: [

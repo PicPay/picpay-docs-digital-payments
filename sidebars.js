@@ -30,7 +30,7 @@ module.exports = {
 
     {
       type: 'category',
-      label: 'Resources',
+      label: 'Recursos',
       items: [
         'checkout/resources/api-reference',
         'checkout/resources/postman',
@@ -49,6 +49,26 @@ module.exports = {
       collapsed: false,
       items: [
         'pagamento-logado/intro/overview',
+        'pagamento-logado/intro/getting-started'
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Guias',
+      items: [ 
+        'pagamento-logado/guides/oauth2-flow',
+        'pagamento-logado/guides/process-payments',
+        'pagamento-logado/guides/refund-payments',
+        'pagamento-logado/guides/user-info'
+      ],
+    },
+  
+    {
+      type: 'category',
+      label: 'Recursos',
+      items: [
+        'pagamento-logado/resources/api-reference',
+        'pagamento-logado/resources/postman-collection',        
       ],
     },
   ]
