@@ -9,7 +9,7 @@ module.exports = {
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.png',
   organizationName: 'mrcsvg', // Usually your GitHub org/user name.
-  projectName: 'poc-picpay-docs', // Usually your repo name.
+  projectName: 'picpay-digitalpayments-docs', // Usually your repo name.
   
  
 
@@ -138,7 +138,7 @@ module.exports = {
           routeBasePath: '/', // Jogando pra home de docs
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/mrcsvg/poc-picpay-docs/',
+            'https://github.com/mrcsvg/poc-picpay-docs/tree/main',
         },
 
 
