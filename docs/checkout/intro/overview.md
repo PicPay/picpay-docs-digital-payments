@@ -1,6 +1,7 @@
 ---
 id: overview
 title: Visão Geral
+slug: /
 ---
 
 ## O que é

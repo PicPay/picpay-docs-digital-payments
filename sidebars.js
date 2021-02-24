@@ -67,7 +67,7 @@ module.exports = {
       type: 'category',
       label: 'Recursos',
       items: [
-        'pagamento-logado/resources/api-reference',
+        // 'pagamento-logado/resources/api-reference',
         'pagamento-logado/resources/postman-collection',        
       ],
     },

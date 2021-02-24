@@ -1,7 +1,6 @@
 ---
 id: getting-started
 title: Como começar
-slug: /
 ---
 
 

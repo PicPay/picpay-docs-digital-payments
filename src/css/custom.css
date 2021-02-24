@@ -94,9 +94,6 @@
   line-height: 2rem;
   padding: 0 0.5rem 0 2.25rem;
   width: 12.5rem;
-
-  -webkit-transition: none;
-  transition: none;
 }
 
 .navbar__search-input:hover {
@@ -223,6 +220,10 @@
 
 .swagger-ui .responses-table {
 
+}
+
+.swagger-ui .opblock .opblock-summary-path {
+  min-width: fit-content;
 }
 
 /* ajustes do swagger - fim */

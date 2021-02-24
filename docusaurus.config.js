@@ -31,6 +31,16 @@ module.exports = {
         },
       },
     },
+
+    announcementBar: {
+      id: 'officialDocumentation',
+      backgroundColor: '#E3F7EA', // Defaults to `#fff`.
+      textColor: '#091E42', // Defaults to `#000`.
+      content:
+        'Olá 💚! Esta é apenas uma documentação temporária de pagamentos online. A documentão oficial do PicPay você encontra no  <a target="_blank" rel="noopener noreferrer" href="https://studio.picpay.com/">PicPay Studio</a>!',
+    },
+
+
     navbar: {
      // title: 'PicPay',
       logo: {
@@ -44,7 +54,7 @@ module.exports = {
           items: [
             {
               label: "QR Code",
-              to: "/checkout/intro/overview",
+              to: "/checkout/intro/getting-started",
             },
             {
               label: "Pagamento logado",
@@ -52,7 +62,7 @@ module.exports = {
             }
           ]
         },
-        {to: 'blog', label: 'Blog', position: 'left'},
+        // {to: 'blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/picpay/',
           label: 'GitHub',
@@ -132,12 +142,12 @@ module.exports = {
         },
 
 
-        blog: {
+/*         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
             'https://github.com/facebook/docusaurus/edit/master/website/blog/',
-        },
+        }, */
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
