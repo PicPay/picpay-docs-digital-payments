@@ -4,7 +4,7 @@ module.exports = {
   title: 'PicPay',
   tagline: 'Documentação - Pagamentos Online',
   url: 'https://mrcsvg.github.io',
-  baseUrl: '/poc-picpay-docs/',
+  baseUrl: '/picpay-digitalpayments-docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.png',
