@@ -10,7 +10,7 @@ function APIReference({children, minHeight, url}) {
       <div className={styles.APIReference}> 
 
         { ExecutionEnvironment.canUseDOM && 
-          <SwaggerUI url="/poc-picpay-docs/swagger/checkout.json" />
+          <SwaggerUI url="/picpay-digitalpayments-docs/swagger/checkout.json" />
         }
         
       </div>
