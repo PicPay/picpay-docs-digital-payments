@@ -3,12 +3,12 @@ const path = require('path')
 module.exports = {
   title: 'PicPay',
   tagline: 'Documentação - Pagamentos Online',
-  url: 'https://mrcsvg.github.io',
+  url: 'https://picpay.github.io',
   baseUrl: '/picpay-docs-digital-payments/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.png',
-  organizationName: 'mrcsvg', // Usually your GitHub org/user name.
+  organizationName: 'PicPay', // Usually your GitHub org/user name.
   projectName: 'picpay-docs-digital-payments', // Usually your repo name.
   themeConfig: {
     colorMode: {
@@ -135,7 +135,7 @@ module.exports = {
           routeBasePath: '/', // Jogando pra home de docs
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/mrcsvg/poc-picpay-docs/tree/main',
+            'https://github.com/picpay/picpay-docs-digital-payments/tree/main',
         },
 /*         blog: {
           showReadingTime: true,
