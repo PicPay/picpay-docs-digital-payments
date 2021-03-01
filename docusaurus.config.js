@@ -10,9 +10,6 @@ module.exports = {
   favicon: 'img/favicon.png',
   organizationName: 'mrcsvg', // Usually your GitHub org/user name.
   projectName: 'picpay-digitalpayments-docs', // Usually your repo name.
-  
- 
-
   themeConfig: {
     colorMode: {
       defaultMode: 'light',
@@ -31,7 +28,6 @@ module.exports = {
         },
       },
     },
-
     announcementBar: {
       id: 'officialDocumentation',
       backgroundColor: '#E3F7EA', // Defaults to `#fff`.
@@ -39,8 +35,6 @@ module.exports = {
       content:
         'Olá 💚! Esta é apenas uma documentação temporária de pagamentos online. A documentão oficial do PicPay você encontra no  <a target="_blank" rel="noopener noreferrer" href="https://studio.picpay.com/">PicPay Studio</a>!',
     },
-
-
     navbar: {
      // title: 'PicPay',
       logo: {
@@ -48,7 +42,7 @@ module.exports = {
         src: 'img/PP-logo.png',
       },
       items: [
-        {
+/*         {
           label: 'Pagamentos',
           position: 'left',
           items: [
@@ -61,7 +55,9 @@ module.exports = {
               to: "/pagamento-logado/intro/overview",
             }
           ]
-        },
+        }, */
+        {to: "/checkout/intro/overview", label: "QR Code e Push" },
+        {to: "/pagamento-logado/intro/overview", label: "Pagamento logado" },
         // {to: 'blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/picpay/',
@@ -69,8 +65,9 @@ module.exports = {
           position: 'right',
         },
       ],
-    },
 
+
+    },
     footer: {
       style: 'dark',
       links: [
@@ -140,8 +137,6 @@ module.exports = {
           editUrl:
             'https://github.com/mrcsvg/poc-picpay-docs/tree/main',
         },
-
-
 /*         blog: {
           showReadingTime: true,
           // Please change this to your repo.
@@ -154,8 +149,6 @@ module.exports = {
       },
     ],
   ],
-
-  
   plugins: [
     [ 
       require.resolve('docusaurus-lunr-search'), { languages: ['pt'] }],
