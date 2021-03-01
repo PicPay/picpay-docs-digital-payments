@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>PicPay Blog</title>
+        <link>https://picpay.github.io/blog</link>
+        <description>PicPay Blog</description>
+        <lastBuildDate>Thu, 30 May 2019 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[Olá, Mundo!]]></title>
+            <link>https://picpay.github.io/picpay-docs-digital-payments/blog/Olá, Mundo!</link>
+            <guid>Olá, Mundo!</guid>
+            <pubDate>Thu, 30 May 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[Olá mundo!]]></description>
+        </item>
+    </channel>
+</rss>

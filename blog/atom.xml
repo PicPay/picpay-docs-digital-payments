@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://picpay.github.io/blog</id>
+    <title>PicPay Blog</title>
+    <updated>2019-05-30T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://picpay.github.io/blog"/>
+    <subtitle>PicPay Blog</subtitle>
+    <icon>https://picpay.github.io/img/favicon.png</icon>
+    <entry>
+        <title type="html"><![CDATA[Olá, Mundo!]]></title>
+        <id>Olá, Mundo!</id>
+        <link href="https://picpay.github.io/picpay-docs-digital-payments/blog/Olá, Mundo!"/>
+        <updated>2019-05-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Olá mundo!]]></summary>
+    </entry>
+</feed>
