@@ -4,12 +4,12 @@ module.exports = {
   title: 'PicPay',
   tagline: 'Documentação - Pagamentos Online',
   url: 'https://mrcsvg.github.io',
-  baseUrl: '/picpay-digitalpayments-docs/',
+  baseUrl: '/picpay-docs-digital-payments/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.png',
   organizationName: 'mrcsvg', // Usually your GitHub org/user name.
-  projectName: 'picpay-digitalpayments-docs', // Usually your repo name.
+  projectName: 'picpay-docs-digital-payments', // Usually your repo name.
   themeConfig: {
     colorMode: {
       defaultMode: 'light',
