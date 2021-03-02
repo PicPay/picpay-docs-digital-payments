@@ -56,7 +56,7 @@ module.exports = {
             }
           ]
         }, */
-        {to: "/checkout/intro/overview", label: "QR Code e Push" },
+        {to: "/checkout/intro/getting-started", label: "QR Code e Push" },
         {to: "/pagamento-logado/intro/overview", label: "Pagamento logado" },
         // {to: 'blog', label: 'Blog', position: 'left'},
         {
@@ -151,6 +151,11 @@ module.exports = {
   ],
   plugins: [
     [ 
-      require.resolve('docusaurus-lunr-search'), { languages: ['pt'] }],
-    ]
+       require.resolve('docusaurus-lunr-search'), { languages: ['pt'] }
+    ],    
+    
+
+
+    ],
+
 };

@@ -1,6 +1,6 @@
 ---
 id: overview
-title: Visão Geral
+title: Visão geral
 slug: /
 ---
 

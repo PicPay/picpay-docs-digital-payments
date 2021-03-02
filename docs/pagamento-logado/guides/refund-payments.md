@@ -57,7 +57,7 @@ O saldo será retornado ao mesmo lugar da origem dos fundos, ou seja:
 
 #### Mensagens de erro
 
-Não informamos os codigos de erro no processo de estorno. Apenas informamos se a transação foi estornada ou não. Exemplo:
+Não informamos os códigos de erro no processo de estorno. Apenas informamos se a transação foi estornada ou não. Exemplo:
 
 ```json
 {

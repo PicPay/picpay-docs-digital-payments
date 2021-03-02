@@ -60,7 +60,7 @@ Exemplo: Estou efetuando uma compra de R$60, possuo R$19 de saldo em minha carte
 
 #### Mensagens de erro
 
-Não informamos os codigos de erro nos retornos das transações. Apenas informamos se a transação foi aprovada ou não.
+Não informamos os códigos de erro nos retornos das transações. Apenas informamos se a transação foi aprovada ou não.
 
 ```json
 {
