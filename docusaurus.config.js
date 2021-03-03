@@ -5,8 +5,8 @@ module.exports = {
   tagline: 'Documentação - Pagamentos Online',
   url: 'https://picpay.github.io',
   baseUrl: '/picpay-docs-digital-payments/',
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'error',
+  onBrokenMarkdownLinks: 'error',
   favicon: 'img/favicon.png',
   organizationName: 'PicPay', // Usually your GitHub org/user name.
   projectName: 'picpay-docs-digital-payments', // Usually your repo name.
@@ -80,7 +80,7 @@ module.exports = {
             },
             {
               label: 'Pagamento Logado',
-              to: 'docs/doc2/',
+              to: 'pagamento-logado/intro/overview',
             },
             {
               label: 'Assinaturas',

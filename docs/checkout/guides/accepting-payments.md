@@ -11,7 +11,7 @@ Neste guia vamos descrever o passo-a-passo para que você aceite pagamentos onli
 
 ## Pré-requisitos
 
-Antes de iniciar sua integração, você deve possuir credenciais válidas. Você pode conferir como obter suas credenciais [neste artigo](/docs/checkout/intro/getting-started#antes-de-começar).
+Antes de iniciar sua integração, você deve possuir credenciais válidas. Você pode conferir como obter suas credenciais [neste artigo](/checkout/intro/getting-started#antes-de-começar).
 
 
 ## Como funciona?
@@ -122,9 +122,9 @@ _Exemplo de notificação que o PicPay envia para o e-commerce._
 
 ## Próximos passos
 
-- [Entenda os possíveis status de um pagamento](/docs/checkout/guides/order-status);
-- [Entenda como solicitar um cancelamento total](/docs/checkout/guides/cancel-order);
-- [Entenda um pouco mais sobre as notificações que o PicPay envia](/docs/checkout/guides/notifications);
+- [Entenda os possíveis status de um pagamento](/checkout/guides/order-status);
+- [Entenda como solicitar um cancelamento total](/checkout/guides/cancel-order);
+- [Entenda um pouco mais sobre as notificações que o PicPay envia](/checkout/guides/notifications);
 
 
 ## Obtendo ajuda

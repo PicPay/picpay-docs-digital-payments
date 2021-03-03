@@ -9,7 +9,7 @@ Neste guia vamos descrever o passo-a-passo para que você possa utilizar PicPay 
 
 ## Antes de começar
 
-Antes de iniciar sua integração, você deve possuir credenciais válidas. Você pode conferir como obter suas credenciais [neste artigo](/docs/checkout/intro/getting-started#antes-de-começar).
+Antes de iniciar sua integração, você deve possuir credenciais válidas. Você pode conferir como obter suas credenciais [neste artigo](/checkout/intro/getting-started#antes-de-começar).
 
 ## Como utilizar
 
@@ -50,7 +50,7 @@ Preencha os campos Application Key e Application Token com as informações da s
 
 ## Próximos passos
 
-- [Entenda os possíveis status de um pagamento](/docs/checkout/guides/order-status);
+- [Entenda os possíveis status de um pagamento](/checkout/guides/order-status);
 
 ## Obtendo ajuda
 Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 

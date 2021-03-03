@@ -8,7 +8,7 @@ Neste guia vamos descrever o passo-a-passo para que você cancelar suas ordens p
 
 ## Pré-requisitos
 
-Antes de iniciar sua integração, você deve possuir credenciais válidas. Você pode conferir como obter suas credenciais [neste artigo](/docs/checkout/intro/getting-started#antes-de-começar).
+Antes de iniciar sua integração, você deve possuir credenciais válidas. Você pode conferir como obter suas credenciais [neste artigo](/checkout/intro/getting-started#antes-de-começar).
 
 ## Como funciona?
 
@@ -48,8 +48,8 @@ Para transações pagas com saldo, o valor será devolvido à carteira do usuár
 
 ## Próximos passos
 
-- [Entenda os possíveis status de um pagamento](/docs/checkout/guides/order-status);
-- [Entenda um pouco mais sobre as notificações que o PicPay envia](/docs/checkout/guides/notifications);
+- [Entenda os possíveis status de um pagamento](/checkout/guides/order-status);
+- [Entenda um pouco mais sobre as notificações que o PicPay envia](/checkout/guides/notifications);
 
 ## Obtendo ajuda
 Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 

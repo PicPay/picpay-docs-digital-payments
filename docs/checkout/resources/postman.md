@@ -11,7 +11,7 @@ Neste breve guia vamos descrever como utilizar o Postman como ferramente de apoi
 
 ## Pré-requisitos
 
-Antes de iniciar sua integração, você deve possuir credenciais válidas. Você pode conferir como obter suas credenciais [neste artigo](/docs/checkout/intro/getting-started#antes-de-começar).
+Antes de iniciar sua integração, você deve possuir credenciais válidas. Você pode conferir como obter suas credenciais [neste artigo](/checkout/intro/getting-started#antes-de-começar).
 
 ## O que posso fazer com esta collection?
 

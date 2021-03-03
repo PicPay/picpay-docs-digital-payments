@@ -8,7 +8,7 @@ Neste guia vamos descrever o passo-a-passo para que você consulte o status de s
 
 ## Pré-requisitos
 
-Antes de iniciar sua integração, você deve possuir credenciais válidas. Você pode conferir como obter suas credenciais [neste artigo](/docs/checkout/intro/getting-started#antes-de-começar).
+Antes de iniciar sua integração, você deve possuir credenciais válidas. Você pode conferir como obter suas credenciais [neste artigo](/checkout/intro/getting-started#antes-de-começar).
 
 ## Como funciona?
 
@@ -51,8 +51,8 @@ Abaixo um resumo sobre os status explicados acima, assim como outros status rele
     
 ## Próximos passos
 
-- [Entenda como solicitar um cancelamento total](/docs/checkout/guides/cancel-order);
-- [Entenda um pouco mais sobre as notificações que o PicPay envia](/docs/checkout/guides/notifications);
+- [Entenda como solicitar um cancelamento total](/checkout/guides/cancel-order);
+- [Entenda um pouco mais sobre as notificações que o PicPay envia](/checkout/guides/notifications);
 
 ## Obtendo ajuda
 Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 
