@@ -30,7 +30,7 @@ module.exports = {
     
     },
     googleAnalytics: {
-      trackingID: 'UA-174800333-1'
+      trackingID: '264344699'
     },
     announcementBar: {
       id: 'officialDocumentation',
@@ -167,7 +167,7 @@ module.exports = {
         src: '/js/google-tag-manager.js'
       },  */
       {
-        src: '/js/hotjar.js'
+        src: '/picpay-docs-digital-payments/js/hotjar.js'
       },   
     ],
 
