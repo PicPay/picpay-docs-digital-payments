@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{80:function(a){a.exports=JSON.parse('{"allTagsPath":"/picpay-docs-digital-payments/blog/tags","slug":"hello","name":"hello","count":1,"permalink":"/picpay-docs-digital-payments/blog/tags/hello"}')}}]);
