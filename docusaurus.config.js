@@ -30,7 +30,10 @@ module.exports = {
     
     },
     googleAnalytics: {
-      trackingID: '264344699'
+      trackingID: 'G-52VCWRLND8'
+    },
+    gtag: {
+      trackingID: 'G-52VCWRLND8'
     },
     announcementBar: {
       id: 'officialDocumentation',
