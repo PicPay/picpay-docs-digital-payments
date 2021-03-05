@@ -27,6 +27,10 @@ module.exports = {
           marginLeft: '1px',
         },
       },
+    
+    },
+    googleAnalytics: {
+      trackingID: 'UA-174800333-1'
     },
     announcementBar: {
       id: 'officialDocumentation',
@@ -157,5 +161,15 @@ module.exports = {
 
 
     ],
+
+    scripts: [ 
+/*       {
+        src: '/js/google-tag-manager.js'
+      },  */
+      {
+        src: '/js/hotjar.js'
+      },   
+    ],
+
 
 };
