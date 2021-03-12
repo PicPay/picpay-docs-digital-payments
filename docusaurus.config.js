@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  title: 'PicPay',
+  title: 'PicPay - Pagamentos Digitais',
   tagline: 'Documentação - Pagamentos Online',
   url: 'https://picpay.github.io',
   baseUrl: '/picpay-docs-digital-payments/',
@@ -40,7 +40,7 @@ module.exports = {
       backgroundColor: '#E3F7EA', // Defaults to `#fff`.
       textColor: '#091E42', // Defaults to `#000`.
       content:
-        'Olá 💚! Esta é apenas uma documentação temporária de pagamentos online. A documentão oficial do PicPay você encontra no  <a target="_blank" rel="noopener noreferrer" href="https://studio.picpay.com/">PicPay Studio</a>!',
+        'Olá 💚! Este é um domínio temporário para nossa documentação de pagamentos online. Em breve migraremos para o <a target="_blank" rel="noopener noreferrer" href="https://studio.picpay.com/">PicPay Studio</a>!',
     },
     navbar: {
      // title: 'PicPay',
