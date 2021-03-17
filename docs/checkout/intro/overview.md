@@ -7,7 +7,7 @@ slug: /
 
 ## O que é
 
-Nosso e-commerce é um plataforma oferecida para quem vende pela internet e quer faturar mais. Você ainda pode aproveitar nossa rede com mais de 8 milhões de usuários!
+Nosso e-commerce é um plataforma oferecida para quem vende pela internet e quer faturar mais. Você ainda pode aproveitar nossa rede com mais de 47 milhões de usuários!
 
 Oferecendo PicPay no seu e-commerce, seus clientes efetuam o pagamento de forma segura diretamente em seu aplicativo. Você pode criar uma conta como pessoa física ou jurídica.
 
