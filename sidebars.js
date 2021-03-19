@@ -21,7 +21,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Plugins',
+      label: 'Plugins e plataformas',
       items: [
         'checkout/plugins/vtex',
         'checkout/plugins/magento'        
