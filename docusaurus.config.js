@@ -147,6 +147,7 @@ module.exports = {
          blog: {
           showReadingTime: true,
           blogTitle: 'Change Log',
+          blogDescription: "Mudanças e novidades a respeito de nossas soluções de pagamento digital",
           blogSidebarTitle: 'Posts recentes',
           routeBasePath: 'change-log',
           // Please change this to your repo.

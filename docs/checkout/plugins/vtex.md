@@ -25,6 +25,12 @@ Estas chaves deverão ser copiadas e inseridas dentro do seu painel de configura
 Toda vez que novos tokens são gerados através do botão **Gerar Tokens**, os tokens antigos serão invalidados.
 :::
 
+:::warning Problemas na obtenção de chaves.
+
+Por conta de uma instabilidade em nosso novo painel lojista (https://painel-empresas.picpay.com/) recomendamos que as chaves de integração da VTEX sejam obtidas através do painel lojista antigo (https://lojista.picpay.com/ecommerce-token).
+
+:::
+
 ### Habilitando o PicPay como forma de pagamento
 
 Dentro de seu painel da VTEX, você deverá configurar o PicPay como um novo gateway de pagamentos.

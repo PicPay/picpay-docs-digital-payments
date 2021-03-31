@@ -10,13 +10,13 @@ tags: [mundo-fisico, pagamentos]
 
 Olá, mundo físico!
 
-Recentemente fizemos uma melhoria em nossa API de pagamentos que simplifica a sua utilização por lojistas do mundo físico. Se você se encaixa nessa categoria, confira abaixo como se beneficiar.
+Recentemente fizemos uma melhoria em nossa API de pagamentos que simplifica sua utilização por lojistas do mundo físico. Se você se encaixa nessa categoria, confira abaixo como se beneficiar.
 
 ## O que muda?
 
-Não é sempre que o lojista do mundo físico possui os dados do cliente (como CPF, e-mail, telefone, etc), dado que a compra é presencial.
+Compras em lojas físicas fazem com que os lojistas nem sempre possuam dados de seus clientes, como por exemplo CPF, e-mail, telefone, etc. 
 
-Solicitar estes dados em uma transação presencial pode aumentar a fricção junto ao ponto de venda e por isso removemos a obrigatoriedade destes dados.
+Solicitá-los no momento da transação presencial pode criar fricção para o ponto de venda e por isso removemos a obrigatoriedade destes dados.
 
 ## Como utilizar
 
@@ -46,11 +46,12 @@ curl --location --request POST 'https://appws.picpay.com/ecommerce/public/paymen
 ```
 
 **Importante**
-> Apesar de não ser obrigatório, vocÊ ainda poderá enviar os dados de `buyer` na requisição. Lembre-se que os níveis de conversão aumentam consideravelmente quando os dados de `buyer` são enviados, já que o cliente recebe uma notificação via push.
+> Apesar de não ser obrigatório, você ainda poderá enviar os dados de `buyer` na requisição. Lembre-se que os níveis de conversão aumentam consideravelmente quando os dados de `buyer` são enviados, já que o cliente recebe uma notificação via push.
 
-## Pontos de atenção
+## Ponto de atenção
 
-As credenciais do lojista serão bloqueadas caso o PicPay identifique que o lojista está enviando transações 100% online (ecommerces, por exemplo) como `in-store`, apenas para "driblar" a obrigatoriedade dos dados de `buyer`.
+As credenciais do lojista serão bloqueadas caso o PicPay identifique que o mesmo está enviando transações 100% online (como, por exemplo, transações de e-commerce como `in-store`), apenas para "driblar" a obrigatoriedade dos dados de `buyer`.
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Ficou alguma dúvida? Você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com.
+Esperamos ter ajudado com este artigo! Ficou alguma dúvida? Você pode consultar o nosso [FAQ](https://ajudaempresas.picpay.com/hc/pt-br/categories/360003836611-PicPay-E-commerce) ou entrar em contato através do e-mail relacionamento-empresas@picpay.com.
+
