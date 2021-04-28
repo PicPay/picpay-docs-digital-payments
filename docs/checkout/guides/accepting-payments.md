@@ -105,7 +105,13 @@ _Exemplo de notificação que o PicPay envia para o e-commerce._
 Porém, por questões de segurança, não iremos informar o novo status nesta requisição. Para isto, sua loja (a partir do recebimento de nossa notificação) deverá consultar nosso endpoint de status de pedidos.
 :::
 
-Saiba mais sobre as notificações que o PicPay envia neste artigo
+:::caution Atenção
+
+Se o callback não chegar após o tempo determinado por você, recomendamos que uma consulta do status da ordem seja feita de forma direta (**passo 8**). Isso é aplicável para casos que precisem de confirmações instântaneas (compras presenciais ou vending-machines, por exemplo).
+
+:::
+
+Saiba mais sobre as notificações que o PicPay envia [neste artigo](/checkout/guides/notifications).
 
 **Passo 8:** O seu e-commerce deve efetuar um GET utilizando o referenceId que enviamos por notificação, através para obtenção do status do pagamento.
 
