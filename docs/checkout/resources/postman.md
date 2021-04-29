@@ -7,7 +7,7 @@ hide_table_of_contents: false
 
 ## Sobre este guia
 
-Neste breve guia vamos descrever como utilizar o Postman como ferramente de apoio em sua integração.
+Neste breve guia vamos descrever como utilizar o Postman como ferramenta de apoio em sua integração.
 
 ## Pré-requisitos
 
@@ -15,10 +15,10 @@ Antes de iniciar sua integração, você deve possuir credenciais válidas. Voc�
 
 ## O que posso fazer com esta collection?
 
-Em nossa collection, disponibilizamos os seguintes end-points:
-- End-point para criação de pagamento;
-- End-point de consulta de ordem;
-- End-point para cancelamento;
+Em nossa collection, disponibilizamos os seguintes endpoints:
+- Endpoint para criação de pagamento;
+- Endpoint de consulta de ordem;
+- Endpoint para cancelamento;
 - Simulação de callback;
 
 ## Talk is cheap, show me the code! 
@@ -31,7 +31,7 @@ Também é um fã de postman como nós? Acesse nossa collection através do bot�
 
 ### Configurar suas chaves de integração
 
-Após importar nossa collection, você poderá configurar suas chaves dentro nas configurações de ambientes como exibido abaixo:
+Após importar nossa collection, você poderá configurar suas chaves dentro das configurações de ambientes como exibido abaixo:
 
 ![img](../../../static/img/guides/postman-environment.png)
 
