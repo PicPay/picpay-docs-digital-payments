@@ -109,7 +109,7 @@ module.exports = {
             },
             {
               label: 'Dúvidas frequentes',
-              href: 'https://ajudaempresas.picpay.com/hc/pt-br/categories/360004972752-PicPay-Studio-',
+              href: 'https://ajudaempresas.picpay.com/hc/pt-br/categories/360003836611-PicPay-E-commerce',
             },
             {
               label: 'PicPay.com',
