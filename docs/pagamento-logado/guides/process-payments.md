@@ -25,12 +25,12 @@ Antes de processar pagamentos online através de nossa solução de **Pagamento 
 Além do `access_token`, gerado dinamicamente, o end-point de pagamentos necessita também de uma `Api-Key` que lhe será informada junto com seu `client_id` e `client_secret`.
 
 :::caution Sobre o Api-Key
-O `Api-Key` não deverá ser comparilhado de forma alguma e deverá ficar armazenado de forma segura em seus servidores. 
+O `Api-Key` não deverá ser compartilhado de forma alguma e deve ficar armazenado de forma segura em seus servidores. 
 :::
 
 ### Gerando uma cobrança na carteira do usuário
 
-Possuindo um `access_token` válido, o processo de geração de uma cobrança na carteira dos clientes é extremamente simples e flúido. A cobrança deverá ser gerada através do end-point `v1/payments/charge`, indicando o valor a ser debitado no corpo da requisição. No exemplo abaixo, estamos solicitando a cobrança de R$ 3,00 na carteira do usuário.
+Possuindo um `access_token` válido, o processo de geração de uma cobrança na carteira dos clientes é extremamente simples e fluido. A cobrança deverá ser gerada através do end-point `v1/payments/charge`, indicando o valor a ser debitado no corpo da requisição. No exemplo abaixo, estamos solicitando a cobrança de R$ 3,00 na carteira do usuário.
 
 ```bash
 
