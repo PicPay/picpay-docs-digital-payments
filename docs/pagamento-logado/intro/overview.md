@@ -5,7 +5,7 @@ title: Visão geral
 
 ## O que é o pagamento logado?
 
-O Pagamento Logado oferece uma forma de pagamento síncrona aos seus cliemtes efetuando cobranças na carteira de seus usuários, de forma transparente, após um concentimento inicial.
+O Pagamento Logado oferece uma forma de pagamento síncrona aos seus clientes efetuando cobranças na carteira de seus usuários, de forma transparente, após um consentimento inicial.
 
 Após efetuar o login em sua aplicação, o cliente autoriza cobranças em sua carteira e sua aplicação então gerencia as cobranças.
 
