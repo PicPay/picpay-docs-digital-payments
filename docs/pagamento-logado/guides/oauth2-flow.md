@@ -24,7 +24,7 @@ Antes de iniciar sua integração, você deve possuir credenciais válidas. Atua
 
 Para esta solução de pagamentos, o e-commerce já deve ser um parceiro do PicPay. Os dados necessários para realizar o registro do aplicativo são:
 - E-mail de cadastro;
-- URI de redirecionamento ou URL de callback;
+- URL de redirecionamento ou URL de callback;
 
 :::info
 
@@ -95,7 +95,7 @@ Após o concentimento inicial, o PicPay não solicitará novamente as permissõe
 
 Caso o cliente autorize o aplicativo no [passo anterior](/pagamento-logado/guides/oauth2-flow#solicitando-a-autorização-do-usuário), o usuário será redirecionado para a URL de retorno indicada.
 
-O código de autorização será enviado como um parametro junto a URI indicada e deverá ser utilizado para a geração dos tokens no passo seguinte.
+O código de autorização será enviado como um parâmetro junto a URL indicada e deverá ser utilizado para a geração dos tokens no passo seguinte.
 
 ![img](../../../static/img/guides/pagamento-logado/get-with-code.png)
 
