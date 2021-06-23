@@ -25,7 +25,7 @@ Antes de processar pagamentos online através de nossa solução de **Pagamento 
 Além do `access_token`, gerado dinamicamente, o end-point de pagamentos necessita também de uma `Api-Key` que lhe será informada junto com seu `client_id` e `client_secret`.
 
 :::caution Sobre o Api-Key
-O `Api-Key` não deverá ser comparilhado de forma alguma e deverá ficar armazenado de forma segura em seus servidores. 
+O `Api-Key` não deverá ser compartilhado de forma alguma e deverá ficar armazenado de forma segura em seus servidores. 
 :::
 
 ### Solicitando um reembolso de uma cobrança à carteira do usuário
