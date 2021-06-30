@@ -50,7 +50,7 @@ Abaixo um exemplo de retorno de sucesso.
 
 :::info
 
-O cliente irá autorizar o e-commerce a ter acesso a essas informações no momento do concentimento de permissões, explicado [aqui](/pagamento-logado/guides/oauth2-flow#solicitando-a-autorização-do-usuário)
+O cliente irá autorizar o e-commerce a ter acesso a essas informações no momento do consentimento de permissões, explicado [aqui](/pagamento-logado/guides/oauth2-flow#solicitando-a-autorização-do-usuário)
 
 :::
 
