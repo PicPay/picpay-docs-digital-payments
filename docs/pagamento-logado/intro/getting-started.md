@@ -16,7 +16,7 @@ Antes de iniciar sua integração, você deve possuir credenciais válidas. Atua
 
 ## Testando sua integração
 
-Atualmente o PicPay não disponibiliza ambiente de SandBox. Todos os testes serão feitos no ambiente de produção e não geram qualquer ônus ao desenvolvedor/lojista, sendo que todos os pagamentos realizados podem ser imediatamente estornados (Através de nossa API de cancelamento, ou pelo painel lojista).
+Atualmente o PicPay não disponibiliza ambiente de SandBox. Todos os testes serão feitos no ambiente de produção e não geram qualquer ônus ao desenvolvedor/lojista, sendo que todos os pagamentos realizados podem ser imediatamente estornados (através de nossa API de cancelamento ou pelo painel lojista).
 
 ![img](../../../static/img/guides/cancel-transactions.gif)
 
