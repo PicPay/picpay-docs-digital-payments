@@ -15,7 +15,7 @@ Oferecendo PicPay no seu e-commerce, seus clientes efetuam o pagamento de forma 
 
 ## Taxas
 
-Você não paga taxa de adesão ou de cancelamento e seus primeiros 3 meses são gratuitos! Nos meses seguintes, é só escolher a taxa que melhor se adapta ao seu momento e quando quer receber, e vamos solicitar o pagamento de uma taxa de intermediação.
+Você não paga taxa de adesão ou de cancelamento e seus primeiros 30 dias são gratuitos! Nos meses seguintes, é só escolher a taxa que melhor se adapta ao seu momento e quando quer receber, e vamos solicitar o pagamento de uma taxa de intermediação.
 
 | DIAS A RECEBER | TAXA |
 |--|--|
