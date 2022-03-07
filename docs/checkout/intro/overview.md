@@ -19,8 +19,8 @@ Você não paga taxa de adesão ou de cancelamento e seus primeiros 3 meses são
 
 | DIAS A RECEBER | TAXA |
 |--|--|
-| 1 dia | 5,89% |
-| 14 dias | 4,89% |
+| 1 dia | 5,19% |
+| 14 dias | 4,61% |
 | 30 dias | 3,89% |
 
 ## Funcionalidades disponíveis.
