@@ -23,3 +23,7 @@ yarn build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
+
+
+## Documentação - Docusaurus
+https://picpay.atlassian.net/wiki/spaces/PAC/pages/2128314894/Documenta+o+-+Docusaurus
