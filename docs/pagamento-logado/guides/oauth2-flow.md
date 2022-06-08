@@ -173,4 +173,4 @@ Com um `access_token` válido, seu aplicativo poderá efetuar cobranças, reembo
 ## Obtendo ajuda
 Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 
 
- 
+
