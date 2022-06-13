@@ -1,7 +1,6 @@
 ---
-id: api-reference
-title: API Reference
-hide_table_of_contents: true
+id: api-reference-e-commerce
+title: API Reference E-commerce
 ---
 
 import APIReference from '@site/src/components/APIReference'
