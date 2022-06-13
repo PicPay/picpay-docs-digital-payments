@@ -4,9 +4,11 @@
 # Production
 /build
 
-# Generated files
+# Generated local files
 .docusaurus
 .cache-loader
+package-lock.json
+yarn.lock
 
 # Misc
 .DS_Store
