@@ -1,11 +1,11 @@
-# Website
+# Documentação E-commerce
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
 
 ## Installation
 
 ```console
-yarn install
+yarn
 ```
 
 ## Local Development
@@ -25,5 +25,5 @@ yarn build
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
 
-## Documentação - Docusaurus
+## Documentação para deploy - Docusaurus
 https://picpay.atlassian.net/wiki/spaces/PAC/pages/2128314894/Documenta+o+-+Docusaurus
