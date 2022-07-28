@@ -3,9 +3,9 @@ id: process-payments
 title: Processando pagamentos
 sidebar_label: Processando pagamentos
 hide_title: false
-description: Aprenda como processar pagamentos na nossa solução de Pagamento Logado
+description: Aprenda como processar pagamentos na nossa solução PicPay 1-Click
 keywords: 
-    - Pagamento logado
+    - PicPay 1-Click
     - Pagamento    
     - Login
 ---
@@ -16,7 +16,7 @@ Neste guia vamos descrever o passo-a-passo para que você processe pagamentos co
 
 ## Antes de começar
 
-Antes de processar pagamentos online através de nossa solução de **Pagamento Logado**, você deve possuir um `access_token` válido e não expirado. Você pode conferir como gerar seus tokens [neste artigo](/pagamento-logado/guides/oauth2-flow).
+Antes de processar pagamentos online através de nossa solução de **PicPay 1-Click**, você deve possuir um `access_token` válido e não expirado. Você pode conferir como gerar seus tokens [neste artigo](/one-click/guides/oauth2-flow).
 
 ## Como funciona
 
@@ -70,8 +70,8 @@ Não informamos os códigos de erro nos retornos das transações. Apenas inform
 
 ## Próximos passos
 
-- [Solicitando um reembolso](/pagamento-logado/guides/refund-payments);
-- [Consultando informações dos usuários](/pagamento-logado/guides/user-info);
+- [Solicitando um reembolso](/one-click/guides/refund-payments);
+- [Consultando informações dos usuários](/one-click/guides/user-info);
 
 
 ## Obtendo ajuda

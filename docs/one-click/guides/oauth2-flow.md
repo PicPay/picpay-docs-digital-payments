@@ -5,7 +5,7 @@ sidebar_label: Autenticação e autorização
 hide_title: false
 description: Aprenda como obter tokens de acesso para sua aplicação através de nossos serviços oauth2.
 keywords: 
-    - Pagamento logado
+    - PicPay 1-Click
     - Autenticação
     - Autorização
     - Login
@@ -28,7 +28,7 @@ Para esta solução de pagamentos, o e-commerce já deve ser um parceiro do PicP
 
 :::info
 
-A solução de **Pagamento Logado** não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-empresas@picpay.com demonstrando interesse.
+A solução de **PicPay 1-Click** não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-empresas@picpay.com demonstrando interesse.
 
 :::
 
@@ -72,9 +72,9 @@ Breve explicação sobre os parametros da URL acima:
 
 ### Solicitando a autorização do usuário
 
-Ao utilizar a URL do [passo anterior](/pagamento-logado/guides/oauth2-flow#redirecionando-usuário-para-tela-de-login-e-senha), o cliente será redirecionado para uma página de login e senha. Seu cliente deverá então efetuar o login através de seu usuário e senha do PicPay.
+Ao utilizar a URL do [passo anterior](/one-click/guides/oauth2-flow#redirecionando-usuário-para-tela-de-login-e-senha), o cliente será redirecionado para uma página de login e senha. Seu cliente deverá então efetuar o login através de seu usuário e senha do PicPay.
 
-![img](../../../static/img/guides/pagamento-logado/login.png)
+![img](../../../static/img/guides/one-click/login.png)
 
 Após o login, o cliente deverá revisar as permissões solicitadas pelo aplicativo. 
 
@@ -82,7 +82,7 @@ Após o login, o cliente deverá revisar as permissões solicitadas pelo aplicat
 As permissões solicitadas irão depender das configurações de escopo setadas no momento da criação das credenciais.
 :::
 
-![img](../../../static/img/guides/pagamento-logado/authorization.png)
+![img](../../../static/img/guides/one-click/authorization.png)
 
 :::caution Atenção
 O cliente poderá conceder ou não as permissões. Sua aplicação deverá estar preparada para receber os dois tipos de resposta.
@@ -93,11 +93,11 @@ Após o concentimento inicial, o PicPay não solicitará novamente as permissõe
 
 ### Obtendo o código de autorização
 
-Caso o cliente autorize o aplicativo no [passo anterior](/pagamento-logado/guides/oauth2-flow#solicitando-a-autorização-do-usuário), o usuário será redirecionado para a URL de retorno indicada.
+Caso o cliente autorize o aplicativo no [passo anterior](/one-click/guides/oauth2-flow#solicitando-a-autorização-do-usuário), o usuário será redirecionado para a URL de retorno indicada.
 
 O código de autorização será enviado como um parâmetro junto a URL indicada e deverá ser utilizado para a geração dos tokens no passo seguinte.
 
-![img](../../../static/img/guides/pagamento-logado/get-with-code.png)
+![img](../../../static/img/guides/one-click/get-with-code.png)
 
 ### Solicitação dos tokens
 
@@ -165,9 +165,9 @@ O fluxo de atualização de tokens precisa ser obrigatoriamente previsto em sua 
 
 Com um `access_token` válido, seu aplicativo poderá efetuar cobranças, reembolsos ou consultar algumas informações básicas dos usuários. Confira abaixo os próximos passos:
 
-- [Efetuando uma cobrança](/pagamento-logado/guides/process-payments);
-- [Solicitando um reembolso](/pagamento-logado/guides/refund-payments);
-- [Consultando informações dos usuários](/pagamento-logado/guides/user-info);
+- [Efetuando uma cobrança](/one-click/guides/process-payments);
+- [Solicitando um reembolso](/one-click/guides/refund-payments);
+- [Consultando informações dos usuários](/one-click/guides/user-info);
 
 
 ## Obtendo ajuda

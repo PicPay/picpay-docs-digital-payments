@@ -48,18 +48,18 @@ module.exports = {
       label: 'Introdução',
       collapsed: false,
       items: [
-        'pagamento-logado/intro/overview',
-        'pagamento-logado/intro/getting-started'
+        'one-click/intro/overview',
+        'one-click/intro/getting-started'
       ],
     },
     {
       type: 'category',
       label: 'Guias',
       items: [ 
-        'pagamento-logado/guides/oauth2-flow',
-        'pagamento-logado/guides/process-payments',
-        'pagamento-logado/guides/refund-payments',
-        'pagamento-logado/guides/user-info'
+        'one-click/guides/oauth2-flow',
+        'one-click/guides/process-payments',
+        'one-click/guides/refund-payments',
+        'one-click/guides/user-info'
       ],
     },
   
@@ -67,8 +67,8 @@ module.exports = {
       type: 'category',
       label: 'Recursos',
       items: [
-        'pagamento-logado/resources/api-reference',
-        'pagamento-logado/resources/postman-collection',
+        'one-click/resources/api-reference',
+        'one-click/resources/postman-collection',
       ],
     },
   ]
