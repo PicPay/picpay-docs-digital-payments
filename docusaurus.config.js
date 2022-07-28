@@ -49,22 +49,8 @@ module.exports = {
         src: 'img/PP-logo.png',
       },
       items: [
-/*         {
-          label: 'Pagamentos',
-          position: 'left',
-          items: [
-            {
-              label: "QR Code",
-              to: "/checkout/intro/getting-started",
-            },
-            {
-              label: "Pagamento logado",
-              to: "/pagamento-logado/intro/overview",
-            }
-          ]
-        }, */
         {to: "/checkout/intro/getting-started", label: "QR Code e Push" },
-        {to: "/pagamento-logado/intro/overview", label: "Pagamento logado" },
+        {to: "/one-click/intro/overview", label: "PicPay 1-Click" },
         // {to: 'blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/picpay/',
@@ -86,8 +72,8 @@ module.exports = {
               to: '/',
             },
             {
-              label: 'Pagamento Logado',
-              to: 'pagamento-logado/intro/overview',
+              label: 'PicPay 1-Click',
+              to: 'one-click/intro/overview',
             },
             {
               label: 'Assinaturas',

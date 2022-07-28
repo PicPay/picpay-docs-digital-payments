@@ -3,9 +3,9 @@ id: refund-payments
 title: Reembolsando pagamentos
 sidebar_label: Reembolsando pagamentos
 hide_title: false
-description: Aprenda como reembolsar pagamentos na nossa solução de Pagamento Logado
+description: Aprenda como reembolsar pagamentos na nossa solução de PicPay 1-Click
 keywords: 
-    - Pagamento logado
+    - PicPay 1-Click
     - Reembolso    
     - Login
 ---
@@ -16,7 +16,7 @@ Neste guia vamos descrever o passo-a-passo para que você solicite reembolsos de
 
 ## Antes de começar
 
-Antes de processar pagamentos online através de nossa solução de **Pagamento Logado**, você deve possuir um `access_token` válido e não expirado. Você pode conferir como gerar seus tokens [neste artigo](/pagamento-logado/guides/oauth2-flow).
+Antes de processar pagamentos online através de nossa solução de **PicPay 1-Click**, você deve possuir um `access_token` válido e não expirado. Você pode conferir como gerar seus tokens [neste artigo](/one-click/guides/oauth2-flow).
 
 ## Como funciona
 
@@ -67,7 +67,7 @@ Não informamos os códigos de erro no processo de estorno. Apenas informamos se
 
 ## Próximos passos
 
-- [Consultando informações dos usuários](/pagamento-logado/guides/user-info);
+- [Consultando informações dos usuários](/one-click/guides/user-info);
 
 ## Obtendo ajuda
 Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 

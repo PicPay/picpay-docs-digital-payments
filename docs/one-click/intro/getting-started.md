@@ -3,16 +3,16 @@ id: getting-started
 title: Como começar
 sidebar_label: Como começar
 hide_title: false
-description: Aprenda como processar pagamentos na nossa solução de Pagamento Logado
+description: Aprenda como processar pagamentos na nossa solução PicPay 1-Click
 keywords: 
-    - Pagamento logado
+    - PicPay 1-Click
     - Pagamento    
     - Login
 ---
 
 ## Antes de começar
 
-Antes de iniciar sua integração, você deve possuir credenciais válidas. Atualmente, a solução de **Pagamento Logado** não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-empresas@picpay.com demonstrando interesse.
+Antes de iniciar sua integração, você deve possuir credenciais válidas. Atualmente, a solução de **PicPay 1-Click** não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-empresas@picpay.com demonstrando interesse.
 
 ## Testando sua integração
 
@@ -22,10 +22,10 @@ Atualmente o PicPay não disponibiliza ambiente de SandBox. Todos os testes ser�
 
 ## Próximos passos
 
-- [Autenticação e autorização](/pagamento-logado/guides/oauth2-flow);
-- [Efetuando uma cobrança](/pagamento-logado/guides/process-payments);
-- [Solicitando um reembolso](/pagamento-logado/guides/refund-payments);
-- [Consultando informações dos usuários](/pagamento-logado/guides/user-info);
+- [Autenticação e autorização](/one-click/guides/oauth2-flow);
+- [Efetuando uma cobrança](/one-click/guides/process-payments);
+- [Solicitando um reembolso](/one-click/guides/refund-payments);
+- [Consultando informações dos usuários](/one-click/guides/user-info);
 
 ## Obtendo ajuda
 Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com

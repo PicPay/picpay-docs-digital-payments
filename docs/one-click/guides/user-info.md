@@ -3,9 +3,9 @@ id: user-info
 title: Obtendo informações do usuário
 sidebar_label: Informações do usuário
 hide_title: false
-description: Aprenda como obter informações básicas dos usuários na nossa solução de Pagamento Logado
+description: Aprenda como obter informações básicas dos usuários na nossa solução PicPay 1-Click
 keywords: 
-    - Pagamento logado
+    - PicPay 1-Click
     - Informações
     - Data de nascimento
     - e-mail    
@@ -18,7 +18,7 @@ Neste guia vamos descrever o passo-a-passo para que você consulte informações
 
 ## Antes de começar
 
-Antes de processar pagamentos online através de nossa solução de **Pagamento Logado**, você deve possuir um `access_token` válido e não expirado. Você pode conferir como gerar seus tokens [neste artigo](/pagamento-logado/guides/oauth2-flow).
+Antes de processar pagamentos online através de nossa solução de **PicPay 1-Click**, você deve possuir um `access_token` válido e não expirado. Você pode conferir como gerar seus tokens [neste artigo](/one-click/guides/oauth2-flow).
 
 ## Como funciona
 
@@ -50,7 +50,7 @@ Abaixo um exemplo de retorno de sucesso.
 
 :::info
 
-O cliente irá autorizar o e-commerce a ter acesso a essas informações no momento do consentimento de permissões, explicado [aqui](/pagamento-logado/guides/oauth2-flow#solicitando-a-autorização-do-usuário)
+O cliente irá autorizar o e-commerce a ter acesso a essas informações no momento do consentimento de permissões, explicado [aqui](/one-click/guides/oauth2-flow#solicitando-a-autorização-do-usuário)
 
 :::
 
@@ -66,8 +66,8 @@ Caso algum erro ocorra, informaremos o motivo na resposta da requisição
 
 ## Próximos passos
 
-- [Efetuando uma cobrança](/pagamento-logado/guides/process-payments);
-- [Solicitando um reembolso](/pagamento-logado/guides/refund-payments);
+- [Efetuando uma cobrança](/one-click/guides/process-payments);
+- [Solicitando um reembolso](/one-click/guides/refund-payments);
 
 ## Obtendo ajuda
 Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 
