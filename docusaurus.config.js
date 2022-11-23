@@ -51,6 +51,7 @@ module.exports = {
       items: [
         {to: "/checkout/intro/getting-started", label: "QR Code e Push" },
         {to: "/one-click/intro/overview", label: "PicPay 1-Click" },
+        {to: "/one-click-en/guides/user-info", label: "PicPay 1-Click (English)" },
         // {to: 'blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/picpay/',
@@ -74,6 +75,10 @@ module.exports = {
             {
               label: 'PicPay 1-Click',
               to: 'one-click/intro/overview',
+            },
+            {
+              label: 'PicPay 1-Click (English)',
+              to: 'one-click-en/guides/user-info-en',
             },
             {
               label: 'Assinaturas',
