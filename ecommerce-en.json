@@ -9,20 +9,21 @@
   "info": {
     "version": "3.0",
     "title": "PicPay - E-commerce Public API",
-    "description": "\n\n# Introduction\n\nThe PicPay APIs were developed based on REST technology, following the current market\ntechnical standards. All URLs are user-friendly and resource-oriented, using HTTP protocol\nstandards like authentication, verbs and return codes.\n\nAs can be seen below, the APIs have been carefully crafted so that the business terms contained within are easily understood by developers who have no prior knowledge of the system. They have been meticulously studied so that a field name in an endpoint has exactly the same meaning in other resources.\n\n\n# Authentication\n\n All communication (receiving and sending data) uses tokens for authentication. See\n the table below for tokens and streams:\n\n | Header | Flow |\n | 🇧🇷 - |\n |`x-picpay-token` | E-Commerce requests for PicPay.|\n |`x-seller-token` | PicPay requests for E-Commerce (Callback).|\n\n *Both tokens will be provided by PicPay, after completing the store registration.*\n\n\n# Test environment\n\n Currently PicPay does not have a homologation environment for customer integration tests. All\n validations must be carried out in production, **without charge to the developer.** \n Payments made during testing can be immediately reversed, by the API\n or [merchant's panel](https:/ /painel-empresas.picpay.com/).\n\n\n # Support\n If you have any questions, consult our FAQ or contact the PicPay Empresas relationship center by email ** contato-empresas@picpay.com.**\n\n\n **Information:** PicPay's development team does not provide consulting services, therefore, no\n codes are analyzed in our support.\n "
+    "description": "\n\n# Introduction\n\nThe PicPay APIs were developed based on REST technology, following the current market\ntechnical standards. All URLs are user-friendly and resource-oriented, using HTTP protocol\nstandards like authentication, verbs and return codes.\n\nAs can be seen below, the APIs have been carefully crafted so that the business terms contained within are easily understood by developers who have no prior knowledge of the system. They have been meticulously studied so that a field name in an endpoint has exactly the same meaning in other resources.\n\n\n# Authentication\n\n All communication (receiving and sending data) uses tokens for authentication. See\n the table below for tokens and streams:\n\n | Header | Flow |\n | 🇧🇷 - |\n |`x-picpay-token` |
+E-Commerce requests for PicPay.|\n |`x-seller-token` | PicPay requests for E-Commerce (Callback).|\n\n *Both tokens will be provided by PicPay, after completing the store registration.*\n\n\n# Test environment\n\n Currently PicPay does not have a homologation environment for customer integration tests. All\n validations must be carried out in production, **without charge to the developer.** \n Payments made during testing can be immediately reversed, by the API\n or [merchant's panel](https:/ /painel-empresas.picpay.com/).\n\n\n # Support\n If you have any questions, consult our FAQ or contact the PicPay Empresas relationship center by email ** contato-empresas@picpay.com.**\n\n\n **Information:** PicPay's development team does not provide consulting services, therefore, no\n codes are analyzed in our support.\n "
   },
   "tags": [
     {
-      "name": "Create an order for a payment"
+      "name": "Create order for payment"
     },
     {
       "name": "Capture payment"
     },
     {
-      "name": "Payment Cancel request"
+      "name": "Cancel payment request"
     },
     {
-      "name": "Order Check Status"
+      "name": "Check Order Status"
     },
     {
       "name": "Order change notification"
@@ -32,7 +33,7 @@
     "/payments": {
       "post": {
         "tags": [
-          "Create an order for a payment"
+          "Create order for payment"
         ],
         "description": "\nThe creation of the payment request is performed at checkout, on the payment screen. It is the last stage of the \npurchase that the consumer performs. In this process, the payment method is chosen, \nyou can choose to pay with PicPay. \n\nAfter choosing to pay with PicPay, 2 forms of integration with the checkout are available to generate \n the payment order creation request:\n \n - **Payment link:**the order generated offers a URL address, informed in the `paymentUrl` field, \n so that the consumer is directed to the PicPay payment screen.If you choose \n redirection, using the payment link, the consumer will return to the virtual store, \n according to the address entered in the `returnUrl` field, as soon as the payment is completed;\n\n - **QRCode:** returned in the `qrcode` field, an image is generated in base64 format for use directly in \n the merchant's system, enabling the assembly of a transparent checkout. There will be no \n visual difference between the online store and the payment page.\n\nThe identification process of the consumer in the PicPay database is based on the information \ncontained in the `buyer` field. Once located, the consumer can complete the payment from the \npush notification of the PicPay application.\n\nThe payment information is sent to the e-mail registered in the application and/or e-mail informed in the \nrequest, in the `email` field. it is recommended to inform all data of the consumer in the \nrequest.\n\nIf the ecommerce needs confirmation of the value after the authorization of the consumer, \nit is necessary to send the `autoCapture` field with the value `false`,indicating that the authorized value will only be \ntemporarily reserved (late capture). See capture request below for \ndetails.",
         "summary": "Request to Create order for payment",
@@ -77,7 +78,7 @@
     "/payments/{referenceId}/capture": {
       "post": {
         "tags": [
-          "Payment Capture"
+          "capture payment"
         ],
         "description": "\nThe partial or total payment capture is realized out under the condition that the payment request is \ncreated with the `autoCapture` field set to `false` and the consumer has made the payment. \nThe request will be awaited to effect the charge, with the correct amount, informed in the `amount` field. \nThe value can be the same or less than the authorized value.Captures with a value greater than the authorized value will be \nrejected.\n\nThe return of the request informs the updated values ​​pertinent to the transaction, located in the\n`summary` field:\n- **`authorized` field:** contains the authorized value; \n- **Field `paid`:** registers the amount paid (captured).\n\n\n**Information:**\n- The capture request is only allowed when the transaction is authorized. In the situation where \nthe capture request does not occur within 5 consecutive days, counting from the authorization, the order is canceled \automatically;\n\n- After the successful capture, even if of partial value, it will not be possible request\nnew capture of the same order/transaction.",
         "summary": "Request to capture payment total or partial",
@@ -262,7 +263,7 @@
         "tags": [
           "Order change notification"
         ],
-        "description": "\nThrough the callback, the merchant's system is notified when there is a change of state \n(status) in the order.\nThe message is sent to the address identified when creating the order, through the field\n`callbackUrl`.This way, it is possible to know when something has changed and query the order again to \nupdate the records.\n\nAs a security measure, updates are not communicated directly to the merchant\n\ncallbackUrl`s system.This is as a guarantee that only the retailer has access \nto the data of their orders and that they do not come to the knowledge of third parties, especially malicious people.\n\nThe merchant's system must always return a successful response (status http 200) for this call.\n\nIn case the trader's system is down, there will be another 21 callback attempts.",
+        "description": "\nThrough the callback, the merchant's system is notified when there is a change of state \n(status) in the order.\nThe message is sent to the address identified when creating the order, through the field\n`callbackUrl`.This way, it is possible to know when something has changed and query the order again to \nupdate the records.\n\nAs a security measure, updates are not communicated directly to the merchant\n\ncallbackUrl`s system.This is as a guarantee that only the retailer has access \nto the data of their orders and that they do not come to the knowledge of third parties, especially malicious people.\n\nThe merchant's system must always return a successful response (status http 200) for this \call.\n\nIn case the trader's system is down, there will be another 21 callback attempts.",
         "summary": "Notification to inform order update",
         "operationId": "postCallbacks",
         "security": [
@@ -472,7 +473,7 @@
         "properties": {
           "referenceId": {
             "description": "The referenceId is the order's unique identifier code, used to inform the consumer of their ID at the time of payment. The code is also used for the shopkeeper to check the payment status, cancellation request, etc.",
-            "example": "102030",
+        "example": "102030",
             "type": "string"
           },
           "callbackUrl": {
@@ -670,7 +671,7 @@
             "example": "paid"
           },
           "summary": {
-            "title": "Payment amounts summary",
+            "title": "Summary of payment amounts",
             "type": "object",
             "properties": {
               "authorized": {
@@ -707,7 +708,7 @@
         "properties": {
           "authorizationId": {
             "description":"Authorization ID that the e-commerce received in the paid order notification. If the order is not paid, it is not necessary to send this parameter.",
-            "example": "555008cef7f321d00ef236333",
+           "example": "555008cef7f321d00ef236333",
             "type": "string"
           },
           "amount": {
@@ -736,7 +737,7 @@
             "type": "string"
           },
           "summary": {
-            "title": "Payments amounts summary",
+            "title": "Summary of payment amounts",
             "type": "object",
             "properties": {
               "authorized": {
@@ -844,7 +845,7 @@
       "CallbackResponse200": {
         "title": "Callback request response",
         "type": "string",
-        "example": "We gonna just validate the HTTP 200 status."
+        "example": "Let's just validate the status HTTP 200."
       },
       "UnprocessableRefunds2": {
         "title": "Cancellation amount exceeds payment amount",

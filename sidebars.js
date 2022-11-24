@@ -33,7 +33,7 @@ module.exports = {
       label: 'Recursos',
       items: [
         'checkout/resources/api-reference',
-        'checkout/resources/english/api-reference',
+        //'checkout/resources/english/api-reference',
         'checkout/resources/postman',
         'checkout/resources/faq'
         
