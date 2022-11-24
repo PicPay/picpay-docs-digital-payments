@@ -3,7 +3,7 @@ id: oauth2-flow
 title: Autenticação e autorização
 sidebar_label: Autenticação e autorização
 hide_title: false
-description: Aprenda como obter tokens de acesso para sua aplicação através de nossos serviços oauth2.
+description: Aprenda como obter tokens de acesso para sua aplicação através de nossos serviços oauth2
 keywords: 
     - PicPay 1-Click
     - Autenticação

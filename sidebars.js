@@ -33,13 +33,12 @@ module.exports = {
       label: 'Recursos',
       items: [
         'checkout/resources/api-reference',
+        'checkout/resources/english/api-reference',
         'checkout/resources/postman',
         'checkout/resources/faq'
         
       ],
     },
-
-
   ],
 
   pagamentoLogado: [
@@ -69,6 +68,27 @@ module.exports = {
       items: [
         'one-click/resources/api-reference',
         'one-click/resources/postman-collection',
+      ],
+    },
+  ],
+
+  pagamentoLogadoenglish: [
+    {
+      type: 'category',
+      label: 'Introduction',
+      items: [
+        'one-click-en/guides/oauth2-flow',
+        'one-click-en/guides/process-payments',
+        'one-click-en/guides/refund-payments',
+        'one-click-en/guides/user-info'
+      ],
+    },
+
+    {
+      type: 'category',
+      label: 'Resources',
+      items: [
+        'one-click-en/resources/api-reference',
       ],
     },
   ]
