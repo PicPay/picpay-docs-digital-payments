@@ -83,6 +83,14 @@ module.exports = {
         'one-click-en/guides/user-info'
       ],
     },
+
+    {
+      type: 'category',
+      label: 'Resources',
+      items: [
+        'one-click-en/resources/api-reference',
+      ],
+    },
   ]
 
 };
