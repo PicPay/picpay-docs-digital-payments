@@ -16,7 +16,7 @@
   "paths": {
     "/payments/charge": {
       "post": {
-        "summary": "Create billing",
+        "summary": "Billing Create",
         "description": "This feature allows the seller to charge in the user's wallet.",
         "operationId": "charge",
         "security": [
@@ -129,7 +129,7 @@
     },
     "/payments/{transaction_id}/refund": {
       "post": {
-        "summary": "Perform a full or partial reversal",
+        "summary": "Perform a full or partial refund",
         "description": "This resource allows the seller to make a total or partial reversal of a payment. \nIf you specify a refund amount lower than was charged, the original transaction will be canceled and we will make a second charge to the user's wallet with the difference amount.” This resource allows the seller to make a total or partial reversal of a payment. \nIf you specify a refund amount lower than what was charged, the original transaction will be canceled and we will make a second charge to the user's wallet with the difference amount.",
 
 
