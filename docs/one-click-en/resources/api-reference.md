@@ -4,8 +4,8 @@ title: API Reference
 hide_table_of_contents: true
 ---
 
-:::caution Atenção
-Para consumir os recursos abaixo você precisa ter realizado todos os passos do [Guia de Autenticação e Autorização](/one-click/guides/oauth2-flow), e possuir um `access_token` válido a disposição.
+:::caution Atenttion
+To consume the following resources you need to had done all te steps into [Authentication and Authorization Guide](/one-click-en/guides/oauth2-flow), to get a valid `access_token` for the requests.
 :::
 
 import APIReference from '@site/src/components/APIReference'
