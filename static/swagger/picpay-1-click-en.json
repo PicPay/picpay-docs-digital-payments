@@ -5,7 +5,7 @@
   },
   "info": {
     "title": "PicPay 1-Click",
-    "description": "# Introdução\nA API do PicPay 1-Click was developed \ncom based on REST technology, following current standard \ntechnical of market. All the URLs use the protocol \nHTTP  as authentication,  verbs and return codes.\n\n## Authentication and Authorization\nAll communication uses tokens for authorization, in \ncompliance withOpenID Connect and \nOAuth 2.0 specifications. The tokens are created from authentication \nwith the credentials provided by PicPay, and from \nuser authorization as shown in our guide.\n",
+    "description": "# Introduction\nA API do PicPay 1-Click was developed \ncom based on REST technology, following current standard \ntechnical of market. All the URLs use the protocol \nHTTP  as authentication,  verbs and return codes.\n\n## AUTHENTICATION AND AUTHORIZATION\nAll communication uses tokens for authorization, in \ncompliance withOpenID Connect and \nOAuth 2.0 specifications. The tokens are created from authentication \nwith the credentials provided by PicPay, and from \nuser authorization as shown in our guide.\n",
     "version": "1.0.0"
   },
   "servers": [
@@ -16,7 +16,7 @@
   "paths": {
     "/payments/charge": {
       "post": {
-        "summary": "Criar cobrança",
+        "summary": "Create billing",
         "description": "This feature allows the seller to charge in the user's wallet.",
         "operationId": "charge",
         "security": [
@@ -123,14 +123,16 @@
           }
         },
         "tags": [
-          "Pagamentos"
+          "Payments"
         ]
       }
     },
     "/payments/{transaction_id}/refund": {
       "post": {
-        "summary": "Realizar um estorno total ou parcial",
-        "description": "This resource allows the seller to make a total or partial reversal of a payment. \nIf you specify a refund amount lower than was charged, the original transaction will be canceled and we will make a second charge to the user's wallet with the difference amount.",
+        "summary": "Perform a full or partial reversal",
+        "description": "This resource allows the seller to make a total or partial reversal of a payment. \nIf you specify a refund amount lower than was charged, the original transaction will be canceled and we will make a second charge to the user's wallet with the difference amount.” This resource allows the seller to make a total or partial reversal of a payment. \nIf you specify a refund amount lower than what was charged, the original transaction will be canceled and we will make a second charge to the user's wallet with the difference amount.",
+
+
         "operationId": "refund",
         "security": [
           {
@@ -242,7 +244,7 @@
             }
           },
           "500": {
-            "description": "Unexpected server error.",
+            "description": "Unexpected server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -253,13 +255,13 @@
           }
         },
         "tags": [
-          "Pagamentos"
+          "Payments"
         ]
       }
     },
     "/v1/sandbox/payments/charge": {
       "post": {
-        "summary": "Criar cobrança",
+        "summary": "Create billing",
         "description": "This feature allows the seller to simulate charging the user's wallet.",
         "operationId": "Sandbox Charge",
         "security": [
@@ -321,7 +323,7 @@
                     }
                   },
                   "badTokenFormat": {
-"description": "Response when resource is called with token that invalid JWT.",
+                    "description": "Response when resource is called with token that invalid JWT.",
                     "value": {
                       "message": "Bad token; invalid JSON"
                     }
@@ -354,7 +356,7 @@
             }
           },
           "500": {
-   	   "description": "Unexpected server error.",
+            "description": "Unexpected server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -365,13 +367,13 @@
           }
         },
         "tags": [
-          "Pagamentos"
+          "Payments"
         ]
       }
     },
     "/v1/sandbox/payments/{transaction_id}/refund": {
       "post": {
-        "summary": "Realizar um estorno total ou parcial",
+        "summary": "Perform a full or partial reversal",
         "description": "This resource allows the seller to make a total or partial reversal of a payment. \nIf you specify a refund amount lower than was charged, the original transaction will be canceled and we will make a second charge to the user's wallet with the difference amount.",
         "operationId": "Sandbox Refund",
         "security": [
@@ -495,7 +497,7 @@
           }
         },
         "tags": [
-          "Pagamentos"
+          "Payments"
         ]
       }
     }
@@ -510,10 +512,10 @@
     },
     "schemas": {
       "ChargeRequestBody": {
-        "title": "Criar cobrança",
+        "title": "Create billing",
         "type": "object",
         "x-examples": {
-          "Cobrar R$ 99,99 da carteira do cliente.": {
+          "Charge BRL 99.99 from the customer's wallet.": {
             "value": 99.99,
             "reference_id": "dfecee7e-2414-4966-8911-104f6389b070"
           }
@@ -536,7 +538,7 @@
         ]
       },
       "RefundRequestBody": {
-        "title": "Realizar um reembolso",
+        "title": "Make a refund",
         "type": "object",
         "properties": {
           "value": {
@@ -547,7 +549,7 @@
         }
       },
       "RefundResponseBody": {
-        "title": "Reembolso realizado parcialmente",
+        "title": "Partially paid refund",
         "type": "object",
         "properties": {
           "transaction_id": {
@@ -563,7 +565,7 @@
         }
       },
       "SandboxRequestBody": {
-        "title": "Reembolsar cobrança",
+        "title": "Refund charge",
         "type": "object",
         "properties": {
           "value": {
@@ -585,7 +587,7 @@
         }
       },
       "SandboxChargeRequestBody": {
-        "title": "Criar cobrança",
+        "title": "Create billing",
         "type": "object",
         "properties": {
           "value": {
@@ -659,7 +661,7 @@
           "message": {
             "type": "string",
             "format": "string",
-            "example": "Ops! Ocorreu um erro inesperado ao processar a sua solicitação."
+            "example": "Oops! An unexpected error occurred while processing your request."
           },
           "business_code": {
             "type": "string",

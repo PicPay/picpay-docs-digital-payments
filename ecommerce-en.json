@@ -9,7 +9,8 @@
   "info": {
     "version": "3.0",
     "title": "PicPay - E-commerce Public API",
-    "description": "\n\n# Introduction\n\nThe PicPay APIs were developed based on REST technology, following the current market\ntechnical standards. All URLs are user-friendly and resource-oriented, using HTTP protocol\nstandards like authentication, verbs and return codes.\n\nAs can be seen below, the APIs have been carefully crafted so that the business terms contained within are easily understood by developers who have no prior knowledge of the system. They have been meticulously studied so that a field name in an endpoint has exactly the same meaning in other resources.\n\n\n# Authentication\n\n All communication (receiving and sending data) uses tokens for authentication. See\n the table below for tokens and streams:\n\n | Header | Flow |\n | 🇧🇷 - |\n |`x-picpay-token` | E-Commerce requests for PicPay.|\n |`x-seller-token` | PicPay requests for E-Commerce (Callback).|\n\n *Both tokens will be provided by PicPay, after completing the store registration.*\n\n\n# Test environment\n\n Currently PicPay does not have a homologation environment for customer integration tests. All\n validations must be carried out in production, **without charge to the developer.** \n Payments made during testing can be immediately reversed, by the API\n or [merchant's panel](https:/ /painel-empresas.picpay.com/).\n\n\n # Support\n If you have any questions, consult our FAQ or contact the PicPay Empresas relationship center by email ** contato-empresas@picpay.com.**\n\n\n **Information:** PicPay's development team does not provide consulting services, therefore, no\n codes are analyzed in our support.\n "
+    "description": "\n\n# Introduction\n\nThe PicPay APIs were developed based on REST technology, following the current market\ntechnical standards. All URLs are user-friendly and resource-oriented, using HTTP protocol\nstandards like authentication, verbs and return codes.\n\nAs can be seen below, the APIs have been carefully crafted so that the business terms contained within are easily understood by developers who have no prior knowledge of the system. They have been meticulously studied so that a field name in an endpoint has exactly the same meaning in other resources.\n\n\n# Authentication\n\n All communication (receiving and sending data) uses tokens for authentication. See\n the table below for tokens and streams:\n\n | Header | Flow |\n | 🇧🇷 - |\n |`x-picpay-token` |
+E-Commerce requests for PicPay.|\n |`x-seller-token` | PicPay requests for E-Commerce (Callback).|\n\n *Both tokens will be provided by PicPay, after completing the store registration.*\n\n\n# Test environment\n\n Currently PicPay does not have a homologation environment for customer integration tests. All\n validations must be carried out in production, **without charge to the developer.** \n Payments made during testing can be immediately reversed, by the API\n or [merchant's panel](https:/ /painel-empresas.picpay.com/).\n\n\n # Support\n If you have any questions, consult our FAQ or contact the PicPay Empresas relationship center by email ** contato-empresas@picpay.com.**\n\n\n **Information:** PicPay's development team does not provide consulting services, therefore, no\n codes are analyzed in our support.\n "
   },
   "tags": [
     {
@@ -262,7 +263,7 @@
         "tags": [
           "Order change notification"
         ],
-        "description": "\nThrough the callback, the merchant's system is notified when there is a change of state \n(status) in the order.\nThe message is sent to the address identified when creating the order, through the field\n`callbackUrl`.This way, it is possible to know when something has changed and query the order again to \nupdate the records.\n\nAs a security measure, updates are not communicated directly to the merchant\n\ncallbackUrl`s system.This is as a guarantee that only the retailer has access \nto the data of their orders and that they do not come to the knowledge of third parties, especially malicious people.\n\nThe merchant's system must always return a successful response (status http 200) for this call.\n\nIn case the trader's system is down, there will be another 21 callback attempts.",
+        "description": "\nThrough the callback, the merchant's system is notified when there is a change of state \n(status) in the order.\nThe message is sent to the address identified when creating the order, through the field\n`callbackUrl`.This way, it is possible to know when something has changed and query the order again to \nupdate the records.\n\nAs a security measure, updates are not communicated directly to the merchant\n\ncallbackUrl`s system.This is as a guarantee that only the retailer has access \nto the data of their orders and that they do not come to the knowledge of third parties, especially malicious people.\n\nThe merchant's system must always return a successful response (status http 200) for this \call.\n\nIn case the trader's system is down, there will be another 21 callback attempts.",
         "summary": "Notification to inform order update",
         "operationId": "postCallbacks",
         "security": [
@@ -472,7 +473,7 @@
         "properties": {
           "referenceId": {
             "description": "The referenceId is the order's unique identifier code, used to inform the consumer of their ID at the time of payment. The code is also used for the shopkeeper to check the payment status, cancellation request, etc.",
-            "example": "102030",
+        "example": "102030",
             "type": "string"
           },
           "callbackUrl": {
@@ -707,7 +708,7 @@
         "properties": {
           "authorizationId": {
             "description":"Authorization ID that the e-commerce received in the paid order notification. If the order is not paid, it is not necessary to send this parameter.",
-            "example": "555008cef7f321d00ef236333",
+           "example": "555008cef7f321d00ef236333",
             "type": "string"
           },
           "amount": {
