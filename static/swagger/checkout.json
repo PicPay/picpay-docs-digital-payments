@@ -209,7 +209,7 @@
     "/payments/{referenceId}/status": {
       "get": {
         "tags": [
-          "Status do pedido"
+          "Consultar Status do pedido"
         ],
         "description": "Permite consultar e identificar o atual estado do pedido de pagamento, através do campo `status`.        \nO retorno da requisição informa os valores atualizados pertinentes ao pedido de pagamento, localizados \nno campo `summary`:\n- **Campo `authorized`:** valor autorizado;\n- **Campo `paid`:** valor pago (capturado);\n- **Campo `refunded`:** valor cancelado.",
         "summary": "Requisição de detalhes sobre o pedido",
