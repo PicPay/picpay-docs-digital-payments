@@ -1,6 +1,6 @@
 ---
-id: api-reference
-title: API Reference
+id: api-reference-legacy
+title: API Reference Legacy
 hide_table_of_contents: true
 ---
 
