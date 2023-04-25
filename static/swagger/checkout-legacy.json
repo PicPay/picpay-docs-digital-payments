@@ -1,0 +1,557 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "https://appws.picpay.com/ecommerce/public/",
+      "description": "Endereço de produção do PicPay"
+    }
+  ],
+  "info": {
+    "version": "3.0",
+    "title": "PicPay - E-commerce Public API",
+    "description": "\n# Introdução\n\nAs APIs do PicPay foram desenvolvidas baseadas na tecnologia REST, seguindo os atuais padrões técnicos de mercado. Tudo isso para que a experiência na hora da integração seja a mais fácil possível. Todas as URLs são amigáveis e orientadas a recursos e utilizam os padrões do protocolo HTTP como autenticação, verbos e códigos de retorno. Isso permite que APIs possam ser utilizadas por clientes HTTP já existentes. Todas as respostas são retornadas no formato JSON.\n\nComo pode ser visto abaixo, as APIs foram cuidadosamente trabalhadas para que os termos de negócios contidos sejam facilmente entendidos por desenvolvedores que não tenham conhecimento prévio do sistema. Elas foram meticulosamente estudadas para que um nome de campo em um endpoint tenha rigorosamente o mesmo significado em outros recursos.\n\n**Atenção: Lembramos que o time de desenvolvimento do PicPay não presta serviços de consultoria, por isso, não analisaremos códigos em nosso suporte.**\n\n## Autenticação\n\n  Toda a comunicação (recebimento e envio de dados) utiliza tokens para autenticação. Veja na tabela abaixo quais são os tokens e os fluxos:\n\n  | Header | Fluxo |\n  | - | - |\n  |`x-picpay-token` | Requests do E-Commerce para o PicPay|\n  |`x-seller-token` | Requests PicPay para o E-Commerce (Callback)|\n\n  *Ambos os tokens serão fornecidos pelo PicPay após a validação do cadastro de sua loja.*\n\n## Testes\n\n Todos os testes devem ser realizados em produção **sem ônus ao desenvolvedor**: todos os pagamentos realizados podem ser imediatamente estornados (tanto pela API quanto pelo [painel do lojista](https://painel-empresas.picpay.com/))."
+  },
+  "tags": [
+    {
+      "name": "Requisição de Pagamento"
+    },
+    {
+      "name": "Cancelamento"
+    },
+    {
+      "name": "Status"
+    },
+    {
+      "name": "Notificação"
+    }
+  ],
+  "paths": {
+    "/payments": {
+      "post": {
+        "tags": [
+          "Requisição de Pagamento"
+        ],
+        "description": "Seu e-commerce irá solicitar o pagamento de um pedido através do PicPay na finalização do carrinho de compras. Após a requisição http, o cliente deverá ser redirecionado para o endereço informada no campo `paymentUrl` contido na resposta para que o mesmo possa finalizar o pagamento.\n\nAssim que o pagamento for concluído o cliente será redirecionado para o endereço informada no campo `returnUrl` do json enviado pelo seu e-commerce no momento da requisição (obrigatório).\n\nCaso seja identificado que seu cliente também é cliente PicPay, iremos enviar um push notification e uma notificação dentro do aplicativo PicPay avisando sobre o pagamento pendente. Para todos os casos iremos enviar um e-mail de pagamento pendente contendo o link de nossa página de checkout.",
+        "summary": "Requisição de Pagamento",
+        "operationId": "postPayments",
+        "security": [
+          {
+            "PicpayApiToken": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentResponse200"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/payments/{referenceId}/cancellations": {
+      "post": {
+        "tags": [
+          "Cancelamento"
+        ],
+        "description": "Utilize este endereço para solicitar o cancelamento ouestorno de um pedido. Valem as seguintes regras:\n\n**a)** Se já foi pago, o cliente PicPay será estornado caso sua conta de Lojista no PicPay tenha saldo para realizar o estorno e caso o cliente PicPay tenha recebido algum cashback nesta transação, este valor será estornado do cliente (para isto o mesmo deve possuir saldo). Todas esses requisitos devem ser cumpridos para que o estorno da transação ocorra com sucesso.\n\n**b)** Se ainda não foi pago, a transação será cancelada em nosso servidor e não permitirá pagamento por parte do cliente PicPay;",
+        "summary": "Cancel Request",
+        "operationId": "postCancellations",
+        "security": [
+          {
+            "PicpayApiToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "referenceId",
+            "in": "path",
+            "required": true,
+            "description": "Id do pedido",
+            "example": "102030",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelResponse200"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/payments/{referenceId}/status": {
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "description": "Utilize o endpoint abaixo para consultar o status de sua requisição de pagameto.",
+        "summary": "Status Request",
+        "operationId": "getStatus",
+        "security": [
+          {
+            "PicpayApiToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "referenceId",
+            "in": "path",
+            "required": true,
+            "description": "Id do pedido",
+            "example": "102030",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resultado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse200"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/callback": {
+      "post": {
+        "servers": [
+          {
+            "url": "http://www.sualoja.com.br/",
+            "description": "Aqui chamaremos sua loja"
+          }
+        ],
+        "tags": [
+          "Notificação"
+        ],
+        "description": "Iremos notificar o `callbackUrl` (fornecido na requisição de pagamento), via método POST, informando que houve uma alteração no status do pedido.\n\nPorém, por questões de segurança, não iremos informar o novo status nesta requisição. Para isto, sua loja (a partir do recebimento de nossa notificação) deverá consultar nosso endpoint de status de pedidos.\n\nPara que o callback seja considerado confirmado, sua loja deve responder com HTTP Status 200.",
+        "summary": "Notification Request",
+        "operationId": "postCallbacks",
+        "security": [
+          {
+            "SellerApiToken": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CallbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CallbackResponse200"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "Unauthorized": {
+        "description": "Token Inválido",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Mensagem de erro",
+                  "type": "string",
+                  "example": "O Token informado é inválido"
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "Unprocessable": {
+        "description": "Validação de Dados",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Mensagem de erro",
+                  "type": "string",
+                  "example": "Algumas propriedades não passaram no teste de validação."
+                },
+                "errors": {
+                  "description": "Array contendo os erros (opcional)",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "description": "Propriedade",
+                        "example": "callbackUrl"
+                      },
+                      "message": {
+                        "type": "string",
+                        "description": "O que aconteceu",
+                        "example": "O campo callback url é obrigatório."
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "Error": {
+        "description": "Erro Interno",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Mensagem de erro (campo opcional)",
+                  "type": "string",
+                  "example": "Problema geral, verifique se a transação foi criada ou cancele a mesma."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "PicpayApiToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-picpay-token",
+        "description": "Token gerado e fornecido pelo PicPay."
+      },
+      "SellerApiToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-seller-token",
+        "description": "Token gerado e fornecido pelo PicPay."
+      }
+    },
+    "schemas": {
+      "PaymentRequest": {
+        "title": "Requisição de pagamento",
+        "properties": {
+          "referenceId": {
+            "description": "Identificador único do seu pedido. Este campo precisa ser sempre único. Este também será o ID exibido ao cliente no momento do pagamento e também será o ID que sua loja utilizará para ver status de pagamento, solicitar cancelamento etc.",
+            "example": "102030",
+            "type": "string"
+          },
+          "callbackUrl": {
+            "description": "Url para o qual o PicPay irá retornar a situação do pagamento.",
+            "example": "http://www.sualoja.com.br/callback",
+            "type": "string"
+          },
+          "returnUrl": {
+            "description": "Url para a qual o cliente será redirecionado após o pagamento.",
+            "example": "http://www.sualoja.com.br/cliente/pedido/102030",
+            "type": "string"
+          },
+          "value": {
+            "description": "Valor do pagamento em reais.",
+            "example": 20.51,
+            "type": "number",
+            "format": "double"
+          },
+          "expiresAt": {
+            "description": "Quando a ordem de pagamento irá expirar. Formato ISO 8601. Exemplo: 2022-05-01T16:00:00-03:00 (significa que expirará em 01/05/2022 às 16h no fuso horário -03:00)",
+            "example": "2022-05-01T16:00:00-03:00",
+            "type": "string"
+          },
+          "channel": {
+            "description": "Campo de uso exclusivo à integradores que possuem mais de um estabelecimento comercial (cada um com a sua chave de integração)",
+            "example": "my-channel",
+            "type": "string"
+          },
+          "purchaseMode": {
+            "description": "Identifica se a compra é presencial ou online. Caso não seja enviado, assume o valor padrão de `online`",
+            "example": "in-store",
+            "type": "string",
+            "enum":["online", "in-store"]
+          },
+          "buyer": {
+            "description": "Objeto contendo as informações do comprador.",
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string",
+                "description": "Primeiro nome do comprador."
+              },
+              "lastName": {
+                "type": "string",
+                "description": "Sobrenome do comprador."
+              },
+              "document": {
+                "type": "string",
+                "description": "CPF do comprador no formato 123.456.789-10"
+              },
+              "email": {
+                "type": "string",
+                "description": "E-mail do comprador."
+              },
+              "phone": {
+                "type": "string",
+                "description": "Numero de telefone do comprador no formato +55 27 12345-6789"
+              }
+            },
+            "required": [
+              "document"
+            ],
+            "example": {
+              "firstName": "João",
+              "lastName": "Da Silva",
+              "document": "123.456.789-10",
+              "email": "teste@picpay.com",
+              "phone": "+55 27 12345-6789"
+            }
+          },
+          "notification": {
+            "type": "object",
+            "description": "Objeto para escolha de qual meio de notificação, caso não informado será feita notificação padrão.",
+            "properties": {
+              "disablePush": {
+                "description": "Desativar notificação no aplicativo do picpay",
+                "example": "true"
+              },
+              "disableEmail": {
+                "description": "Desativar notificação via e-mail",
+                "example": "true"
+              }
+            },
+            "example": {
+              "disablePush": true,
+              "disableEmail": true
+            }
+          },
+          "softDescriptor": {
+            "description": "Descrição adicional que será enviada na identificação da transação para fatura do comprador",
+            "example": "description",
+            "type": "string"
+          }
+        },
+        "required": [
+          "referenceId",
+          "callbackUrl",
+          "value",
+          "buyer"
+        ]
+      },
+      "PaymentResponse200": {
+        "title": "Resposta à requisição de pagamentos",
+        "type": "object",
+        "properties": {
+          "referenceId": {
+            "description": "Seu referenceId",
+            "example": "102030",
+            "type": "string"
+          },
+          "paymentUrl": {
+            "description": "URL na qual sua loja deve redirecionar o cliente para conclusão do pagamento",
+            "example": "https://app.picpay.com/checkout/NWFmMGRjNmViZDc0Y2EwMDMwNzZlYzEw",
+            "type": "string"
+          },
+          "expiresAt": {
+            "description": "Quando a ordem de pagamento irá expirar. Formato ISO 8601. Exemplo: 2022-05-01T16:00:00-03:00 (significa que expirará em 01/05/2022 às 16h no fuso horário -03:00)",
+            "example": "2022-05-01T16:00:00-03:00",
+            "type": "string"
+          },
+          "qrcode": {
+            "description": "Objeto que contém o valor do QR Code e também a imagem pronta do QR Code em formato base 64",
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "Conteúdo do QR Code"
+              },
+              "base64": {
+                "type": "string",
+                "description": "Imagem do QR Code em formato base 64 (válido para exibir no frontend sem depender de plugins externos)"
+              }
+            },
+            "example": {
+              "content": "https://app.picpay.com/checkout/NWNlYzMxOTM1MDg1NGEwMDIwMzUxODcy",
+              "base64": "data:image/png;base64,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"
+            }
+          }
+        },
+        "required": [
+          "referenceId",
+          "paymentUrl",
+          "expiresAt"
+        ]
+      },
+      "CancelRequest": {
+        "title": "Requisição de cancelamento",
+        "type": "object",
+        "properties": {
+          "authorizationId": {
+            "description": "ID da autorização que seu e-commerce recebeu na notificação de pedido pago. Caso o pedido não esteja pago, não é necessário enviar este parâmetro.",
+            "example": "555008cef7f321d00ef236333",
+            "type": "string"
+          }
+        }
+      },
+      "CancelResponse200": {
+        "title": "Resposta à requisição de cancelamento",
+        "type": "object",
+        "properties": {
+          "referenceId": {
+            "description": "É o seu `referenceId` da requisição de pagamento.",
+            "example": "102030",
+            "type": "string"
+          },
+          "cancellationId": {
+            "description": "Nosso identificador único do cancelamento.",
+            "example": "5b008cef7f321d00ef236444",
+            "type": "string"
+          }
+        },
+        "required": [
+          "referenceId",
+          "cancellationId"
+        ]
+      },
+      "StatusResponse200": {
+        "title": "Resposta à requisição de Status",
+        "type": "object",
+        "properties": {
+          "authorizationId": {
+            "description": "Número da autorização de pagamento (caso esteja pago)",
+            "type": "string",
+            "example": "555008cef7f321d00ef236333"
+          },
+          "referenceId": {
+            "description": "Seu ID",
+            "type": "string",
+            "example": "102030"
+          },
+          "status": {
+            "description": "- \"created\": registro criado\n\n- \"expired\": prazo para pagamento expirado\n\n- \"analysis\": pago e em processo de análise anti-fraude\n\n- \"paid\": pago\n\n- \"completed\": pago e saldo disponível\n\n- \"refunded\": pago e devolvido\n\n- \"chargeback\": pago e com chargeback",
+            "type": "string",
+            "enum": [
+              "created",
+              "expired",
+              "analysis",
+              "paid",
+              "completed",
+              "refunded",
+              "chargeback"
+            ],
+            "example": "paid"
+          }
+        },
+        "required": [
+          "referenceId",
+          "status"
+        ]
+      },
+      "CallbackRequest": {
+        "title": "Requisição de callback",
+        "type": "object",
+        "properties": {
+          "referenceId": {
+            "description": "Identificador da transação",
+            "example": "102030",
+            "type": "string"
+          },
+          "authorizationId": {
+            "description": "Identificador único da autorização, caso pago ou em análise. Você deve usar esse valor para realizar estornos em nossa API.",
+            "example": "5b01780ba8914c001a007673",
+            "type": "string"
+          }
+        },
+        "required": [
+          "referenceId"
+        ]
+      },
+      "CallbackResponse200": {
+        "title": "Resposta da requisição de callback",
+        "type": "string",
+        "example": "Iremos apenas validar o status HTTP 200."
+      }
+    }
+  }
+}
