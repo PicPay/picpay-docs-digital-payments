@@ -503,7 +503,7 @@
     "/payments/{id}": {
       "get": {
         "summary": "Consultar uma cobrança",
-        "description": "Este recurso permite a busca das informações de um determinado pagamento, através do transaction_id e/ou\n reference_id. É necessário passar o transaction_id ou reference_id obrigatóriamente.",
+        "description": "Este recurso permite a busca das informações de um determinado pagamento, através do transaction_id e/ou\n reference_id. É necessário passar o transaction_id ou reference_id obrigatoriamente.",
         "operationId": "find",
         "security": [
           {
