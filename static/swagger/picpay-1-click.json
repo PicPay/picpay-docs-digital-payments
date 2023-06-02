@@ -500,7 +500,7 @@
         ]
       }
     },
-    "/payments/{reference_id}": {
+    "/payments": {
       "get": {
         "summary": "Consultar uma cobrança",
         "description": "Este recurso permite a busca de uma cobrança através de um identificador. O identificador poderá ser o enviado na criação de uma cobrança reference_id ou do identificador respondido no sucesso de uma cobrança transaction_id, o qual deve ser informado substituindo a variável {reference_id}  no path deste endpoint.",
@@ -512,9 +512,15 @@
         ],
         "parameters": [
           {
-            "in": "path",
+            "in": "query",
             "name": "reference_id",
-            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "transaction_id",
             "schema": {
               "type": "string"
             }
@@ -890,7 +896,7 @@
             "format": "date-time",
             "example": "2023-05-29T19:25:34-03:00 (Formato ISO 8601)"
           },
-          "transactionId": {
+          "id": {
             "type": "string"
           }
         }
