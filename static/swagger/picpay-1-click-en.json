@@ -846,12 +846,12 @@
           "created_at": {
             "type": "string",
             "format": "date-time",
-            "example": "2023-05-29T19:25:34-03:00"
+            "example": "2023-05-29T19:25:34-03:00 (Format ISO 8601)"
           },
           "paid_at": {
             "type": "string",
             "format": "date-time",
-            "example": "2023-05-29T19:25:34-03:00"
+            "example": "2023-05-29T19:25:34-03:00 (Format ISO 8601)"
           },
           "value": {
             "type": "integer",
@@ -888,7 +888,7 @@
           "created_at": {
             "type": "string",
             "format": "date-time",
-            "example": "2023-05-29T19:25:34-03:00"
+            "example": "2023-05-29T19:25:34-03:00 (Format ISO 8601)"
           },
           "transactionId": {
             "type": "string"
