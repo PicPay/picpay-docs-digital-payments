@@ -500,7 +500,7 @@
         ]
       }
     },
-    "/payments/{reference_id}": {
+    "/payments": {
       "get": {
         "summary": "Find a charge",
         "description": "This resource allows the search for a charge through an identifier. The identifier may be the one sent when creating a reference_id charge or the identifier answered when a transaction_id charge succeeds, which must be informed by replacing the variable {reference_id} in the path of this endpoint.",
@@ -512,9 +512,15 @@
         ],
         "parameters": [
           {
-            "in": "path",
+            "in": "query",
             "name": "reference_id",
-            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "transaction_id",
             "schema": {
               "type": "string"
             }
@@ -890,7 +896,7 @@
             "format": "date-time",
             "example": "2023-05-29T19:25:34-03:00 (Format ISO 8601)"
           },
-          "transactionId": {
+          "id": {
             "type": "string"
           }
         }
