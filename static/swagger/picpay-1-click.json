@@ -827,6 +827,9 @@
       "FindPaymentResponse": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string"
+          },
           "status": {
             "type": "string",
             "description": "- \"refused\": recusada\n\n- \"error\": erro\n\n- \"refunded\": devolvida\n\n- \"cancel\": cancelada\n\n- \"approved\": aprovada\n\n- \"completed\": completa\n\n- \"pending\": em análise",
