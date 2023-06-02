@@ -650,7 +650,7 @@
             "type": "number",
             "format": "float",
             "example": 99.99,
-            "description": "Valor em reais a ser combrado do cliente."
+            "description": "Valor em reais a ser cobrado do cliente."
           },
           "reference_id": {
             "type": "string",
@@ -836,6 +836,10 @@
           "id": {
             "type": "string"
           },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro."
+          },
           "status": {
             "type": "string",
             "description": "- \"refused\": recusada\n\n- \"error\": erro\n\n- \"refunded\": devolvida\n\n- \"cancel\": cancelada\n\n- \"approved\": aprovada\n\n- \"completed\": completa\n\n- \"pending\": em análise",
@@ -852,12 +856,14 @@
           "created_at": {
             "type": "string",
             "format": "date-time",
-            "example": "2023-05-29T19:25:34-03:00 (Formato ISO 8601)"
+            "example": "2023-05-29T19:25:34-03:00",
+            "description": "Formato ISO 8601"
           },
           "paid_at": {
             "type": "string",
             "format": "date-time",
-            "example": "2023-05-29T19:25:34-03:00 (Formato ISO 8601)"
+            "example": "2023-05-29T19:25:34-03:00",
+            "description": "Formato ISO 8601"
           },
           "value": {
             "type": "integer",
@@ -894,7 +900,8 @@
           "created_at": {
             "type": "string",
             "format": "date-time",
-            "example": "2023-05-29T19:25:34-03:00 (Formato ISO 8601)"
+            "example": "2023-05-29T19:25:34-03:00",
+            "description": "Formato ISO 8601"
           },
           "id": {
             "type": "string"
