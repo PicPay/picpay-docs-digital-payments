@@ -503,7 +503,7 @@
     "/payments": {
       "get": {
         "summary": "Consultar uma cobrança",
-        "description": "Este recurso permite a busca de uma cobrança através de um identificador. O identificador poderá ser o enviado na criação de uma cobrança reference_id ou do identificador respondido no sucesso de uma cobrança transaction_id, o qual deve ser informado substituindo a variável {reference_id}  no path deste endpoint.",
+        "description": "Este recurso permite a busca de uma cobrança através de um identificador. Dois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores precisa ser enviado. Quando os dois forem enviados, será considerado apenas o `reference_id`.",
         "operationId": "find",
         "security": [
           {
