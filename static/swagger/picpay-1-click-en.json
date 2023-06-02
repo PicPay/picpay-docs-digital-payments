@@ -503,7 +503,7 @@
     "/payments/{reference_id}": {
       "get": {
         "summary": "Find a charge",
-        "description": "This resource allows the search for information on a specific payment, through the transaction_id or \nreference_id. It is mandatory to pass the transaction_id or reference_id.",
+        "description": "This resource allows the search for a charge through an identifier. The identifier may be the one sent when creating a reference_id charge or the identifier answered when a transaction_id charge succeeds, which must be informed by replacing the variable {reference_id} in the path of this endpoint.",
         "operationId": "find",
         "security": [
           {
@@ -831,7 +831,17 @@
             "type": "string"
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "- \"refused\"\n\n- \"error\"\n\n- \"refunded\"\n\n- \"cancel\"\n\n- \"approved\"\n\n- \"completed\"\n\n- \"pending\"",
+            "enum": [
+              "refused",
+              "error",
+              "refunded",
+              "cancel",
+              "approved",
+              "completed",
+              "pending"
+            ]
           },
           "created_at": {
             "type": "string",
@@ -863,7 +873,17 @@
             "example": 2.10
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "- \"refused\"\n\n- \"error\"\n\n- \"refunded\"\n\n- \"cancel\"\n\n- \"approved\"\n\n- \"completed\"\n\n- \"pending\"",
+            "enum": [
+              "refused",
+              "error",
+              "refunded",
+              "cancel",
+              "approved",
+              "completed",
+              "pending"
+            ]
           },
           "created_at": {
             "type": "string",

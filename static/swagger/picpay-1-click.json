@@ -503,7 +503,7 @@
     "/payments/{reference_id}": {
       "get": {
         "summary": "Consultar uma cobrança",
-        "description": "Este recurso permite a busca das informações de um determinado pagamento, através do transaction_id e/ou\n reference_id. É necessário passar o transaction_id ou reference_id obrigatoriamente.",
+        "description": "Este recurso permite a busca de uma cobrança através de um identificador. O identificador poderá ser o enviado na criação de uma cobrança reference_id ou do identificador respondido no sucesso de uma cobrança transaction_id, o qual deve ser informado substituindo a variável {reference_id}  no path deste endpoint.",
         "operationId": "find",
         "security": [
           {
@@ -827,11 +827,18 @@
       "FindPaymentResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "- \"refused\": recusada\n\n- \"error\": erro\n\n- \"refunded\": devolvida\n\n- \"cancel\": cancelada\n\n- \"approved\": aprovada\n\n- \"completed\": completa\n\n- \"pending\": em análise",
+            "enum": [
+              "refused",
+              "error",
+              "refunded",
+              "cancel",
+              "approved",
+              "completed",
+              "pending"
+            ]
           },
           "created_at": {
             "type": "string",
@@ -863,7 +870,17 @@
             "example": 2.10
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "- \"refused\": recusada\n\n- \"error\": erro\n\n- \"refunded\": devolvida\n\n- \"cancel\": cancelada\n\n- \"approved\": aprovada\n\n- \"completed\": completa\n\n- \"pending\": em análise",
+            "enum": [
+              "refused",
+              "error",
+              "refunded",
+              "cancel",
+              "approved",
+              "completed",
+              "pending"
+            ]
           },
           "created_at": {
             "type": "string",
