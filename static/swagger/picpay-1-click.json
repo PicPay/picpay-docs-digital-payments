@@ -500,7 +500,7 @@
         ]
       }
     },
-    "/payments/{id}": {
+    "/payments/{reference_id}": {
       "get": {
         "summary": "Consultar uma cobrança",
         "description": "Este recurso permite a busca das informações de um determinado pagamento, através do transaction_id e/ou\n reference_id. É necessário passar o transaction_id ou reference_id obrigatoriamente.",
@@ -508,6 +508,16 @@
         "security": [
           {
             "Authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reference_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -565,7 +575,14 @@
             }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
           },
           "422": {
             "description": "Resposta para erros de validação",
@@ -804,6 +821,57 @@
           "message": {
             "type": "string",
             "example": "API rate limit exceeded"
+          }
+        }
+      },
+      "FindPaymentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00"
+          },
+          "paid_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00"
+          },
+          "value": {
+            "type": "integer",
+            "example": 2.10
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            }
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "example": 2.10
+          },
+          "status": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00"
+          },
+          "transactionId": {
+            "type": "string"
           }
         }
       }

@@ -131,8 +131,6 @@
       "post": {
         "summary": "Perform a full or partial refund",
         "description": "This resource allows the seller to make a total or partial reversal of a payment. \nIf you specify a refund amount lower than was charged, the original transaction will be canceled and we will make a second charge to the user's wallet with the difference amount.” This resource allows the seller to make a total or partial reversal of a payment. \nIf you specify a refund amount lower than what was charged, the original transaction will be canceled and we will make a second charge to the user's wallet with the difference amount.",
-
-
         "operationId": "refund",
         "security": [
           {
@@ -267,7 +265,8 @@
         "security": [
           {
             "Authorization": []
-          }      ],
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -501,7 +500,7 @@
         ]
       }
     },
-    "/payments/{id}": {
+    "/payments/{reference_id}": {
       "get": {
         "summary": "Find a charge",
         "description": "This resource allows the search for information on a specific payment, through the transaction_id or \nreference_id. It is mandatory to pass the transaction_id or reference_id.",
@@ -509,6 +508,16 @@
         "security": [
           {
             "Authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "reference_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -566,7 +575,14 @@
             }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
           },
           "422": {
             "description": "Response to validation errors.",
@@ -807,8 +823,58 @@
             "example": "API rate limit exceeded"
           }
         }
+      },
+      "FindPaymentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00"
+          },
+          "paid_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00"
+          },
+          "value": {
+            "type": "integer",
+            "example": 2.10
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            }
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "example": 2.10
+          },
+          "status": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00"
+          },
+          "transactionId": {
+            "type": "string"
+          }
+        }
       }
     }
   }
 }
-
