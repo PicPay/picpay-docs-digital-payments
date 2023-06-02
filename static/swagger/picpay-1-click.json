@@ -499,6 +499,109 @@
           "Pagamentos"
         ]
       }
+    },
+    "/payments/{id}": {
+      "get": {
+        "summary": "Consultar uma cobrança",
+        "description": "Este recurso permite a busca das informações de um determinado pagamento, através do transaction_id e/ou\n reference_id. É necessário passar o transaction_id ou reference_id obrigatóriamente.",
+        "operationId": "find",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Busca realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindPaymentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidFindNullInput"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pagamentos"
+        ]
+      }
     }
   },
   "components": {
@@ -679,6 +782,28 @@
           "business_code": {
             "type": "string",
             "example": "TRANSACTION_NOT_FOUND"
+          }
+        }
+      },
+      "InvalidFindNullInput": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "É necessário informar o reference_id ou transaction_id."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "INVALID_INPUT"
+          }
+        }
+      },
+      "FindTooManyRequestsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "API rate limit exceeded"
           }
         }
       }
