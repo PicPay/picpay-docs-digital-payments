@@ -68,6 +68,12 @@ Não informamos os códigos de erro nos retornos das transações. Apenas inform
 }
 ```
 
+#### Timeout de cobrança
+> Atualmente um pagamento tem como timeout padrão o valor de 30 segundos. Esse gerenciamento é feito internamente para evitar problemas com cobranças indevidas.
+> Na prática, caso o pagamento demore mais de 30s para retornar um sucesso a api vai retornar um erro 500 e caso o pagamento seja resolvido posteriormente ele automaticamente será desfeito através de um reembolso automático.
+> 
+> Caso a sua api tenha um timeout diferente de 30 segundos será preciso solicitar essa alteração para a sua integração
+
 ## Próximos passos
 
 - [Solicitando um reembolso](/one-click/guides/refund-payments);
