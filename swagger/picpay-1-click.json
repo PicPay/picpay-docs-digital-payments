@@ -257,7 +257,7 @@
         ]
       }
     },
-    "/v1/sandbox/payments/charge": {
+    "/sandbox/payments/charge": {
       "post": {
         "summary": "Criar cobrança",
         "description": "Este recurso permite ao vendedor simular uma realização de cobrança na carteira do usuário.",
@@ -370,7 +370,7 @@
         ]
       }
     },
-    "/v1/sandbox/payments/{transaction_id}/refund": {
+    "/sandbox/payments/{transaction_id}/refund": {
       "post": {
         "summary": "Realizar um estorno total ou parcial",
         "description": "Este recurso permite ao vendedor realize o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de rembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
@@ -480,6 +480,146 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pagamentos"
+        ]
+      }
+    },
+    "/sandbox/payments": {
+      "get": {
+        "summary": "Consultar uma cobrança",
+        "description": "Este recurso permite a busca das informações de um determinado pagamento, através do transaction_id e/ou reference_id. É necessário passar o transaction_id ou reference_id obrigatóriamente.",
+        "operationId": "Sandbox Find",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "reference_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "transaction_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "testScenery",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SUCCESS",
+                "SUCCESS_REFUNDED",
+                "SUCCESS_PARTIALLY_REFUNDED",
+                "INTERNAL_SERVER_ERROR",
+                "NOT_FOUND"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Busca realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindPaymentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidFindNullInput"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindTooManyRequestsResponse"
                 }
               }
             }
