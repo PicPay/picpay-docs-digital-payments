@@ -257,6 +257,126 @@
         ]
       }
     },
+    "/payments/refund": {
+      "post": {
+        "summary": "Realizar um estorno total ou parcial",
+        "description": "Este recurso permite ao vendedor realize o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de rembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
+        "operationId": "refund",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reembolso total ou parcial realizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pagamentos"
+        ]
+      }
+    },
     "/sandbox/payments/charge": {
       "post": {
         "summary": "Criar cobrança",
@@ -810,6 +930,16 @@
             "type": "number",
             "format": "float",
             "example": 99.99
+          },
+          "transaction_id": {
+            "type": "string",
+            "description": "Identificador da transação criada.",
+            "example": "123456222"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro.",
+            "example": "123456222"
           }
         }
       },

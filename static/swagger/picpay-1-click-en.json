@@ -257,6 +257,126 @@
         ]
       }
     },
+    "/payments/refund": {
+      "post": {
+        "summary": "Perform a full or partial refund",
+        "description": "This resource allows the seller to make a total or partial reversal of a payment. \nIf you specify a refund amount lower than was charged, the original transaction will be canceled and we will make a second charge to the user's wallet with the difference amount.” This resource allows the seller to make a total or partial reversal of a payment. \nIf you specify a refund amount lower than what was charged, the original transaction will be canceled and we will make a second charge to the user's wallet with the difference amount.",
+        "operationId": "refund",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Full or partial refund successfully completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Errors with Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Invalid Token.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Response when resource is called without acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Expired Access Token",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Response when resource is called with token that invalid JWT.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Response for validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Payments"
+        ]
+      }
+    },
     "/sandbox/payments/charge": {
       "post": {
         "summary": "Billing Create",
@@ -810,6 +930,16 @@
             "type": "number",
             "format": "float",
             "example": 99.99
+          },
+          "transaction_id": {
+            "type": "string",
+            "description": "Identifier of the created transaction.",
+            "example": "123456222"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Partner unique payment identifier.",
+            "example": "123456222"
           }
         }
       },
