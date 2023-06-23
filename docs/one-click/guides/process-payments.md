@@ -74,6 +74,14 @@ Não informamos os códigos de erro nos retornos das transações. Apenas inform
 > 
 > Caso a sua api tenha um timeout diferente de 30 segundos será preciso solicitar essa alteração para a sua integração
 
+Nesses casos a requisição responderá com o HTTP Status Code **408 Request Timeout** e com o seguinte body:
+```json
+{
+    "message": "Request took too long to process.",
+    "business_code": "REQUEST_TIMEOUT"
+}
+```
+
 ## Próximos passos
 
 - [Solicitando um reembolso](/one-click/guides/refund-payments);
