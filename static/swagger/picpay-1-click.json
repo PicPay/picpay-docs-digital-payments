@@ -822,6 +822,11 @@
             "description": "Identificador da transação cancelada, ou da nova transação criada para os casos de ao reembolso parcial.",
             "example": "123456222"
           },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro.",
+            "example": "123456222"
+          },
           "created_at": {
             "type": "string",
             "example": "2020-04-16 20:59:58",
@@ -877,6 +882,11 @@
           "transaction_id": {
             "type": "string",
             "description": "Identificador da transação criada.",
+            "example": "123456222"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro.",
             "example": "123456222"
           },
           "created_at": {

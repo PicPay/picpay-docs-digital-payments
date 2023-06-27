@@ -822,6 +822,11 @@
             "description": "Identifier of the canceled transaction, or of the new transaction created for cases of partial refund.",
             "example": "123456222"
           },
+          "reference_id": {
+            "type": "string",
+            "description": "Unique payment identifier in the partner.",
+            "example": "123456222"
+          },
           "created_at": {
             "type": "string",
             "example": "2020-04-16 20:59:58",
@@ -877,6 +882,11 @@
           "transaction_id": {
             "type": "string",
             "description": "Identifier of the created transaction.",
+            "example": "123456222"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Unique payment identifier in the partner.",
             "example": "123456222"
           },
           "created_at": {
