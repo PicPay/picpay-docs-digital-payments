@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[49],{119:function(a){a.exports=JSON.parse('{"allTagsPath":"/picpay-docs-digital-payments/change-log/tags","slug":"mundo-fisico","name":"mundo-fisico","count":1,"permalink":"/picpay-docs-digital-payments/change-log/tags/mundo-fisico"}')}}]);
