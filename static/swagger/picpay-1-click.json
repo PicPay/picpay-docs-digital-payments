@@ -91,6 +91,16 @@
           "404": {
             "description": "Not Found"
           },
+          "408": {
+            "description": "Request Timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestTimeoutResponse"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Resposta para erros de validação",
             "content": {
@@ -976,6 +986,19 @@
           "business_code": {
             "type": "string",
             "example": "INVALID_INPUT"
+          }
+        }
+      },
+      "RequestTimeoutResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Request took too long to process."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "REQUEST_TIMEOUT"
           }
         }
       },
