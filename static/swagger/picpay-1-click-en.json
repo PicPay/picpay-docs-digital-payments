@@ -528,6 +528,7 @@
           {
             "in": "query",
             "name": "testScenery",
+            "description": "default: SUCCESS",
             "schema": {
               "type": "string",
               "enum": [
@@ -845,6 +846,7 @@
           },
           "testScenery": {
             "type": "string",
+            "description": "default: SUCCESS",
             "enum": [
               "SUCCESS",
               "GRAND_VALUE",
@@ -865,8 +867,14 @@
             "format": "float",
             "example": 99.99
           },
+          "reference_id": {
+            "type": "string",
+            "description": "Unique payment identifier in the partner.",
+            "example": "dfecee7e-2414-4966-8911-104f6389b071"
+          },
           "testScenery": {
             "type": "string",
+            "description": "default: SUCCESS",
             "enum": [
               "SUCCESS",
               "INTERNAL_SERVER_ERROR",
