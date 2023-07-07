@@ -130,7 +130,7 @@
     "/payments/{transaction_id}/refund": {
       "post": {
         "summary": "Realizar um estorno total ou parcial",
-        "description": "Este recurso permite ao vendedor realize o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de rembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
+        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de reembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
         "operationId": "refund",
         "security": [
           {
@@ -260,7 +260,7 @@
     "/payments/refund": {
       "post": {
         "summary": "Realizar um estorno total ou parcial",
-        "description": "Este recurso permite ao vendedor realize o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de rembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
+        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. Caso você especifique um valor de reembolso menor do que foi cobrado, a transação original será cancelada e faremos uma segunda cobrança na carteira do usuário com o valor da diferença. Dois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores precisa ser enviado. Quando os dois forem enviados, será considerado apenas o `reference_id`.",
         "operationId": "refund",
         "security": [
           {
@@ -493,7 +493,7 @@
     "/sandbox/payments/{transaction_id}/refund": {
       "post": {
         "summary": "Realizar um estorno total ou parcial",
-        "description": "Este recurso permite ao vendedor realize o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de rembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
+        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de reembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
         "operationId": "Sandbox Refund",
         "security": [
           {
