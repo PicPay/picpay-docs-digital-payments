@@ -139,6 +139,7 @@
     },
     "/payments/{transaction_id}/refund": {
       "post": {
+        "deprecated": true,
         "summary": "Realizar um estorno total ou parcial",
         "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de reembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
         "operationId": "refund",
@@ -271,7 +272,7 @@
       "post": {
         "summary": "Realizar um estorno total ou parcial",
         "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. Caso você especifique um valor de reembolso menor do que foi cobrado, a transação original será cancelada e faremos uma segunda cobrança na carteira do usuário com o valor da diferença. Dois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores precisa ser enviado. Quando os dois forem enviados, será considerado apenas o `reference_id`.",
-        "operationId": "refund",
+        "operationId": "refund with body",
         "security": [
           {
             "Authorization": []
@@ -502,6 +503,7 @@
     },
     "/sandbox/payments/{transaction_id}/refund": {
       "post": {
+        "deprecated": true,
         "summary": "Realizar um estorno total ou parcial",
         "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de reembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
         "operationId": "Sandbox Refund",
@@ -630,11 +632,131 @@
         ]
       }
     },
+    "/sandbox/payments/refund": {
+      "post": {
+        "summary": "Realizar um estorno total ou parcial",
+        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. Caso você especifique um valor de reembolso menor do que foi cobrado, a transação original será cancelada e faremos uma segunda cobrança na carteira do usuário com o valor da diferença. Dois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores precisa ser enviado. Quando os dois forem enviados, será considerado apenas o `reference_id`.",
+        "operationId": "sandbox refund with body",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequestWithPayloadBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reembolso total ou parcial realizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pagamentos"
+        ]
+      }
+    },
     "/sandbox/payments": {
       "get": {
         "summary": "Consultar uma cobrança",
         "description": "Este recurso permite a busca das informações de um determinado pagamento, através do transaction_id e/ou reference_id. É necessário passar o transaction_id ou reference_id obrigatóriamente.",
-        "operationId": "Sandbox Find",
+        "operationId": "Sandbox Refund",
         "security": [
           {
             "Authorization": []
@@ -945,7 +1067,7 @@
         }
       },
       "RefundRequestWithPayloadBody": {
-        "title": "Realizar um reembolso",
+        "title": "Realizar um reembolso with transaction_id ou reference_id",
         "type": "object",
         "properties": {
           "value": {
