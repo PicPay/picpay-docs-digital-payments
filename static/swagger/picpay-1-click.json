@@ -272,7 +272,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RefundRequestBody"
+                "$ref": "#/components/schemas/RefundRequestWithPayloadBody"
               }
             }
           }
@@ -923,6 +923,17 @@
         ]
       },
       "RefundRequestBody": {
+        "title": "Realizar um reembolso",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99
+          }
+        }
+      },
+      "RefundRequestWithPayloadBody": {
         "title": "Realizar um reembolso",
         "type": "object",
         "properties": {

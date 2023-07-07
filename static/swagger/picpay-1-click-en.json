@@ -272,7 +272,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RefundRequestBody"
+                "$ref": "#/components/schemas/RefundRequestWithPayloadBody"
               }
             }
           }
@@ -940,6 +940,17 @@
             "type": "string",
             "description": "Partner unique payment identifier.",
             "example": "123456222"
+          }
+        }
+      },
+      "RefundRequestWithPayloadBody": {
+        "title": "Make a refund",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99
           }
         }
       },
