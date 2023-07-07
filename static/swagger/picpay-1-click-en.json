@@ -930,16 +930,6 @@
             "type": "number",
             "format": "float",
             "example": 99.99
-          },
-          "transaction_id": {
-            "type": "string",
-            "description": "Identifier of the created transaction.",
-            "example": "123456222"
-          },
-          "reference_id": {
-            "type": "string",
-            "description": "Partner unique payment identifier.",
-            "example": "123456222"
           }
         }
       },
@@ -951,6 +941,16 @@
             "type": "number",
             "format": "float",
             "example": 99.99
+          },
+          "transaction_id": {
+            "type": "string",
+            "description": "Identifier of the created transaction.",
+            "example": "123456222"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Partner unique payment identifier.",
+            "example": "123456222"
           }
         }
       },
