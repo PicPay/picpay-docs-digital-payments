@@ -647,7 +647,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RefundRequestWithPayloadBody"
+                "$ref": "#/components/schemas/SandboxRefundRequestWithPayloadBody"
               }
             }
           }
@@ -1084,6 +1084,39 @@
             "type": "string",
             "description": "Identificador único do pagamento no parceiro.",
             "example": "123456222"
+          }
+        }
+      },
+      "SandboxRefundRequestWithPayloadBody": {
+        "title": "Realizar um reembolso with transaction_id ou reference_id",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99
+          },
+          "transaction_id": {
+            "type": "string",
+            "description": "Identificador da transação criada.",
+            "example": "123456222"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro.",
+            "example": "123456222"
+          },
+          "testScenery": {
+            "type": "string",
+            "description": "default: SUCCESS",
+            "enum": [
+              "SUCCESS",
+              "GRAND_VALUE",
+              "TRANSACTION_NOT_FOUND",
+              "INTERNAL_SERVER_ERROR",
+              "EXPIRED_TOKEN",
+              "MISSING_TOKEN"
+            ]
           }
         }
       },
