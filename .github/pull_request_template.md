@@ -26,4 +26,4 @@
 ---
 [//]: <> (Deixe a linha abaixo para cada code owner ser notificado)
 Podem fazer o review, por favor?
-@alice-rodriguess @andrebparpaiola @ARD @camilaPereiraOliveira @MarcosNery38 @michael-picpay @r-freitas-ppay
+@alice-rodriguess @andrebparpaiola @ARD @camilaPereiraOliveira @michael-picpay @r-freitas-ppay @wanderson-lima-picpay
