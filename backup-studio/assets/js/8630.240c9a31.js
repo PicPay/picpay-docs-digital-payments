@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkpicpay_frontend=self.webpackChunkpicpay_frontend||[]).push([[8630],{79186:(n,t,r)=>{r.r(t),r.d(t,{apollo_card_actions:()=>e});var c=r(88865),e=function(){function n(n){(0,c.r)(this,n)}return n.prototype.render=function(){return(0,c.h)(c.H,{class:"mdc-card__actions"},(0,c.h)("slot",null))},n}();e.style=""}}]);
