@@ -50,7 +50,7 @@ module.exports = {
       items: [
         { to: '/checkout/intro/getting-started', label: 'QR Code e Push' },
         { to: '/one-click/intro/overview', label: 'PicPay 1-Click' },
-        { to: '/subscriptions/intro/overview', label: 'Assinaturas' },
+        // { to: '/subscriptions', label: 'Assinaturas' },
         // {to: "/one-click-en/guides/user-info", label: "PicPay 1-Click (English)" },
         // {to: 'blog', label: 'Blog', position: 'left'},
         {

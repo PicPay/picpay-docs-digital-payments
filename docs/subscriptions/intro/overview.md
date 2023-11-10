@@ -2,6 +2,7 @@
 id: overview
 title: Assinaturas
 description: Crie planos de assinatura para seus produtos, solicite o pagamento aos seus clientes de modo recorrente
+slug: /subscriptions
 ---
 
 <div style={{ display: 'flex' }}>
