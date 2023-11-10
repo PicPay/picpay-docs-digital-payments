@@ -4,13 +4,16 @@ title: Assinaturas
 description: Crie planos de assinatura para seus produtos, solicite o pagamento aos seus clientes de modo recorrente
 ---
 
-<div style={{textAlign: 'right'}}>
+<div style={{ display: 'flex' }}>
+  <div style={{ display: 'flex', flex: '1 1 60%' }}>
 
-![image](../../../static/img/icone-banner-assinaturas.png)
+## Crie planos de assinatura para seus produtos, solicite o pagamento aos seus clientes de modo recorrente
 
+  </div>
+  <div style={{ display: 'flex', flex: '1 2 40%' }}>
+    <img src="../../../static/img/icone-banner-assinaturas.png" width="30%"/>
+  </div>
 </div>
-
-Crie planos de assinatura para seus produtos, solicite o pagamento aos seus clientes de modo recorrente
 
 ## Receba mensalmente de seus clientes e apoiadores
 
