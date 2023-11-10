@@ -8,7 +8,7 @@ keywords:
   - PicPay Assinaturas
 ---
 
-# Como os usuários assinam seus planos
+## Como os usuários assinam seus planos
 
 Você faz um cadastro no nosso Painel Lojista, usa uma chave de integração no seu e-commerce e configura a aplicação em poucos passos.
 
