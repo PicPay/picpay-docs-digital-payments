@@ -34,13 +34,13 @@ module.exports = {
     gtag: {
       trackingID: 'G-52VCWRLND8',
     },
-    announcementBar: {
-      id: 'officialDocumentation',
-      backgroundColor: '#E3F7EA', // Defaults to `#fff`.
-      textColor: '#091E42', // Defaults to `#000`.
-      content:
-        'Olá 💚! Este é um domínio temporário para nossa documentação de pagamentos online. Em breve migraremos para o <a target="_blank" rel="noopener noreferrer" href="https://studio.picpay.com/">PicPay Studio</a>!',
-    },
+    // announcementBar: {
+    //   id: 'officialDocumentation',
+    //   backgroundColor: '#E3F7EA',
+    //   textColor: '#091E42',
+    //   content:
+    //     'Olá 💚! Este é um domínio temporário para nossa documentação de pagamentos online. Em breve migraremos para o <a target="_blank" rel="noopener noreferrer" href="https://studio.picpay.com/">PicPay Studio</a>!',
+    // },
     navbar: {
       // title: 'PicPay',
       logo: {
