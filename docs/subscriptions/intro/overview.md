@@ -11,8 +11,11 @@ slug: /subscriptions
 ## Crie planos de assinatura para seus produtos, solicite o pagamento aos seus clientes de modo recorrente
 
   </div>
-  <div style={{ display: 'flex', flex: '1 2 40%' }}>
-    <img src="../../../static/img/icone-banner-assinaturas.png" width="30%"/>
+  <div style={{ display: 'flex', flex: '1 2 20%' }}></div>
+  <div style={{ display: 'flex', flex: '1 3 20%' }}>
+
+![image](../../../static/img/icone-banner-assinaturas.png)
+
   </div>
 </div>
 
