@@ -26,7 +26,3 @@ PicPay Assinaturas é o serviço de pagamentos recorrentes do PicPay perfeito pa
 ## Próximos passos
 
 - [Como assinar](/subscriptions/intro/sign-up);
-
-## Obtendo ajuda
-
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode entrar em contato através do e-mail relacionamento-empresas@picpay.com
