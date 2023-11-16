@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   title: 'PicPay - Pagamentos Digitais',
@@ -27,30 +27,30 @@ module.exports = {
           marginLeft: '1px',
         },
       },
-    
     },
     googleAnalytics: {
-      trackingID: 'G-52VCWRLND8'
+      trackingID: 'G-52VCWRLND8',
     },
     gtag: {
-      trackingID: 'G-52VCWRLND8'
+      trackingID: 'G-52VCWRLND8',
     },
-    announcementBar: {
-      id: 'officialDocumentation',
-      backgroundColor: '#E3F7EA', // Defaults to `#fff`.
-      textColor: '#091E42', // Defaults to `#000`.
-      content:
-        'Olá 💚! Este é um domínio temporário para nossa documentação de pagamentos online. Em breve migraremos para o <a target="_blank" rel="noopener noreferrer" href="https://studio.picpay.com/">PicPay Studio</a>!',
-    },
+    // announcementBar: {
+    //   id: 'officialDocumentation',
+    //   backgroundColor: '#E3F7EA',
+    //   textColor: '#091E42',
+    //   content:
+    //     'Olá 💚! Este é um domínio temporário para nossa documentação de pagamentos online. Em breve migraremos para o <a target="_blank" rel="noopener noreferrer" href="https://studio.picpay.com/">PicPay Studio</a>!',
+    // },
     navbar: {
-     // title: 'PicPay',
+      // title: 'PicPay',
       logo: {
         alt: 'Logo PicPay',
         src: 'img/PP-logo.png',
       },
       items: [
-        {to: "/checkout/intro/getting-started", label: "QR Code e Push" },
-        {to: "/one-click/intro/overview", label: "PicPay 1-Click" },
+        { to: '/checkout/intro/getting-started', label: 'QR Code e Push' },
+        { to: '/one-click/intro/overview', label: 'PicPay 1-Click' },
+        // { to: '/subscriptions', label: 'Assinaturas' },
         // {to: "/one-click-en/guides/user-info", label: "PicPay 1-Click (English)" },
         // {to: 'blog', label: 'Blog', position: 'left'},
         {
@@ -59,8 +59,6 @@ module.exports = {
           position: 'right',
         },
       ],
-
-
     },
     footer: {
       style: 'dark',
@@ -88,7 +86,6 @@ module.exports = {
               label: 'Remessa de Crédito',
               href: 'https://studio.picpay.com/docs/b2p',
             },
-
           ],
         },
         {
@@ -132,40 +129,30 @@ module.exports = {
         docs: {
           routeBasePath: '/', // Jogando pra home de docs
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/picpay/picpay-docs-digital-payments/tree/main',
+          editUrl: 'https://github.com/picpay/picpay-docs-digital-payments/tree/main',
         },
-         blog: {
+        blog: {
           showReadingTime: true,
           blogTitle: 'Change Log',
-          blogDescription: "Mudanças e novidades a respeito de nossas soluções de pagamento digital",
+          blogDescription: 'Mudanças e novidades a respeito de nossas soluções de pagamento digital',
           blogSidebarTitle: 'Posts recentes',
           routeBasePath: 'change-log',
           // Please change this to your repo.
-        }, 
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
       },
     ],
   ],
-  plugins: [
-    [ 
-       require.resolve('docusaurus-lunr-search'), { languages: ['pt'] }
-    ],    
-    
+  plugins: [[require.resolve('docusaurus-lunr-search'), { languages: ['pt'] }]],
 
-
-    ],
-
-    scripts: [ 
-/*       {
+  scripts: [
+    /*       {
         src: '/js/google-tag-manager.js'
       },  */
-      {
-        src: '/picpay-docs-digital-payments/js/hotjar.js'
-      },   
-    ],
-
-
+    {
+      src: '/picpay-docs-digital-payments/js/hotjar.js',
+    },
+  ],
 };
