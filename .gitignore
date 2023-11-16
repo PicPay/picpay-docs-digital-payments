@@ -7,7 +7,6 @@
 # Generated local files
 .docusaurus
 .cache-loader
-package-lock.json
 yarn.lock
 
 # Misc
