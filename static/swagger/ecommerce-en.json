@@ -487,7 +487,7 @@
           },
           "leaveUrl": {
             "description": "Url for when the customer wants to give up or when they cannot pay because the order has expired",
-            "example": "http://www.sualoja.com.br/cliente/pedido/102030",
+            "example": "http://www.sualoja.com.br/cliente/pedido/102030/desistir",
             "type": "string"
           },
           "value": {
