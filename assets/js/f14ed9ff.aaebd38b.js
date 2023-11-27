@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkpicpay=self.webpackChunkpicpay||[]).push([[2663],{35753:a=>{a.exports=JSON.parse('{"allTagsPath":"/picpay-docs-digital-payments/change-log/tags","slug":"mundo-fisico","name":"mundo-fisico","count":1,"permalink":"/picpay-docs-digital-payments/change-log/tags/mundo-fisico"}')}}]);
