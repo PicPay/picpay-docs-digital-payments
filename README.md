@@ -24,6 +24,6 @@ npm run build
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
-## Documentação para deploy (Docusaurus)
+## Documentação para deploy - Docusaurus
 
 https://picpay.atlassian.net/wiki/spaces/PAC/pages/2128314894/Documenta+o+-+Docusaurus
