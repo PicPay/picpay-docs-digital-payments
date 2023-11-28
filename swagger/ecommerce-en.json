@@ -77,7 +77,7 @@
     "/payments/{referenceId}/capture": {
       "post": {
         "tags": [
-          "Payment Capture"
+          "Capture Payment"
         ],
         "description": "\nThe partial or total payment capture is realized out under the condition that the payment request is \ncreated with the `autoCapture` field set to `false` and the consumer has made the payment. \nThe request will be awaited to effect the charge, with the correct amount, informed in the `amount` field. \nThe value can be the same or less than the authorized value.Captures with a value greater than the authorized value will be \nrejected.\n\nThe return of the request informs the updated values ​​pertinent to the transaction, located in the\n`summary` field:\n- **`authorized` field:** contains the authorized value; \n- **Field `paid`:** registers the amount paid (captured).\n\n\n**Information:**\n- The capture request is only allowed when the transaction is authorized. In the situation where \nthe capture request does not occur within 5 consecutive days, counting from the authorization, the order is canceled \automatically;\n\n- After the successful capture, even if of partial value, it will not be possible request\nnew capture of the same order/transaction.",
         "summary": "Request to capture payment total or partial",
