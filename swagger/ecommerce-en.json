@@ -16,13 +16,13 @@
       "name": "Create an order for a payment"
     },
     {
-      "name": "Capture payment"
+      "name": "Payment capture"
     },
     {
-      "name": "Payment Cancel request"
+      "name": "Payment cancel request"
     },
     {
-      "name": "Order Check Status"
+      "name": "Order check Status"
     },
     {
       "name": "Order change notification"
@@ -77,7 +77,7 @@
     "/payments/{referenceId}/capture": {
       "post": {
         "tags": [
-          "Capture Payment"
+          "Payment capture"
         ],
         "description": "\nThe partial or total payment capture is realized out under the condition that the payment request is \ncreated with the `autoCapture` field set to `false` and the consumer has made the payment. \nThe request will be awaited to effect the charge, with the correct amount, informed in the `amount` field. \nThe value can be the same or less than the authorized value.Captures with a value greater than the authorized value will be \nrejected.\n\nThe return of the request informs the updated values ​​pertinent to the transaction, located in the\n`summary` field:\n- **`authorized` field:** contains the authorized value; \n- **Field `paid`:** registers the amount paid (captured).\n\n\n**Information:**\n- The capture request is only allowed when the transaction is authorized. In the situation where \nthe capture request does not occur within 5 consecutive days, counting from the authorization, the order is canceled \automatically;\n\n- After the successful capture, even if of partial value, it will not be possible request\nnew capture of the same order/transaction.",
         "summary": "Request to capture payment total or partial",
@@ -134,7 +134,7 @@
     "/payments/{referenceId}/refunds": {
       "post": {
         "tags": [
-          "Cancel payment request"
+          "Payment cancel request"
         ],
         "description": "\nThe cancellation of the payment request is made by the retailer in a partial or total way, even if \nthe payment has already taken place, by a cancellation request.\n\nThe return of the request informs the updated values ​​pertaining to the transaction, localized in the\nca`summary` field:\n- **Field `paid`:** amount paid;\n- **Field `refunded`:** value canceled.\n\n##Cancel order that does not have a payment request\nWhen canceling an order that does not yet have payment authorization, \na new payment attempt is not allowed.\n\n## Canceling an authorized payment request and awaiting capture\nTo orders with payment authorized and awaiting capture,it is allowed to close the request \nin advance, always for the total amount, as long as the wait is within 5 days of the \ncapture request. This avoids any possibility of being charged and makes the consumer's balance available \nfor new purchases.\n\n## Cancel payment request made\nIf the payment has been made, the amount entered in the `amount` field will be returned to the person \ nconsumer, not being allowed to return more than the amount paid.The cancellation can be partial, \namely, when the refund amount is lower than the available amount paid (amount paid minus amount \ncancelled). \n\n## Cancel partially returned payment request\nPartially returned payments are still considered paid and new \ncancellations are allowed until the entire amount paid has been cancelled. It is considered total cancellation when \nthe consumer receives back the entire amount paid.\n\n## Cancel payment already received\nFor cancellations of transactions in which the retailer has already received the amount, \navailability of amounts in their future releases, being possible a refusal of the cancellation if \nthere are no resources available for the cancellation to occur.\n\n## Canceling a payment that has cashback\nThe process of canceling a payment with a cashback promotion occurs when there is\na balance available in the consumer's account. In this case, a request is made for\nthe cashback amount to be returned proportionally to the canceled amount.\n\n**Information:** payment cancellation with cashback promotions depends on the completion of the purchase.",
         "summary": "Request to cancel / partial or full refund",
@@ -209,7 +209,7 @@
     "/payments/{referenceId}/status": {
       "get": {
         "tags": [
-          "Check Order Status"
+          "Order check status"
         ],
         "description": "Allows to consult and identify the current status of the payment request, through the `status` field. \nThe return of the request informs the updated values ​​pertaining to the payment request, located \nin the `summary` field:\n- **Field `authorized`:** authorized value;\n- **Field `paid`:** amount paid (captured);\n- **Field `refunded`:** amount canceled.",
         "summary": "Request for order details",
@@ -257,7 +257,7 @@
           {
             "url": "http://www.sualoja.com.br/",
             "description": "Here we will call your store"
-          },
+          }
         ],
         "tags": [
           "Order change notification"
