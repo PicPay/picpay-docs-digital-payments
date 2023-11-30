@@ -1343,7 +1343,11 @@
             "description": "Formato ISO 8601"
           },
           "value": {
-            "type": "integer",
+            "type": "float",
+            "example": 2.10
+          },
+          "refunded_value": {
+            "type": "float",
             "example": 2.10
           },
           "transactions": {
@@ -1382,8 +1386,34 @@
           },
           "id": {
             "type": "string"
+          },
+          "refunds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Refunds"
+            }
           }
         }
+      },
+      "Refunds": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "09950d4a-2df4-4d60-9cbc-ac8f004fa595"
+          },
+          "value": {
+            "type": "float",
+            "example": 2.10
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00",
+            "description": "Formato ISO 8601"
+          }
+        }
+          
       }
     }
   }
