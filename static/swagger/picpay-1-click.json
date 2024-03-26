@@ -278,7 +278,7 @@
     "/payments/refund": {
       "post": {
         "summary": "Realizar um estorno total ou parcial",
-        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. Caso você especifique um valor de reembolso menor do que foi cobrado, será realizado um reembolso parcial da transação. Dois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Pelo menos um dos identificadores precisa ser enviado. Quando ambos forem enviados, ambos serão validados.",
+        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. Caso você especifique um valor de reembolso menor do que foi cobrado, será realizado um reembolso parcial da transação. Se o campo `value` não for informado, a transação será reembolsada pelo valor total. Dois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Pelo menos um dos identificadores precisa ser enviado. Quando ambos forem enviados, ambos serão validados.",
         "operationId": "refundwithbody",
         "security": [
           {
@@ -290,7 +290,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RefundRequestWithBody"
+                "$ref": "#/components/schemas/RefundRequestWithPayloadBody"
               }
             }
           }
@@ -651,7 +651,7 @@
     "/payments": {
       "get": {
         "summary": "Consultar uma cobrança",
-        "description": "Este recurso permite a busca de uma cobrança através de um identificador. Dois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores precisa ser enviado. Quando os dois forem enviados, será considerado apenas o `reference_id`.",
+        "description": "Este recurso permite a busca de uma cobrança através de um identificador. Dois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores precisa ser enviado. Quando os dois forem enviados, ambos serão validados.",
         "operationId": "find",
         "security": [
           {
@@ -1021,7 +1021,7 @@
     "/sandbox/payments/refund": {
       "post": {
         "summary": "Realizar um estorno total ou parcial",
-        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de rembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
+        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. Caso você especifique um valor de reembolso menor do que foi cobrado, será realizado um reembolso parcial da transação. Se o campo `value` não for informado, a transação será reembolsada pelo valor total. Dois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Pelo menos um dos identificadores precisa ser enviado. Quando ambos forem enviados, ambos serão validados.",
         "operationId": "SandboxRefundWithBody",
         "security": [
           {
@@ -1141,7 +1141,7 @@
     "/sandbox/payments/capture": {
       "post": {
         "summary": "Capturar cobrança",
-        "description": "Este recurso permite ao vendedor realizar a captura total ou parcial de uma transação.",
+        "description": "\nA captura de pagamento, parcial ou total, é realizada na condição em que o pedido de pagamento é \ncriado com o campo `autoCapture` com valor `false` e a pessoa consumidora tenha realizado o pagamento. \nSerá aguardada a requisição para efetivar a cobrança, com o valor correto, informado no campo `value`. \nO valor pode ser igual ou inferior ao autorizado. Se o campo `value` não for informado, a transação será capturada pelo valor total. \nCapturas com valor superior ao autorizado serão \nrejeitadas.\n\n\n**Informações:**\n- A requisição de captura só é permitida quando a transação é autorizada. Na situação em que a \nrequisição de captura não ocorre em até 6 dias corridos, a contar da autorização, o pedido é cancelado \nautomaticamente;\n\n- Após realizada a captura com sucesso, ainda que de valor parcial, não será possível solicitar\nnova captura do mesmo pedido/transação.",
         "operationId": "Sandbox Capture",
         "security": [
           {
@@ -1264,7 +1264,7 @@
     "/sandbox/payments/cancel": {
       "post": {
         "summary": "Realizar o cancelamento de uma transação não capturada.",
-        "description": "Este recurso permite ao vendedor realizar o cancelamento de um pagamento.",
+        "description": "Este recurso permite ao vendedor realizar o cancelamento de uma transação autorizada e aguardando captura.\nÉ obrigatoriamente necessário passar o `reference_id` ou `transaction_id`.\nPara os pedidos com pagamento autorizado e aguardando captura, é permitido encerrar a requisição com \nantecedência, sempre do valor total, desde que a espera esteja dentro dos 6 dias de solicitação da \ncaptura. Isso evita qualquer possibilidade de cobrança e disponibiliza o saldo da pessoa consumidora \npara novas compras.\n\n",
         "operationId": "Sandbox Cancel",
         "security": [
           {
@@ -1394,7 +1394,7 @@
     "/sandbox/payments": {
       "get": {
         "summary": "Consultar uma cobrança",
-        "description": "Este recurso permite a busca das informações de um determinado pagamento, através do transaction_id e/ou reference_id. É necessário passar o transaction_id ou reference_id obrigatóriamente.",
+        "description": "Este recurso permite a busca de uma cobrança através de um identificador. Dois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores precisa ser enviado. Quando os dois forem enviados, ambos serão validados.",
         "operationId": "Sandbox Get Payments",
         "security": [
           {
@@ -1632,10 +1632,7 @@
             "description": "Identificador único do pagamento no parceiro.",
             "example": "123456222"
           }
-        },
-        "required": [
-          "value"
-        ]
+        }
       },
       "CancelRequestWithBody": {
         "title": "Realizar um cancelamento",
@@ -1702,10 +1699,7 @@
               "EXPIRED_TOKEN",
               "MISSING_TOKEN"
             ]
-          },
-          "required": [
-            "value"
-          ]
+          }
         }
       },
       "SandboxCancelRequestBody": {
@@ -1988,11 +1982,13 @@
           },
           "value": {
             "type": "number",
-            "example": 10.90
+            "format": "float",
+            "example": 10.95
           },
           "refunded_value": {
             "type": "number",
-            "example": 10.90
+            "format": "float",
+            "example": 10.95
           },
           "transactions": {
             "type": "array",
@@ -2007,7 +2003,8 @@
         "properties": {
           "value": {
             "type": "number",
-            "example": 10.90
+            "format": "float",
+            "example": 10.95
           },
           "status": {
             "type": "string",
@@ -2039,7 +2036,8 @@
           },
           "captured_value": {
             "type": "number",
-            "example": 10.90
+            "format": "float",
+            "example": 10.95
           },
           "captured_at": {
             "type": "string",
@@ -2057,7 +2055,8 @@
           },
           "value": {
             "type": "number",
-            "example": 10.90
+            "format": "float",
+            "example": 10.95
           },
           "created_at": {
             "type": "string",
