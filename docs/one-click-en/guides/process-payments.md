@@ -11,11 +11,12 @@ keywords:
 ---
 
 ## About this guide
+
 In this guide we will describe the step-by-step process for you to process payments with PicPay by our logged payment solution.
 
 ## before starting
 
-Before processing online payments by our **PicPay 1-Click** solution, you must have a valid, non-expired access_token. You can check how to generate your tokens [in this article](/one-click/guides/oauth2-flow).
+Before processing online payments by our **PicPay 1-Click** solution, you must have a valid, non-expired `access_token`. You can check how to generate your tokens [in this article](/one-click/guides/oauth2-flow).
 
 ## How it works
 
@@ -33,18 +34,25 @@ With a valid `access_token`, the process of generating a charge on the customer'
 
 ```bash
 
-curl --location --request POST 'https://api.picpay.com/v1/payments/charge' \
+curl  --location --request POST 'https://api.picpay.com/v1/payments/charge' \
 --header 'Api-Key: {{api_key}}' \
---header 'Authorization: Bearer {access_token}' \
+--header 'Authorization: Bearer {{access_token}}' \
 --header 'Content-Type: application/json' \
---data '{"value":3}'
+--header 'x-Idempotency-Key: {{idempotency_key}}' \
+--data '{
+    "value": 0.1,
+    "reference_id": "c413fcb5-d963-4b93-8218-3b776f656553",
+    "auto_capture": true
+}'
 
 ```
-Below is an example of a successful return. The `transaction_id` must be saved as it is the key for reversal processes.
+
+Below is an example of a successful return. The `transaction_id` or `reference_id` must be saved as it is the key for reversal processes.
 
 ```json
 {
-    "transaction_id": "246599282",
+    "transaction_id": "e646263b-2b4d-4b2c-93d8-2568fbffb744",
+    "reference_id": "04c923a4-34d6-43e8-89db-1b563f887b53",
     "created_at": "2021-02-22 19:29:16"
 }
 ```
@@ -65,13 +73,27 @@ We do not report error codes on transaction returns. We only inform you if the t
 }
 ```
 
+#### Timeout de cobrança
+
+> Currently, a payment has a default timeout value of 30 seconds. This management is handled internally to prevent issues with unauthorized charges.
+> In practice, if the payment takes longer than 30 seconds to return a success, the API will return a 500 error, and if the payment is resolved later, it will automatically be undone through an automatic refund.
+> 
+> If your API has a timeout different from 30 seconds, you will need to request this change for your integration.
+
+In these cases, the request will respond with the HTTP Status Code **408 Request Timeout** and with the following body:
+
+```json
+{
+    "message": "Request took too long to process.",
+    "business_code": "REQUEST_TIMEOUT"
+}
+```
+
 ## Next Steps
 
 - [Requesting a refund](/one-click/guides/refund-payments);
 - [Consulting user information](/one-click/guides/user-info);
 
-
 ## Getting help
 
 We hope this article has helped! If you have any questions, you can consult our FAQ or contact us by e-mail : relacionamento-empresas@picpay.com. 
-
