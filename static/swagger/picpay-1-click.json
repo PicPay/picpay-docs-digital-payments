@@ -1836,6 +1836,11 @@
             "description": "Identificador único do pagamento no parceiro.",
             "example": "dfecee7e-2414-4966-8911-104f6389b071"
           },
+          "auto_capture": {
+            "type": "boolean",
+            "example": true,
+            "description": "Identifica o tipo da captura, por padrão é true"
+          },
           "test_case": {
             "type": "string",
             "description": "default: SUCCESS",

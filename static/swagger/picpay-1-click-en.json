@@ -1824,6 +1824,11 @@
             "description": "Unique payment identifier in the partner.",
             "example": "dfecee7e-2414-4966-8911-104f6389b071"
           },
+          "auto_capture": {
+            "type": "boolean",
+            "example": true,
+            "description": "Identifies the capture type, default is true."
+          },
           "test_case": {
             "type": "string",
             "description": "default: SUCCESS",
