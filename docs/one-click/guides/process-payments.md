@@ -47,7 +47,7 @@ curl  --location --request POST 'https://api.picpay.com/v1/payments/charge' \
 
 ```
 
-Abaixo um exemplo de retorno de sucesso. O campo `transaction_id` ou `reference_id` deve ser guardado pois é a chave para processos de estorno.
+Abaixo um exemplo de retorno de sucesso. Os campos `transaction_id` e `reference_id` devem ser guardados pois são as chaves para processos de estorno.
 
 ```json
 {

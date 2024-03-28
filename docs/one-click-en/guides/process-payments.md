@@ -47,7 +47,7 @@ curl  --location --request POST 'https://api.picpay.com/v1/payments/charge' \
 
 ```
 
-Below is an example of a successful return. The `transaction_id` or `reference_id` must be saved as it is the key for reversal processes.
+Below is an example of a successful return. The transaction_id and reference_id fields should be stored as they are the keys for refund processes.
 
 ```json
 {
@@ -73,7 +73,7 @@ We do not report error codes on transaction returns. We only inform you if the t
 }
 ```
 
-#### Timeout de cobrança
+#### Payment Timeout
 
 > Currently, a payment has a default timeout value of 30 seconds. This management is handled internally to prevent issues with unauthorized charges.
 > In practice, if the payment takes longer than 30 seconds to return a success, the API will return a 500 error, and if the payment is resolved later, it will automatically be undone through an automatic refund.
