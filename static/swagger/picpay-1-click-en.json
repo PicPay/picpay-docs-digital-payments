@@ -1696,7 +1696,7 @@
             "description": "Partner unique payment identifier.",
             "example": "4e0124b4-4a13-48a5-9c6b-abb348a6cf4d"
           },
-          "test_scenery": {
+          "test_case": {
             "type": "string",
             "description": "default: SUCCESS",
             "enum": [
@@ -1722,7 +1722,7 @@
             "type": "string",
             "example": "4e0124b4-4a13-48a5-9c6b-abb348a6cf4d"
           },
-          "test_scenery": {
+          "test_case": {
             "type": "string",
             "enum": [
               "SUCCESS",
@@ -1752,7 +1752,7 @@
             "type": "string",
             "example": "4e0124b4-4a13-48a5-9c6b-abb348a6cf4d"
           },
-          "test_scenery": {
+          "test_case": {
             "type": "string",
             "enum": [
               "SUCCESS",
@@ -1796,7 +1796,7 @@
             "format": "float",
             "example": 99.99
           },
-          "test_scenery": {
+          "test_case": {
             "type": "string",
             "description": "default: SUCCESS",
             "enum": [
@@ -1824,7 +1824,7 @@
             "description": "Unique payment identifier in the partner.",
             "example": "dfecee7e-2414-4966-8911-104f6389b071"
           },
-          "test_scenery": {
+          "test_case": {
             "type": "string",
             "description": "default: SUCCESS",
             "enum": [
@@ -1994,12 +1994,12 @@
           "value": {
             "type": "number",
             "format": "float",
-            "example": 2.00
+            "example": 2.52
           },
           "refunded_value": {
             "type": "number",
             "format": "float",
-            "example": 3.00
+            "example": 3.23
           },
           "transactions": {
             "type": "array",
@@ -2015,7 +2015,7 @@
           "value": {
             "type": "number",
             "format": "float",
-            "example": 10.00
+            "example": 10.95
           },
           "status": {
             "type": "string",
@@ -2050,7 +2050,7 @@
           "captured_value": {
             "type": "number",
             "format": "float",
-            "example": 5.00
+            "example": 5.75
           },
           "captured_at": {
             "type": "string",
@@ -2069,7 +2069,7 @@
           "value": {
             "type": "number",
             "format": "float",
-            "example": 3.00
+            "example": 3.23
           },
           "created_at": {
             "type": "string",
