@@ -47,7 +47,7 @@ curl  --location --request POST 'https://api.picpay.com/v1/payments/charge' \
 
 ```
 
-Below is an example of a successful return. The transaction_id and reference_id fields should be stored as they are the keys for refund processes.
+Below is an example of a successful return. The `transaction_id` and `reference_id` fields should be stored as they are the keys for refund processes.
 
 ```json
 {
