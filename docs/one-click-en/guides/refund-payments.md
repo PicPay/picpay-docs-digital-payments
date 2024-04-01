@@ -31,20 +31,26 @@ The `Api-Key` must not be shared in any way and must be stored securely on their
 
 ### Requesting a refund of a charge to the user's wallet
 
-The refund request must be generated with the `transaction_id` by the end-point `v1/payments/{{transaction_id}}/refund`, indicating the amount to be refunded in the body of the request. In the example below, we are requesting a refund of BRL 3.00 in the user's wallet.
+The refund request must be generated with the `transaction_id` or `reference_id` by the end-point `v1/payments/refund`, indicating the amount to be refunded in the body of the request. In the example below, we are requesting a refund of BRL 3.00 in the user's wallet.
 
 :::info Information
 The `transaction_id` is generated when creating the payment.
 :::
 
 ```bash
-curl --location --request POST 'https://api.picpay.com/v1/payments/{{transaction_id}}/refund' \
---header  'Api-Key: {{api_key}}' \
---header 'Authorization: Bearer {access_token}' \
+curl --location 'https://api.picpay.com/v1/payments/refund' \
+--header 'Api-Key: {{api_key}}' \
+--header 'Authorization: Bearer {{access_token}}' \
+--header 'x-Idempotency-Key: {{idempotency_key}}' \
 --header 'Content-Type: application/json' \
---data '{"value":3}'
+--data '{
+  "value": 3,
+  "transaction_id": "daef8a44-b408-4df1-b726-c579723f1116",
+  "reference_id": "f997bbef-8e17-4e59-b1a9-de1fe1dedd51"
+}'
 ```
-If the request is successfully processed, it will return an HTTP code 204
+
+If the request is successfully processed, it will return an HTTP code 200
 
 #### How will the refund be made?
 
