@@ -53,5 +53,5 @@ curl --location --request POST 'https://appws.picpay.com/ecommerce/public/paymen
 As credenciais do lojista serão bloqueadas caso o PicPay identifique que o mesmo está enviando transações 100% online (como, por exemplo, transações de e-commerce como `in-store`), apenas para "driblar" a obrigatoriedade dos dados de `buyer`.
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Ficou alguma dúvida? Você pode consultar o nosso [FAQ](https://ajudaempresas.picpay.com/hc/pt-br/categories/360003836611-PicPay-E-commerce) ou entrar em contato através do e-mail relacionamento-empresas@picpay.com.
+Esperamos ter ajudado com este artigo! Ficou alguma dúvida? Você pode consultar o nosso [FAQ](https://ajudaempresas.picpay.com/hc/pt-br/categories/360003836611-PicPay-E-commerce) ou entrar em contato através do e-mail relacionamento-negocios@picpay.com.
 

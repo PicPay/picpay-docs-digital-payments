@@ -55,4 +55,4 @@ Abaixo um resumo sobre os status explicados acima, assim como outros status rele
 - [Entenda um pouco mais sobre as notificações que o PicPay envia](/checkout/guides/notifications);
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com. 

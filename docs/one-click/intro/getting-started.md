@@ -12,7 +12,7 @@ keywords:
 
 ## Antes de começar
 
-Antes de iniciar sua integração, você deve possuir credenciais válidas. Atualmente, a solução de **PicPay 1-Click** não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-empresas@picpay.com demonstrando interesse.
+Antes de iniciar sua integração, você deve possuir credenciais válidas. Atualmente, a solução de **PicPay 1-Click** não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-negocios@picpay.com demonstrando interesse.
 
 ## Testando sua integração
 
@@ -28,4 +28,4 @@ Atualmente o PicPay não disponibiliza ambiente de SandBox. Todos os testes ser�
 - [Consultando informações dos usuários](/one-click/guides/user-info);
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com

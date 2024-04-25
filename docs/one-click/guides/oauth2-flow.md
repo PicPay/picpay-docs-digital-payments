@@ -28,7 +28,7 @@ Para esta solução de pagamentos, o e-commerce já deve ser um parceiro do PicP
 
 :::info
 
-A solução de **PicPay 1-Click** não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-empresas@picpay.com demonstrando interesse.
+A solução de **PicPay 1-Click** não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-negocios@picpay.com demonstrando interesse.
 
 :::
 
@@ -171,6 +171,6 @@ Com um `access_token` válido, seu aplicativo poderá efetuar cobranças, reembo
 
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com. 
 
  

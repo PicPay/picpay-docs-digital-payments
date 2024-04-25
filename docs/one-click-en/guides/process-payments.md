@@ -96,4 +96,4 @@ In these cases, the request will respond with the HTTP Status Code **408 Request
 
 ## Getting help
 
-We hope this article has helped! If you have any questions, you can consult our FAQ or contact us by e-mail : relacionamento-empresas@picpay.com. 
+We hope this article has helped! If you have any questions, you can consult our FAQ or contact us by e-mail : relacionamento-negocios@picpay.com. 

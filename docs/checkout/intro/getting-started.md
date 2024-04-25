@@ -34,7 +34,7 @@ O PicPay disponibiliza algumas formas de integração. Abaixo vamos falar um pou
 
 
 :::info Informação
-Estamos trabalhando para desenvolver novas integrações. Quer saber mais ou tem interesse em alguma plataforma específica? Nos envie um e-mail para [relacionamento-empresas@picpay.com](mailto:relacionamento-empresas@picpay.com "mailto:relacionamento-empresas@picpay.com"). É desenvolvedor e tem necessidade de alguma plataforma? Aceitamos PRs
+Estamos trabalhando para desenvolver novas integrações. Quer saber mais ou tem interesse em alguma plataforma específica? Nos envie um e-mail para [relacionamento-negocios@picpay.com](mailto:relacionamento-negocios@picpay.com "mailto:relacionamento-negocios@picpay.com"). É desenvolvedor e tem necessidade de alguma plataforma? Aceitamos PRs
 :::
 
 ## Testando sua integração
@@ -52,4 +52,4 @@ Atualmente o PicPay não disponibiliza ambiente de SandBox. Todos os testes ser�
 - [Entenda um pouco mais sobre as notificações que o PicPay envia](/checkout/guides/notifications);
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com
