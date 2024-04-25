@@ -59,4 +59,4 @@ Preencha os campos Application Key e Application Token com as informações da s
 - [Entenda os possíveis status de um pagamento](/checkout/guides/order-status);
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com. 

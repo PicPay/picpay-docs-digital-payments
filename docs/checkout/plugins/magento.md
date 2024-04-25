@@ -58,7 +58,7 @@ Em breve.
 
 ## Obtendo ajuda
 
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com
 
 Adicionalmente, você também pode abrir um issue em nossos repositórios de [Magento 1](https://github.com/PicPay/magento1/issues) ou [Magento 2](https://github.com/PicPay/magento2/issues).
 

@@ -134,6 +134,6 @@ _Exemplo de notificação que o PicPay envia para o e-commerce._
 
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com. 
 
  

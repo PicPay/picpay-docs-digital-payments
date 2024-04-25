@@ -11,7 +11,7 @@ Após efetuar o login em sua aplicação, o cliente autoriza cobranças em sua c
 
 ## Taxas
 
-Como a funcionalidade ainda não está aberta ao público, não temos uma taxa padrão. Para saber mais sobre nossas taxas ou a solução PicPay 1-Click, entre em contato através do e-mail relacionamento-empresas@picpay.com
+Como a funcionalidade ainda não está aberta ao público, não temos uma taxa padrão. Para saber mais sobre nossas taxas ou a solução PicPay 1-Click, entre em contato através do e-mail relacionamento-negocios@picpay.com
 
 ## Funcionalidades disponíveis.
 
@@ -28,4 +28,4 @@ Saiba mais sobre cada funcionalidade nos nossos guias ao longo desta página.
 - [Como começar](/one-click/intro/getting-started);
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com

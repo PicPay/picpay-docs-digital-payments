@@ -76,6 +76,6 @@ We do not report error codes in the chargeback process. We only inform if the tr
 
 ## Getting help
 We hope this article has helped! If you have any questions, you can consult our FAQ or contact us by email:
-relacionamento-empresas@picpay.com. 
+relacionamento-negocios@picpay.com. 
 
 

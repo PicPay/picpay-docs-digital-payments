@@ -70,4 +70,4 @@ Caso algum erro ocorra, informaremos o motivo na resposta da requisição
 - [Solicitando um reembolso](/one-click/guides/refund-payments);
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com. 

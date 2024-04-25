@@ -52,4 +52,4 @@ Para transações pagas com saldo, o valor será devolvido à carteira do usuár
 - [Entenda um pouco mais sobre as notificações que o PicPay envia](/checkout/guides/notifications);
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com. 
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com. 

@@ -11,7 +11,7 @@ Neste breve guia vamos descrever como utilizar o Postman como ferramente de apoi
 
 ## Pré-requisitos
 
-Antes de iniciar sua integração, você deve possuir credenciais válidas. Atualmente, a solução PicPay 1-Click não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-empresas@picpay.com demonstrando interesse.
+Antes de iniciar sua integração, você deve possuir credenciais válidas. Atualmente, a solução PicPay 1-Click não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-negocios@picpay.com demonstrando interesse.
 
 ## O que posso fazer com esta collection?
 
@@ -38,6 +38,6 @@ Após importar nossa collection, você poderá configurar suas chaves dentro nas
 
 ## Não achou o que precisava?
 
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-empresas@picpay.com
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com
 
 
