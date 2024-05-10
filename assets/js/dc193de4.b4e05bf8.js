@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkpicpay=self.webpackChunkpicpay||[]).push([[6419],{27739:a=>{a.exports=JSON.parse('{"allTagsPath":"/picpay-docs-digital-payments/change-log/tags","slug":"payments","name":"payments","count":1,"permalink":"/picpay-docs-digital-payments/change-log/tags/payments"}')}}]);
