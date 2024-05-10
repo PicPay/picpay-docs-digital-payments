@@ -45,12 +45,90 @@ composer require picpay/magento2
 ``` 
 php bin/magento setup:upgrade
 ``` 
+***Passo 3***
+``` 
+php bin/magento setup:di:compile
+```
+***Passo 4***
+``` 
+php bin/magento setup:static-content:deploy pt_BR en_US
+``` 
 
-### Configurando suas chaves dentro dos Plugins
+### Instalação manual para Magento 2 
+Essa primeira etapa faça apenas se seu Magento não tem o Laminas (versões menores que o 2.3.5).<br/>
+Caso seu magento não tenha o Laminas, instale a dependência
 
-Em breve.
+***Passo 1***
+```
+composer require laminas/laminas-http:>2.4.0
+```
+***Passo 2***
+```
+composer require firebase/php-jwt:*
+``` 
+***Passo 3***
+```
+composer require bacon/bacon-qr-code:*
+```
 
-## Próximos passos
+Realize o download do arquivo no **[GitHub](https://github.com/picpay/magento2)** e cole os arquivos na pasta 
+**app/code/Picpay/Payment**.
+
+Depois rode os comandos de instalação abaixo:
+***Passo 1***
+``` 
+php bin/magento setup:upgrade
+``` 
+***Passo 2***
+``` 
+php bin/magento setup:di:compile
+```
+***Passo 3***
+``` 
+php bin/magento setup:static-content:deploy pt_BR en_US
+```
+
+### Configurações
+
+Para realizar a configuração do módulo PicPay para Magento 2, acesse:
+- **Painel Administrador** > **Vendas** > **Picpay** > **Configurações** > localize a opção PicPay dentro do menu **Outros meios de Pagamento**;
+- Em seguida, no menu **PicPay**, clique em **Credenciais** e **Configurações Gerais**;
+<br/>_Atenção: Esta configuração habilita a utilização do módulo PicPay._
+- Insira as credenciais usadas para os serviços do PicPay (_API Token do PicPay_ e _Seller Token do PicPay_), caso você não tenha a mesma é necessário entrar em contato com o método de pagamento.
+
+## Credenciais e Configurações Gerais
+
+Abaixo os detalhes de cada configuração:
+- **Título**: Insira o título da configuração;
+- **API Token do PicPay**: Insira o API Token do PicPay;
+- **Seller Token do PicPay**: Insira o Seller Token do PicPay;
+- **Horas para Expirar**: Horas para expirar a transação (apenas números);
+- **Status para novos pedidos**: Status atribuído aos pedidos recém-criados antes da confirmação do pagamento, via notificações do servidor;
+- **Pagamento de países aplicáveis**: Insira aqui os países onde o pagamento é aplicável;
+- **Habilitar notificação de status do pedido**: Marque esta opção se deseja habilitar a notificação do status do pedido;
+- **Habilitar log de debug**: Ao ativar esta função, os logs serão registrados no servidor para fins de depuração.
+
+## Configurações de Checkout e Layout
+Neste campo você irá configurar o comportamento do checkout:
+- **Modalidade de Checkout**: Determine a página onde o processo de pagamento ocorrerá.
+- **Largura do QRCode no "Modo na mesma Página (transparente)"**: Especifique o tamanho do QRCode em pixels para o modo de checkout transparente. Utilize apenas números.
+- **Largura do QRCode na página de informações de pagamento**: Defina o tamanho do QRCode em pixels para a página de informações de pagamento. Utilize apenas números.
+- **Usar Texto Personalizado no Formulário**: Ative esta opção se deseja exibir uma mensagem personalizada na página de Checkout.
+- **Mostrar QRCode na Página de Sucesso**: Determine se deseja exibir o QRCode na página de sucesso.
+- **Mensagem para mostrar junto ao QRCode na página de sucesso**: Insira a mensagem que será exibida ao lado do QRCode na página de sucesso.
+
+### Logs
+
+Nesta funcionalidade apresentamos os Callbacks no menu de opções do Magento.
+Caso tenha algum retorno de erro, por exemplo estorno/reembolso ou captura, o registro do erro encontra-se no arquivo de logs do próprio Magento.
+- **Caminho**: ```pasta_raiz_do_magento/var/logs```
+
+### Callbacks
+
+Através do menu abaixo, é possível visualizar o payload de callback retornado para PicPay.
+- **Caminho**: Vendas > PicPay > Callbacks
+
+### Próximos passos
 
 - [Entenda os possíveis status de um pagamento](/checkout/guides/order-status);
 - [Entenda como solicitar um cancelamento total](/checkout/guides/cancel-order);
