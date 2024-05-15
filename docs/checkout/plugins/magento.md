@@ -75,6 +75,7 @@ Realize o download do arquivo no **[GitHub](https://github.com/picpay/magento2)*
 **app/code/Picpay/Payment**.
 
 Depois rode os comandos de instalação abaixo:
+
 ***Passo 1***
 ``` 
 php bin/magento setup:upgrade
