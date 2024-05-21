@@ -22,7 +22,7 @@ Antes de processar pagamentos online através de nossa solução de **PicPay 1-C
 
 ### Autenticação
 
-Após a obtenção do `access_token` gerado dinamicamente, nosso end-point de pagamentos também necessita de uma `Api-Key`. Esse dado será compartilhado pelo PicPay juntamente com o seu `client_id` e `client_secret`, no passo anterior a este tópico.
+Além do `access_token`, gerado dinamicamente, o end-point de pagamentos necessita também de uma `Api-Key` que lhe será informada junto com seu `client_id` e `client_secret`.
 
 :::caution Sobre o Api-Key
 O `Api-Key` não deverá ser compartilhado de forma alguma e deve ficar armazenado de forma segura em seus servidores. 
@@ -30,7 +30,7 @@ O `Api-Key` não deverá ser compartilhado de forma alguma e deve ficar armazena
 
 ### Gerando uma cobrança na carteira do usuário
 
-Possuindo um `access_token` e `api_key` válidos, o processo de geração de uma cobrança na carteira dos clientes é extremamente simples e fluído. A cobrança deverá ser gerada através do end-point `v1/payments/charge`, indicando o valor a ser debitado no corpo da requisição. No exemplo abaixo, estamos solicitando a cobrança de R$ 3,00 na carteira do usuário.
+Possuindo um `access_token` e `api_key` válidos, o processo de geração de uma cobrança na carteira dos clientes é extremamente simples e fluido. A cobrança deverá ser gerada através do end-point `v1/payments/charge`, indicando o valor a ser debitado no corpo da requisição. No exemplo abaixo, estamos solicitando a cobrança de R$ 3,00 na carteira do usuário.
 
 ```bash
 
