@@ -32,7 +32,7 @@ A solução de **PicPay 1-Click** não está disponível para todos os nossos lo
 
 :::
 
-### Obtenção do `client_id` e `client_secret` 
+### Obtenção do `client_id`, `client_secret` e `api_key` 
 
 Após o registro do aplicativo, o PicPay compartilhará com o e-commerce as credenciais de acesso, na forma de um `client_id`, `client_secret` e `api_key`. 
 
