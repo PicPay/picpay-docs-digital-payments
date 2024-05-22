@@ -43,7 +43,7 @@ O client ID é uma sequência exposta publicamente usada pela API de serviço pa
  O client secret é usado para autenticar a identidade do aplicativo na API de serviço quando o aplicativo solicita o acesso à conta de um usuário e deve ser mantido privado entre o aplicativo e a API.
 
 #### Um pouco mais sobre o `api_key`
-O api key é um identificador único e criptografado que funciona como uma espécie de senha segura que, além de autenticar o seu acesso a um servidor, fornece a sua identificação durante uma requisição. Ele será utilizado no momento de gerar cobranças.
+O api key é um identificador único que possibilita a identificação de seu serviço durante uma requisição. Ele será utilizado no momento de gerar cobranças.
 
 ## Como funciona?
 
