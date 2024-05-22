@@ -30,7 +30,7 @@ O `Api-Key` não deverá ser compartilhado de forma alguma e deve ficar armazena
 
 ### Gerando uma cobrança na carteira do usuário
 
-Possuindo um `access_token` válido, o processo de geração de uma cobrança na carteira dos clientes é extremamente simples e fluido. A cobrança deverá ser gerada através do end-point `v1/payments/charge`, indicando o valor a ser debitado no corpo da requisição. No exemplo abaixo, estamos solicitando a cobrança de R$ 3,00 na carteira do usuário.
+Possuindo um `access_token` e `api_key` válidos, o processo de geração de uma cobrança na carteira dos clientes é extremamente simples e fluido. A cobrança deverá ser gerada através do end-point `v1/payments/charge`, indicando o valor a ser debitado no corpo da requisição. No exemplo abaixo, estamos solicitando a cobrança de R$ 3,00 na carteira do usuário.
 
 ```bash
 
