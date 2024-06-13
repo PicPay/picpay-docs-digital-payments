@@ -251,6 +251,54 @@
         }
       }
     },
+    "/payments/{referenceId}": {
+      "get": {
+        "tags": [
+          "Consultar dados do pedido"
+        ],
+        "description": "Permitea consultar e identificar o atual estado do pedido de pagamento, através do campo `status`. \nO retorno da requisição informa os valores atualizados pertinentes ao pedido de pagamento, localizados \nno campo `summary`:\n- **Campo `authorized`:** valor autorizado;\n- **Campo `paid`:** valor pago (capturado);\n- **Campo `refunded`:** valor cancelado.",
+        "summary": "Requisição de detalhes sobre o pedido",
+        "operationId": "getPayment",
+        "security": [
+          {
+            "PicpayApiToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "referenceId",
+            "in": "path",
+            "required": true,
+            "description": "Id do pedido",
+            "example": "102030",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resultado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPaymentResponse200"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ErrorGetPayment"
+          }
+        }
+      }
+    },
     "/callback": {
       "post": {
         "servers": [
@@ -447,6 +495,43 @@
                   "example": "Problema geral, verifique se a transação foi criada ou cancele a mesma."
                 }
               }
+            }
+          }
+        }
+      },
+      "ErrorGetPayment": {
+        "description": "Erro Interno",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Mensagem de erro (campo opcional)",
+                  "type": "string",
+                  "example": "Problema ao obter dados do pedido."
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Pedido não encontrado",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Mensagem de erro",
+                  "type": "string",
+                  "example": "Pedido não encontrado."
+                }
+              },
+              "required": [
+                "message"
+              ]
             }
           }
         }
@@ -947,6 +1032,81 @@
         },
         "required": [
           "message"
+        ]
+      },
+      "GetPaymentResponse200": {
+        "title": "Resposta à requisição de obter dados de um pedido",
+        "type": "object",
+        "properties": {
+          "reference": {
+            "description": "É o `referenceId` da requisição de pagamento da pessoa lojista.",
+            "example": "102030",
+            "type": "string"
+          },
+          "authorizationId": {
+            "description": "É o id de pagamento do pedido.",
+            "example": "102030",
+            "type": "string"
+          },
+          "status": {
+            "description": "- \"created\": registro criado\n\n- \"expired\": prazo para pagamento expirado\n\n- \"authorized\": autorizado e aguardando captura\n\n- \"paid\": pago (capturado)\n\n- \"refunded\": pago e devolvido\n\n- \"chargeback\": pago e com chargeback",
+            "type": "string",
+            "enum": [
+              "created",
+              "expired",
+              "authorized",
+              "paid",
+              "refunded",
+              "chargeback"
+            ],
+            "example": "paid"
+          },
+          "summary": {
+            "title": "Resumo dos valores do pagamento",
+            "type": "object",
+            "properties": {
+              "authorized": {
+                "description": "Valor autorizado do pagamento.",
+                "example": 12.04,
+                "type": "number",
+                "format": "double"
+              },
+              "paid": {
+                "description": "Valor pago (capturado) pela pessoa consumidora.",
+                "example": 12.04,
+                "type": "number",
+                "format": "double"
+              },
+              "refunded": {
+                "description": "Valor cancelado.",
+                "example": 0,
+                "type": "number",
+                "format": "double"
+              }
+            }
+          },
+          "payer": {
+            "title": "Dados do pagador do pedido",
+            "type": "object",
+            "properties": {
+              "document": {
+                "description": "CPF do pagador",
+                "example": "***.123.456-**",
+                "type": "string"
+              },
+              "name": {
+                "description": "Nome do pagador.",
+                "example": "Nome Completo do Pagador",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "reference",
+          "authorizationId",
+          "status",
+          "summary"
         ]
       }
     }
