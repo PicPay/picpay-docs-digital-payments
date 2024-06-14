@@ -1104,6 +1104,7 @@
         },
         "required": [
           "reference",
+          "authorizationId",
           "status",
           "summary"
         ]
