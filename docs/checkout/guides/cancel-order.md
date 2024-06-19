@@ -14,7 +14,7 @@ Antes de iniciar sua integração, você deve possuir credenciais válidas. Voc�
 
 ### Autenticação
 
-O PicPay disponibiliza duas chaves de integração: O x-picpay-token e o x-seller-token. Para esta operação, você deverá utilizar o x-picpay-token em suas requisições.
+O PicPay disponibiliza duas chaves de integração: O `x-picpay-token` e o `x-seller-token`. Para esta operação, você deverá utilizar o `x-picpay-token` em suas requisições.
 
 ### Funcionamento básico
 

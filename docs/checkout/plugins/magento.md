@@ -94,7 +94,10 @@ php bin/magento setup:static-content:deploy pt_BR en_US
 Para realizar a configuração do módulo PicPay para Magento 2, acesse:
 - **Painel Administrador** > **Vendas** > **Picpay** > **Configurações** > localize a opção PicPay dentro do menu **Outros meios de Pagamento**;
 - Em seguida, no menu **PicPay**, clique em **Credenciais** e **Configurações Gerais**;
-<br/>_Atenção: Esta configuração habilita a utilização do módulo PicPay._
+<br/>
+
+_Atenção: Esta configuração habilita a utilização do módulo PicPay._
+
 - Insira as credenciais usadas para os serviços do PicPay (_API Token do PicPay_ e _Seller Token do PicPay_), caso você não tenha a mesma é necessário entrar em contato com o método de pagamento.
 
 ## Credenciais e Configurações Gerais
