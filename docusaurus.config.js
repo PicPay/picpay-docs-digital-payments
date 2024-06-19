@@ -10,6 +10,19 @@ module.exports = {
   favicon: 'img/favicon.png',
   organizationName: 'PicPay', // Usually your GitHub org/user name.
   projectName: 'picpay-docs-digital-payments', // Usually your repo name.
+  i18n: {
+    defaultLocale: 'pt',
+    locales: ['pt', 'en'],
+    localeConfigs: {
+        pt: {
+            label: `🇧🇷 Português`,
+            direction: 'ltr',
+        },
+        en: {
+            label: `🇺🇸 English`,
+        }
+    },
+  },
   themeConfig: {
     colorMode: {
       defaultMode: 'light',
@@ -34,13 +47,6 @@ module.exports = {
     gtag: {
       trackingID: 'G-52VCWRLND8',
     },
-    // announcementBar: {
-    //   id: 'officialDocumentation',
-    //   backgroundColor: '#E3F7EA',
-    //   textColor: '#091E42',
-    //   content:
-    //     'Olá 💚! Este é um domínio temporário para nossa documentação de pagamentos online. Em breve migraremos para o <a target="_blank" rel="noopener noreferrer" href="https://studio.picpay.com/">PicPay Studio</a>!',
-    // },
     navbar: {
       // title: 'PicPay',
       logo: {
@@ -50,16 +56,16 @@ module.exports = {
       items: [
         { to: '/checkout/intro/getting-started', label: 'QR Code e Push' },
         { to: '/one-click/intro/overview', label: 'PicPay 1-Click' },
-        // { to: '/subscriptions', label: 'Assinaturas' },
-        // {to: "/one-click-en/guides/user-info", label: "PicPay 1-Click (English)" },
-        // {to: 'blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/picpay/',
-          label: 'GitHub',
+          type: 'localeDropdown',
           position: 'right',
         },
       ],
     },
+    languageTabs: [{
+      highlight: "bash",
+      language: "curl",
+    }],
     footer: {
       style: 'dark',
       links: [
@@ -73,18 +79,6 @@ module.exports = {
             {
               label: 'PicPay 1-Click',
               to: 'one-click/intro/overview',
-            },
-            {
-              label: 'PicPay 1-Click (English)',
-              to: 'one-click-en/guides/user-info-en',
-            },
-            {
-              label: 'Assinaturas',
-              href: 'https://studio.picpay.com/docs/assinaturas',
-            },
-            {
-              label: 'Remessa de Crédito',
-              href: 'https://studio.picpay.com/docs/b2p',
             },
           ],
         },
@@ -109,10 +103,6 @@ module.exports = {
           title: 'Veja mais',
           items: [
             {
-              label: 'Release notes',
-              to: 'blog',
-            },
-            {
               label: 'Github',
               href: 'https://github.com/picpay',
             },
@@ -129,15 +119,6 @@ module.exports = {
         docs: {
           routeBasePath: '/', // Jogando pra home de docs
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/picpay/picpay-docs-digital-payments/tree/main',
-        },
-        blog: {
-          showReadingTime: true,
-          blogTitle: 'Change Log',
-          blogDescription: 'Mudanças e novidades a respeito de nossas soluções de pagamento digital',
-          blogSidebarTitle: 'Posts recentes',
-          routeBasePath: 'change-log',
-          // Please change this to your repo.
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -148,9 +129,6 @@ module.exports = {
   plugins: [[require.resolve('docusaurus-lunr-search'), { languages: ['pt'] }]],
 
   scripts: [
-    /*       {
-        src: '/js/google-tag-manager.js'
-      },  */
     {
       src: '/picpay-docs-digital-payments/js/hotjar.js',
     },
