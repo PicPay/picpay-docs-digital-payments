@@ -13,7 +13,7 @@ After completing your registration, your credentials will be available in the me
 Your credentials are unique and should never be shared with third parties.
 :::
 
-![img](../../../../../../static/img/guides/public-api-tokens.png)
+![img](../../../../../../static/img/guides/vtex-keys.png)
 
 :::caution Attention
 Generating new tokens in the portal takes immediate effect and invalidates previously generated credentials.

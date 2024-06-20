@@ -14,7 +14,7 @@ Após finalizar o seu cadastro, suas credenciais estarão disponíveis no painel
 Suas credenciais são únicas e nunca devem ser compartilhadas com terceiros.
 :::
 
-![img](../../../static/img/guides/public-api-tokens.png)
+![img](../../../static/img/guides/vtex-keys.png)
 
 
 
