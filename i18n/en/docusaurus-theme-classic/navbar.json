@@ -1,0 +1,10 @@
+{
+  "item.label.QR Code e Push": {
+    "message": "QR Code and Push",
+    "description": "Navbar item with label QR Code e Push"
+  },
+  "item.label.PicPay 1-Click": {
+    "message": "PicPay 1-Click",
+    "description": "Navbar item with label PicPay 1-Click"
+  }
+}

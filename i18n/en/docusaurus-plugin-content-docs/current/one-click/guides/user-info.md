@@ -16,7 +16,7 @@ keywords:
 
 In this guide we will describe the step-by-step for you to consult information of authenticated users through our logged payment solution.
 
-## before starting
+## Before starting
 
 Before processing online payments by our **PicPay 1-Click** solution, you must have a valid, non-expired access_token. You can check how to generate your tokens [in this article](/one-click/guides/oauth2-flow).
 
@@ -64,7 +64,7 @@ If an error occurs, we will inform the reason in the response to the request.
 }
 ```
 
-## Next Steps
+## Next steps
 
 - [Making a charge](/one-click/guides/process-payments);
 - [Requesting a refund](/one-click/guides/refund-payments);
@@ -72,7 +72,3 @@ If an error occurs, we will inform the reason in the response to the request.
 ## Getting help
 
 We hope this article has helped! If you have any questions, you can consult our FAQ or contact us by e-mail : atendimento-empresas@picpay.com
-
-
-
-

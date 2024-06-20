@@ -23,16 +23,16 @@ Você não paga taxa de adesão ou de cancelamento e seus primeiros 30 dias são
 | 14 dias | 4,61% |
 | 30 dias | 3,89% |
 
-## Funcionalidades disponíveis.
+## Funcionalidades disponíveis
 
 Atualmente, a API de e-commerce do PicPay oferece as seguintes funcionalidades:
 
--   Geração de link de redirecionamento com QR Code;
--   Geração de QR Code para ser exibido dentro e-commerce e evitar o redirecionamento;
--   Cancelamento de ordens não pagas;
--   Estorno total de ordens pagas;
--   Consulta de status;
-    
+- Geração de link de redirecionamento com QR Code;
+- Geração de QR Code para ser exibido dentro e-commerce e evitar o redirecionamento;
+- Cancelamento de ordens não pagas;
+- Estorno total e parcial de ordens pagas;
+- Consulta de status;
+
 Saiba mais sobre cada funcionalidade nos nossos guias ao longo desta página.
 
 ## Próximos passos
@@ -40,4 +40,5 @@ Saiba mais sobre cada funcionalidade nos nossos guias ao longo desta página.
 - [Como começar](/checkout/intro/getting-started);
 
 ## Obtendo ajuda
+
 Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com

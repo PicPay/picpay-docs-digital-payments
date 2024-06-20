@@ -14,7 +14,7 @@ Após finalizar o seu cadastro, suas credenciais estarão disponíveis no painel
 Suas credenciais são únicas e nunca devem ser compartilhadas com terceiros.
 :::
 
-![img](../../../static/img/guides/public-api-tokens.png)
+![img](../../../static/img/guides/vtex-keys.png)
 
 
 
@@ -28,10 +28,9 @@ O PicPay disponibiliza algumas formas de integração. Abaixo vamos falar um pou
 
 | **Integração** | **A quem se destina** | **Link para o passo-a-passo** |
 |--|--| -- |
-| VTEX | Lojistas que já estão integrados ou possuem uma parceria com a VTEX; | Em breve |
-| Magento 2 | Lojistas que possuem seus e-commerces com Magento 2 | Em breve |
-| API Pública | Lojistas que desejam criar e customizar sua própria experiência (Seja via web, aplicativo ou outros canais). | link |
-
+| VTEX | Lojistas que já estão integrados ou possuem uma parceria com a VTEX; | [VTEX](../plugins/vtex.md) |
+| Magento 2 | Lojistas que possuem seus e-commerces com Magento 2 | [Magento](../plugins/magento.md) |
+| API Pública | Lojistas que desejam criar e customizar sua própria experiência (Seja via web, aplicativo ou outros canais). | [API Pública](../guides/accepting-payments.md) |
 
 :::info Informação
 Estamos trabalhando para desenvolver novas integrações. Quer saber mais ou tem interesse em alguma plataforma específica? Nos envie um e-mail para [relacionamento-negocios@picpay.com](mailto:relacionamento-negocios@picpay.com "mailto:relacionamento-negocios@picpay.com"). É desenvolvedor e tem necessidade de alguma plataforma? Aceitamos PRs
@@ -40,7 +39,6 @@ Estamos trabalhando para desenvolver novas integrações. Quer saber mais ou tem
 ## Testando sua integração
 
 Atualmente o PicPay não disponibiliza ambiente de SandBox. Todos os testes serão feitos no ambiente de produção e não geram qualquer ônus ao desenvolvedor/lojista, sendo que todos os pagamentos realizados podem ser imediatamente estornados (Através de nossa API de cancelamento, ou pelo painel lojista).
-
 
 ![img](../../../static/img/guides/cancel-transactions.gif)
 

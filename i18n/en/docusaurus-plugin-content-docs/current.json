@@ -1,0 +1,42 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Introdução": {
+    "message": "Introduction",
+    "description": "The label for category Introdução in sidebar docs"
+  },
+  "sidebar.docs.category.Guias": {
+    "message": "Guides",
+    "description": "The label for category Guias in sidebar docs"
+  },
+  "sidebar.docs.category.Plugins e plataformas": {
+    "message": "Plugins and platforms",
+    "description": "The label for category Plugins e plataformas in sidebar docs"
+  },
+  "sidebar.docs.category.Recursos": {
+    "message": "Resources",
+    "description": "The label for category Recursos in sidebar docs"
+  },
+  "sidebar.pagamentoLogado.category.Introdução": {
+    "message": "Introduction",
+    "description": "The label for category Introdução in sidebar pagamentoLogado"
+  },
+  "sidebar.pagamentoLogado.category.Guias": {
+    "message": "Guides",
+    "description": "The label for category Guias in sidebar pagamentoLogado"
+  },
+  "sidebar.pagamentoLogado.category.Recursos": {
+    "message": "Resources",
+    "description": "The label for category Recursos in sidebar pagamentoLogado"
+  },
+  "sidebar.subscriptions.category.Introdução": {
+    "message": "Introduction",
+    "description": "The label for category Introdução in sidebar subscriptions"
+  },
+  "sidebar.subscriptions.category.API Reference": {
+    "message": "API Reference",
+    "description": "The label for category API Reference in sidebar subscriptions"
+  }
+}

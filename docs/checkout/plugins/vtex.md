@@ -25,18 +25,12 @@ Estas chaves deverão ser copiadas e inseridas dentro do seu painel de configura
 Toda vez que novos tokens são gerados através do botão **Gerar Tokens**, os tokens antigos serão invalidados.
 :::
 
-:::warning Problemas na obtenção de chaves.
-
-Por conta de uma instabilidade em nosso novo painel lojista (https://painel-empresas.picpay.com/) recomendamos que as chaves de integração da VTEX sejam obtidas através do painel lojista antigo (https://lojista.picpay.com/ecommerce-token).
-
-:::
-
 ### Habilitando o PicPay como forma de pagamento
 
 Dentro de seu painel da VTEX, você deverá configurar o PicPay como um novo gateway de pagamentos.
 
 
-**Passo 1** - Dentro da sessão de pagamentos, clique em **Congigurações**
+**Passo 1** - Dentro da sessão de pagamentos, clique em **Configurações**
 
 ![Menu VTEX](../../../static/img/guides/vtex-menu.png)
 
@@ -59,4 +53,4 @@ Preencha os campos Application Key e Application Token com as informações da s
 - [Entenda os possíveis status de um pagamento](/checkout/guides/order-status);
 
 ## Obtendo ajuda
-Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com. 
+Esperamos ter ajudado com este artigo! Caso tenha restado alguma dúvida, você pode consultar o nosso FAQ ou entrar em contato através do e-mail relacionamento-negocios@picpay.com.

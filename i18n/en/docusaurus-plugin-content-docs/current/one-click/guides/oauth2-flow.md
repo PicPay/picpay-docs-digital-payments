@@ -76,7 +76,7 @@ Brief explanation of the above URL parameters:
 
 When using the URL from the [previous step](/one-click/guides/oauth2-flow#redirecionando-usuário-para-tela-de-login-e-senha), the client will be redirected to a login and password page. Your customer must have to login using his PicPay username and password.
 
-![img](../../../static/img/guides/one-click/login.png)
+![img](../../../../../../static/img/guides/one-click/login.png)
 
 After login, the customer must verify the permissions requested by the application.
 
@@ -84,7 +84,7 @@ After login, the customer must verify the permissions requested by the applicati
 The requested permissions will depend on the scope settings set when creating the credentials.
 :::
 
-![img](../../../static/img/guides/one-click/authorization.png)
+![img](../../../../../../static/img/guides/one-click/authorization.png)
 
 :::caution Warning
 The client may or may not grant permissions. Your application must be prepared to receive two types of response.
@@ -99,7 +99,7 @@ If the client authorizes the application in the [previous step](/one-click/guide
 
 The authorization code will be sent as a parameter along with the indicated URL and must be used to generate tokens in the next step.
 
-![img](../../../static/img/guides/one-click/get-with-code.png)
+![img](../../../../../../static/img/guides/one-click/get-with-code.png)
 
 ### Token request
 
