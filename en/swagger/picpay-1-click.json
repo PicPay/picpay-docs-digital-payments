@@ -1,0 +1,2140 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "9wxuk7cbwz0ek"
+  },
+  "info": {
+    "title": "PicPay 1-Click",
+    "description": "# Introdução\nA API do PicPay 1-Click foi desenvolvida \ncom base na tecnologia REST, seguindo os atuais padrões \ntécnicos de mercado. Todas as URLs utilizam o protocolo \nHTTP como autenticação, verbos e códigos de retorno.\n\n## Autenticação e Autorização\nToda a comunicação utiliza tokens para autorização, em \nconformidade com as especificações do OpenID Connect e \nOAuth 2.0. Os tokens são criados a partir da autenticação \ncom as credenciais fornecidas pelo PicPay, e da autorização \ndo usuário, como mostrado no nosso guia.\n",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/v1"
+    }
+  ],
+  "paths": {
+    "/payments/charge": {
+      "post": {
+        "summary": "Criar cobrança",
+        "description": "Este recurso possibilita que o vendedor efetue uma cobrança na carteira do usuário. Se o vendedor optar por confirmar o valor após a autorização do cliente, \né necessário enviar o parâmetro `autoCapture` com o valor `false`, indicando que o valor autorizado será apenas reservado temporariamente (captura tardia).\n Caso o parâmetro `autoCapture` não seja especificado, assumirá automaticamente o valor `true`, seguindo o fluxo de captura automática.\n Para mais detalhes de como funciona o endpoint `capture`, consulte em [_Capturar transação_](#operations-Pagamentos-cancelPayment).",
+        "operationId": "charge",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChargeRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewTransactionCreatedData"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Request Timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestTimeoutResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pagamentos"
+        ]
+      }
+    },
+    "/payments/cancel": {
+      "post": {
+        "summary": "Realizar o cancelamento de uma transação não capturada",
+        "description": "Este recurso permite ao vendedor realizar o cancelamento de uma transação autorizada e aguardando captura.\nPara as transações autorizadas e aguardando captura, é permitido cancelar a transação com \nantecedência, sempre do valor total, desde que a espera esteja dentro dos 5 dias de solicitação da \ncaptura. Isso evita qualquer possibilidade de cobrança e disponibiliza o saldo da pessoa consumidora \npara novas compras.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
+        "operationId": "cancelPayment",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelRequestWithBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cancelamento realizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionCantBeCancel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pagamentos"
+        ]
+      }
+    },
+    "/payments/capture": {
+      "post": {
+        "summary": "Capturar transação",
+        "description": "\nA captura de pagamento, parcial ou total, é realizada na condição em que a transação é \ncriada com o campo `autoCapture` com valor `false` e a pessoa consumidora tenha realizado o pagamento. \nSerá aguardada a requisição para efetivar a cobrança, com o valor correto, informado no campo `value`. \nO valor pode ser igual ou inferior ao autorizado. Se o campo `value` não for informado, a transação será capturada pelo valor total. \nCapturas com valor superior ao autorizado serão \nrejeitadas.\n\n\n**Informações:**\n- A requisição de captura só é permitida quando a transação é autorizada. Na situação em que a \nrequisição de captura não ocorre em até 5 dias corridos, a contar da autorização, a transação é cancelada \nautomaticamente;\n\n- Após realizada a captura com sucesso, ainda que de valor parcial, não será possível solicitar\nnova captura da mesma transação.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
+        "operationId": "capture",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaptureRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionCaptureInvalidValue"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionCantBeCaptured"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pagamentos"
+        ]
+      }
+    },
+    "/payments/{transaction_id}/refund": {
+      "post": {
+        "deprecated": true,
+        "summary": "Realizar um estorno total ou parcial",
+        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de reembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
+        "operationId": "refund",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "transaction_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reembolso total ou parcial realizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pagamentos"
+        ]
+      }
+    },
+    "/payments/refund": {
+      "post": {
+        "summary": "Realizar um estorno total ou parcial",
+        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. Caso você especifique um valor de reembolso menor do que foi cobrado, será realizado um reembolso parcial da transação. Se o campo `value` não for informado, a transação será reembolsada pelo valor total.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Pelo menos um dos identificadores **precisa** ser enviado. Quando ambos forem enviados, ambos serão validados.",
+        "operationId": "refundwithbody",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequestWithPayloadBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reembolso total ou parcial realizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pagamentos"
+        ]
+      }
+    },
+    "/payments": {
+      "get": {
+        "summary": "Consultar uma cobrança",
+        "description": "Este recurso permite a busca de uma cobrança através de um identificador. \n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
+        "operationId": "find",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "reference_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "transaction_id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Busca realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindPaymentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidFindNullInput"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pagamentos"
+        ]
+      }
+    },
+    "/sandbox/payments/charge": {
+      "post": {
+        "summary": "Criar cobrança",
+        "description": "Este recurso possibilita que o vendedor efetue uma cobrança na carteira do usuário. Se o vendedor optar por confirmar o valor após a autorização do cliente, \né necessário enviar o parâmetro `autoCapture` com o valor `false`, indicando que o valor autorizado será apenas reservado temporariamente (captura tardia).\n Caso o parâmetro `autoCapture` não seja especificado, assumirá automaticamente o valor `true`, seguindo o fluxo de captura automática.\n Para mais detalhes de como funciona o endpoint `capture`, consulte em [_Capturar transação_](#operations-Sandbox-SandboxCancel).",
+        "operationId": "Sandbox Charge",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SandboxChargeRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewTransactionCreatedData"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Sandbox"
+        ]
+      }
+    },
+    "/sandbox/payments/cancel": {
+      "post": {
+        "summary": "Realizar o cancelamento de uma transação não capturada.",
+        "description": "Este recurso permite ao vendedor realizar o cancelamento de uma transação autorizada e aguardando captura.\nPara as transações autorizadas e aguardando captura, é permitido cancelar a transação com \nantecedência, sempre do valor total, desde que a espera esteja dentro dos 5 dias de solicitação da \ncaptura. Isso evita qualquer possibilidade de cobrança e disponibiliza o saldo da pessoa consumidora \npara novas compras.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
+        "operationId": "SandboxCancel",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SandboxCancelRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cancelamento realizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionCantBeCancel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Sandbox"
+        ]
+      }
+    },
+    "/sandbox/payments/capture": {
+      "post": {
+        "summary": "Capturar cobrança",
+        "description": "\nA captura de pagamento, parcial ou total, é realizada na condição em que a transação é \ncriada com o campo `autoCapture` com valor `false` e a pessoa consumidora tenha realizado o pagamento. \nSerá aguardada a requisição para efetivar a cobrança, com o valor correto, informado no campo `value`. \nO valor pode ser igual ou inferior ao autorizado. Se o campo `value` não for informado, a transação será capturada pelo valor total. \nCapturas com valor superior ao autorizado serão \nrejeitadas.\n\n\n**Informações:**\n- A requisição de captura só é permitida quando a transação é autorizada. Na situação em que a \nrequisição de captura não ocorre em até 5 dias corridos, a contar da autorização, a transação é cancelada \nautomaticamente;\n\n- Após realizada a captura com sucesso, ainda que de valor parcial, não será possível solicitar\nnova captura da mesma transação.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
+        "operationId": "Sandbox Capture",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SandboxCaptureRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Ok"
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionCaptureInvalidValue"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionCantBeCaptured"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Sandbox"
+        ]
+      }
+    },
+    "/sandbox/payments/{transaction_id}/refund": {
+      "post": {
+        "deprecated": true,
+        "summary": "Realizar um estorno total ou parcial",
+        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. \nCaso você especifique um valor de reembolso menor do que foi cobrado, a transação  original será cancelada e faremos uma segunda cobrança na carteira do usuário  com o valor da diferença.",
+        "operationId": "Sandbox Refund",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "transaction_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SandboxRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reembolso total ou parcial realizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Sandbox"
+        ]
+      }
+    },
+    "/sandbox/payments/refund": {
+      "post": {
+        "summary": "Realizar um estorno total ou parcial",
+        "description": "Este recurso permite ao vendedor realizar o estorno total ou parcial de um pagamento. Caso você especifique um valor de reembolso menor do que foi cobrado, será realizado um reembolso parcial da transação. Se o campo `value` não for informado, a transação será reembolsada pelo valor total. \n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
+        "operationId": "SandboxRefundWithBody",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SandboxRefundRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reembolso total ou parcial realizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargeTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Sandbox"
+        ]
+      }
+    },
+    "/sandbox/payments": {
+      "get": {
+        "summary": "Consultar uma cobrança",
+        "description": "Este recurso permite a busca de uma cobrança através de um identificador.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
+        "operationId": "Sandbox Get Payments",
+        "security": [
+          {
+            "Authorization": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "reference_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "transaction_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "test_case",
+            "description": "default: SUCCESS",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SUCCESS",
+                "SUCCESS_REFUNDED",
+                "SUCCESS_PARTIALLY_REFUNDED",
+                "INTERNAL_SERVER_ERROR",
+                "NOT_FOUND"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Busca realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindPaymentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erros com seu Access Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "description": "Token inválido.",
+                    "value": {
+                      "message": "Invalid authentication credentials"
+                    }
+                  },
+                  "tokenNotFound": {
+                    "description": "Resposta quando o recurso é chamado sem o acess_token.",
+                    "value": {
+                      "message": "Unauthorized"
+                    }
+                  },
+                  "expiredToken": {
+                    "description": "Access Token expirado",
+                    "value": {
+                      "message": "Token claims invalid: [\"exp\"]=\"token expired\""
+                    }
+                  },
+                  "badTokenFormat": {
+                    "description": "Resposta quando o recurso é chamado com um token que não é um JWT válido.",
+                    "value": {
+                      "message": "Bad token; invalid JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Resposta para erros de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidFindNullInput"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindTooManyRequestsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro inesperado no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Sandbox"
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Authorization": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "ChargeRequestBody": {
+        "title": "Criar cobrança",
+        "type": "object",
+        "x-examples": {
+          "Cobrar R$ 99,99 da carteira do cliente.": {
+            "value": 99.99,
+            "reference_id": "dfecee7e-2414-4966-8911-104f6389b070"
+          }
+        },
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99,
+            "description": "Valor em reais a ser cobrado do cliente."
+          },
+          "reference_id": {
+            "type": "string",
+            "example": "dfecee7e-2414-4966-8911-104f6389b071",
+            "description": "Identificador único do pagamento no parceiro."
+          },
+          "auto_capture": {
+            "type": "boolean",
+            "example": true,
+            "description": "Identifica o tipo da captura, por padrão é true"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      },
+      "CaptureRequestBody": {
+        "title": "Capturar cobrança",
+        "type": "object",
+        "x-examples": {
+          "Capturar R$ 99,99 da carteira do cliente.": {
+            "value": 99.99,
+            "reference_id": "dfecee7e-2414-4966-8911-104f6389b070",
+            "transaction_id": "bdc7bfd7-98bc-4910-801e-99206076947d"
+          }
+        },
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99,
+            "description": "Valor em reais a ser combrado do cliente."
+          },
+          "reference_id": {
+            "type": "string",
+            "example": "dfecee7e-2414-4966-8911-104f6389b071",
+            "description": "Identificador único do pagamento no parceiro."
+          },
+          "transaction_id": {
+            "type": "string",
+            "example": "bdc7bfd7-98bc-4910-801e-99206076947d",
+            "description": "Identificador único do pagamento no parceiro."
+          }
+        }
+      },
+      "RefundRequestBody": {
+        "title": "Realizar um reembolso",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99
+          }
+        }
+      },
+      "RefundRequestWithPayloadBody": {
+        "title": "Realizar um reembolso com transaction_id ou reference_id",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99
+          },
+          "transaction_id": {
+            "type": "string",
+            "description": "Identificador da transação criada.",
+            "example": "57e8b5af-d42b-42a4-9d5e-181aacf1ee9e"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro.",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          }
+        }
+      },
+      "CancelRequestWithBody": {
+        "title": "Realizar um cancelamento",
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "example": "57e8b5af-d42b-42a4-9d5e-181aacf1ee9e"
+          },
+          "reference_id": {
+            "type": "string",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          }
+        }
+      },
+      "CancelResponseBody": {
+        "title": "Reembolso realizado parcialmente",
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "description": "Identificador da transação cancelada.",
+            "example": "57e8b5af-d42b-42a4-9d5e-181aacf1ee9e"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro.",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2020-04-16 20:59:58",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+          }
+        }
+      },
+      "SandboxRefundRequestBody": {
+        "title": "Reembolsar cobrança",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99
+          },
+          "transaction_id": {
+            "type": "string",
+            "description": "Identifier of the created transaction.",
+            "example": "57e8b5af-d42b-42a4-9d5e-181aacf1ee9e"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Partner unique payment identifier.",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          },
+          "test_case": {
+            "type": "string",
+            "description": "default: SUCCESS",
+            "enum": [
+              "SUCCESS",
+              "GRAND_VALUE",
+              "TRANSACTION_NOT_FOUND",
+              "INTERNAL_SERVER_ERROR",
+              "EXPIRED_TOKEN",
+              "MISSING_TOKEN"
+            ]
+          }
+        }
+      },
+      "SandboxCancelRequestBody": {
+        "title": "Cancelar uma transação",
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "example": "57e8b5af-d42b-42a4-9d5e-181aacf1ee9e"
+          },
+          "reference_id": {
+            "type": "string",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          },
+          "test_case": {
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "TRANSACTION_NOT_FOUND",
+              "INVALID_STATUS",
+              "INTERNAL_SERVER_ERROR",
+              "EXPIRED_TOKEN",
+              "MISSING_TOKEN"
+            ]
+          }
+        }
+      },
+      "SandboxCaptureRequestBody": {
+        "title": "Capturar cobrança",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99
+          },
+          "transaction_id": {
+            "type": "string",
+            "example": "57e8b5af-d42b-42a4-9d5e-181aacf1ee9e"
+          },
+          "reference_id": {
+            "type": "string",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          },
+          "test_case": {
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "GRAND_VALUE",
+              "INVALID_STATUS",
+              "TRANSACTION_NOT_FOUND",
+              "EXPIRED_TOKEN",
+              "MISSING_TOKEN",
+              "INTERNAL_SERVER_ERROR"
+            ]
+          }
+        }
+      },
+      "RefundResponseBody": {
+        "title": "Reembolso realizado parcialmente",
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "description": "Identificador da transação cancelada, ou da nova transação criada para os casos de ao reembolso parcial.",
+            "example": "57e8b5af-d42b-42a4-9d5e-181aacf1ee9e"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro.",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2020-04-16 20:59:58",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+          }
+        }
+      },
+      "SandboxRequestBody": {
+        "title": "Reembolsar cobrança",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99
+          },
+          "test_case": {
+            "type": "string",
+            "description": "default: SUCCESS",
+            "enum": [
+              "SUCCESS",
+              "GRAND_VALUE",
+              "TRANSACTION_NOT_FOUND",
+              "INTERNAL_SERVER_ERROR",
+              "EXPIRED_TOKEN",
+              "MISSING_TOKEN"
+            ]
+          }
+        }
+      },
+      "SandboxChargeRequestBody": {
+        "title": "Criar cobrança",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 99.99
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro.",
+            "example": "dfecee7e-2414-4966-8911-104f6389b071"
+          },
+          "auto_capture": {
+            "type": "boolean",
+            "example": true,
+            "description": "Identifica o tipo da captura, por padrão é true"
+          },
+          "test_case": {
+            "type": "string",
+            "description": "default: SUCCESS",
+            "enum": [
+              "SUCCESS",
+              "INTERNAL_SERVER_ERROR",
+              "EXPIRED_TOKEN",
+              "MISSING_TOKEN"
+            ]
+          }
+        }
+      },
+      "NewTransactionCreatedData": {
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "description": "Identificador da transação criada.",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro.",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2020-04-16 20:59:58",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+          }
+        }
+      },
+      "UnprocessableEntityResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "The given data was invalid."
+          },
+          "errors": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "message"
+                }
+              }
+            }
+          },
+          "business_code": {
+            "type": "string",
+            "example": "INVALID_INPUT"
+          }
+        }
+      },
+      "ChargeTooManyRequestsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "API rate limit exceeded"
+          }
+        }
+      },
+      "InternalServerErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "format": "string",
+            "example": "Ops! Ocorreu um erro inesperado ao processar a sua solicitação."
+          },
+          "business_code": {
+            "type": "string",
+            "format": "string",
+            "example": "INTERNAL_ERROR"
+          }
+        }
+      },
+      "TransactionNotFound": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Transaction not found"
+          },
+          "business_code": {
+            "type": "string",
+            "example": "TRANSACTION_NOT_FOUND"
+          }
+        }
+      },
+      "InvalidFindNullInput": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "É necessário informar o reference_id ou transaction_id."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "INVALID_INPUT"
+          }
+        }
+      },
+      "RequestTimeoutResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Request took too long to process."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "REQUEST_TIMEOUT"
+          }
+        }
+      },
+      "FindTooManyRequestsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "API rate limit exceeded"
+          }
+        }
+      },
+      "FindPaymentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "a97e4225-c697-4416-9ba2-6e7b6ddd127b"
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "Identificador único do pagamento no parceiro.",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          },
+          "status": {
+            "type": "string",
+            "description": "- \"AUTHORIZED\": Autorizada\n\n - \"EXPIRED\": Expirada - Ocorre quando a transação está autorizada e não é capturada dentro do período de 5 dias corridos. \n\n- \"CANCELLED\": Cancelada\n\n- \"PAID\": Paga\n\n- \"PARTIALLY_REFUNDED\": Reembolsada parcialmente\n\n- \"REFUNDED\": Reembolsada\n\n- \"ERROR\": Erro\n",
+            "enum": [
+              "AUTHORIZED",
+              "EXPIRED",
+              "CANCELLED",
+              "PAID",
+              "PARTIALLY_REFUNDED",
+              "REFUNDED",
+              "ERROR"
+            ],
+            "example": "PARTIALLY_REFUNDED"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00",
+            "description": "Formato ISO 8601"
+          },
+          "paid_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00",
+            "description": "Formato ISO 8601"
+          },
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 2.52
+          },
+          "refunded_value": {
+            "type": "number",
+            "format": "float",
+            "example": 3.23
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            }
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 10.95
+          },
+          "status": {
+            "type": "string",
+            "description": "- \"AUTHORIZED\": Autorizada\n\n - \"EXPIRED\": Expirada - Ocorre quando a transação está autorizada e não é capturada dentro do período de 5 dias corridos.\n\n- \"CANCELLED\": Cancelada\n\n- \"PAID\": Paga\n\n- \"PARTIALLY_REFUNDED\": Reembolsada parcialmente\n\n- \"REFUNDED\": Reembolsada\n\n- \"ERROR\": Erro\n",
+            "enum": [
+              "AUTHORIZED",
+              "EXPIRED",
+              "CANCELLED",
+              "PAID",
+              "PARTIALLY_REFUNDED",
+              "REFUNDED",
+              "ERROR"
+            ],
+            "example": "PARTIALLY_REFUNDED"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00",
+            "description": "Formato ISO 8601"
+          },
+          "id": {
+            "type": "string",
+            "example": "61b19b5c-0cd2-4cb9-931a-c797bb8b9222"
+          },
+          "refunds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Refunds"
+            }
+          },
+          "captured_value": {
+            "type": "number",
+            "format": "float",
+            "example": 5.75
+          },
+          "captured_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00"
+          }
+        }
+      },
+      "Refunds": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "09950d4a-2df4-4d60-9cbc-ac8f004fa595"
+          },
+          "value": {
+            "type": "number",
+            "format": "float",
+            "example": 3.23
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-05-29T19:25:34-03:00",
+            "description": "Format ISO 8601"
+          }
+        }
+      },
+      "TransactionCantBeCaptured": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Transaction has invalid status for capture."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "TRANSACTION_CANT_BE_CAPTURED"
+          }
+        }
+      },
+      "TransactionCantBeCancel": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Transaction has invalid status for cancellation."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "TRANSACTION_CANT_BE_CANCELLED"
+          }
+        }
+      },
+      "TransactionCaptureInvalidValue": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Captured value is invalid."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "CAPTURED_INVALID_VALUE"
+          }
+        }
+      }
+    }
+  }
+}

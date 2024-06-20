@@ -1,0 +1,810 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Picpay - Webhooks de Assinaturas",
+        "description": " O servi\u00e7o de assinaturas da **PicPay** fornece a seus usu\u00e1rios a op\u00e7\u00e3o de ter acesso a **Webhooks** para consulta de dados.\n___\n# Webhooks\nCaso o usu\u00e1rio tenha webhooks configurados em seu perfil de assinaturas, todos os eventos importantes passar\u00e3o a ser enviados para ele. Sendo eles:\n- **Nova Assinatura**: `new_subscription`;\n- **Nova solicita\u00e7\u00e3o de cancelamento de assinatura**: `subscription_cancel_request`;\n- **Assinatura cancelada**: `subscription_cancelled`;\n- **Pagamento processado**: `payment_processed`.\n\n# Configurando\nPara cadastrar um webhook associado a sua conta, basta acessar o menu \"Para Desenvolvedores\" nas configura\u00e7\u00f5es do seu perfil atrav\u00e9s do Portal <a href='https:\/\/assinaturas.picpay.com' target='_blank'>assinaturas.picpay.com<\/a>.\nPara ser aceito como v\u00e1lido, o webhook precisa cumprir os seguintes requisitos:\n- Deve ser implementado sobre o **protocolo SSL** (https);\n- Deve retornar o c\u00f3digo **HTTP 200** em caso de sucesso e qualquer outro em caso de erro;\n- Responder em menos de **5 segundos** (temos timeout m\u00e1ximo de 5s);\n- Aceitar o metodo http **POST**.\n\nAo cadastrar um webhook, ser\u00e1 informada uma chave **X-Verification-Key** (UUID V4) \u00fanica que ser\u00e1 enviada no HEADER de toda requisi\u00e7\u00e3o para que voc\u00ea possa validar se a requisi\u00e7\u00e3o recebida foi mesmo enviada pela PicPay.\n# Escolhendo a vers\u00e3o\nNa mesma p\u00e1gina onde \u00e9 cadastrada o webhook \u00e9 poss\u00edvel escolher sua vers\u00e3o.\nAtualmente existem as vers\u00f5es V1 e V2.\n\n## O que muda de uma vers\u00e3o para outra?\nA tabela abaixo apresenta as altera\u00e7\u00f5es promovidas na **V2**, para fim de adequa\u00e7\u00e3o \u00e0 LGPD:\n| Objeto | Campos removidos |\n  | - | - |\n  |`Subscriber` | **birth_date**, **gender**, **image_url_small** e **image_url_large**|\n  |`Address` | **id**, **account_id**, **status**, **icon_name** e **is_primary**|\n\n# Recebendo\nAp\u00f3s configurar seu webhook, todos os eventos ocorridos no servi\u00e7o de assinaturas ser\u00e3o comunicados na URL cadastrada mandando um http **POST** com o padr\u00e3o descrito nos endpoints descritos abaixo.\nEm todo evento ser\u00e1 enviado um par\u00e2metro `event_id` \u00fanico para permitir que um evento n\u00e3o seja processado m\u00faltiplas vezes em seu back-end, situa\u00e7\u00e3o poss\u00edvel se processamento do webhook levar mais do que o **limite de 5 segundos** citado anteriormente.\n\n\n## Veja a seguir os exemplos dos eventos que disparamos\n```\nObs.: todos os webhooks s\u00e3o disparados para o mesmo URL explicado na configura\u00e7\u00e3o acima. O path de cada webhook abaixo n\u00e3o passa de mera ilustra\u00e7\u00e3o.\n``` ",
+        "version": "1.0.1"
+    },
+    "paths": {
+        "\/new_subscription": {
+            "post": {
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Webhook de Nova Assinatura (V1 - Deprecated)",
+                "description": "Enviaremos esse POST quando uma nova assinatura for criada\n\n**status**:\n- `active`: assinatura ativa;\n- `cancelled`: assinatura cancelada;\n- `payment_delayed`: assinatura aguardando pagamento;\n- `pending_cancellation`: assinatura ativa mas ser\u00e1 cancelada no pr\u00f3ximo ciclo;\n- `under_analysis`: assinatura em an\u00e1lise.",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/verification_key"
+                    },
+                    {
+                        "in": "query",
+                        "name": "event_type",
+                        "description": "Tipo de evento",
+                        "example": "new_subscription",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/date"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/event_id"
+                    },
+                    {
+                        "in": "query",
+                        "name": "event",
+                        "description": "Detalhes do evento",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "subscription_id": {
+                                    "type": "string",
+                                    "description": "Id da assinatura gerada"
+                                },
+                                "value": {
+                                    "type": "number",
+                                    "description": "Valor assinado"
+                                },
+                                "status": {
+                                    "$ref": "#\/components\/schemas\/Subscription\/properties\/status"
+                                },
+                                "sign_up_date": {
+                                    "type": "string",
+                                    "description": "Data de inscri\u00e7\u00e3o do assinante"
+                                },
+                                "transaction_id": {
+                                    "type": "string",
+                                    "description": "Id da transa\u00e7\u00e3o"
+                                },
+                                "next_payment_date": {
+                                    "type": "string",
+                                    "description": "Data da pr\u00f3xima cobran\u00e7a em formato ISO-8601"
+                                },
+                                "address": {
+                                    "$ref": "#\/components\/schemas\/Address"
+                                },
+                                "subscriber": {
+                                    "$ref": "#\/components\/schemas\/Subscriber"
+                                },
+                                "plan": {
+                                    "$ref": "#\/components\/schemas\/Plan"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#\/components\/responses\/Success"
+                    },
+                    "402": {
+                        "$ref": "#\/components\/responses\/Error"
+                    }
+                }
+            }
+        },
+        "\/subscription_cancel_request": {
+            "post": {
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Webhook de Solicita\u00e7\u00e3o de Cancelamento de Assinatura",
+                "description": "Enviaremos esse POST quando uma solicita\u00e7\u00e3o de cancelamento for gerada. Isso significa que a assinatura permanecer\u00e1 ativa at\u00e9 a pr\u00f3xima renova\u00e7\u00e3o, quando seria cancelada e dispararia o gatilho de Assinatura Cancelada.\n\n**refund_policy**:\n- `no_refund`: sem reembolso;\n- `full_refund`: reembolso total;\n\n**cancel_reason**:\n- `consumer_request`: solicitado pelo assinante;\n- `producer_request`: solicitado pelo vendedor;\n- `plan_cancelled`: plano assinado foi cancelado pelo vendedor;\n- `missing_payment`: pagamento falhou.",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/verification_key"
+                    },
+                    {
+                        "in": "query",
+                        "name": "event_type",
+                        "description": "Tipo de evento",
+                        "example": "subscription_cancel_request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/date"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/event_id"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/subscription_cancelled"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#\/components\/responses\/Success"
+                    },
+                    "402": {
+                        "$ref": "#\/components\/responses\/Error"
+                    }
+                }
+            }
+        },
+        "\/subscription_cancelled": {
+            "post": {
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Webhook de Assinatura Cancelada",
+                "description": "Enviaremos esse POST quando uma nova assinatura for cancelada definitivamente. Note que o payload segue exatamente a mesma estrutura do webhook de solicita\u00e7\u00e3o de cancelamento. Portanto, todas as observa\u00e7\u00f5es equivalem.\n\n**refund_policy**:\n- `no_refund`: sem reembolso;\n- `full_refund`: reembolso total;\n\n**cancel_reason**:\n- `consumer_request`: solicitado pelo assinante;\n- `producer_request`: solicitado pelo vendedor;\n- `plan_cancelled`: plano assinado foi cancelado pelo vendedor;\n- `missing_payment`: pagamento falhou.",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/verification_key"
+                    },
+                    {
+                        "in": "query",
+                        "name": "event_type",
+                        "description": "Tipo de evento",
+                        "example": "subscription_cancelled",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/date"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/event_id"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/subscription_cancelled"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#\/components\/responses\/Success"
+                    },
+                    "402": {
+                        "$ref": "#\/components\/responses\/Error"
+                    }
+                }
+            }
+        },
+        "\/payment_processed": {
+            "post": {
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Webhook de Pagamento Processado",
+                "description": "Enviaremos esse POST quando um pagamento for processado com sucesso.",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/verification_key"
+                    },
+                    {
+                        "in": "query",
+                        "name": "event_type",
+                        "description": "Tipo de evento",
+                        "example": "payment_processed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/date"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/event_id"
+                    },
+                    {
+                        "in": "query",
+                        "name": "event",
+                        "description": "Detalhes do evento",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "subscription_id": {
+                                    "type": "string",
+                                    "description": "Id da assinatura relacionada ao pagamento"
+                                },
+                                "subscriber_id": {
+                                    "type": "string",
+                                    "description": "Id do assinante"
+                                },
+                                "value": {
+                                    "type": "number",
+                                    "description": "Valor pago"
+                                },
+                                "payment_number": {
+                                    "type": "integer",
+                                    "description": "N\u00famero do pagamento",
+                                    "example": 1
+                                },
+                                "payment_date": {
+                                    "type": "string",
+                                    "description": "Data\/hora do pagamento"
+                                },
+                                "next_payment_date": {
+                                    "type": "string",
+                                    "description": "Data da pr\u00f3xima cobran\u00e7a em formato ISO-8601"
+                                },
+                                "transaction_id": {
+                                    "type": "string",
+                                    "description": "Id da transa\u00e7\u00e3o"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#\/components\/responses\/Success"
+                    },
+                    "402": {
+                        "$ref": "#\/components\/responses\/Error"
+                    }
+                }
+            }
+        },
+        "\/new_subscription (V2)": {
+            "post": {
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Webhook de Nova Assinatura (V2)",
+                "description": "Enviaremos esse POST quando uma nova assinatura for criada\n\n**status**:\n- `active`: assinatura ativa;\n- `cancelled`: assinatura cancelada;\n- `payment_delayed`: assinatura aguardando pagamento;\n- `pending_cancellation`: assinatura ativa mas ser\u00e1 cancelada no pr\u00f3ximo ciclo;\n- `under_analysis`: assinatura em an\u00e1lise.",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/verification_key"
+                    },
+                    {
+                        "in": "query",
+                        "name": "event_type",
+                        "description": "Tipo de evento",
+                        "example": "new_subscription",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/date"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/event_id"
+                    },
+                    {
+                        "in": "query",
+                        "name": "event",
+                        "description": "Detalhes do evento",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "subscription_id": {
+                                    "type": "string",
+                                    "description": "Id da assinatura gerada"
+                                },
+                                "value": {
+                                    "type": "number",
+                                    "description": "Valor assinado"
+                                },
+                                "status": {
+                                    "$ref": "#\/components\/schemas\/Subscription\/properties\/status"
+                                },
+                                "sign_up_date": {
+                                    "type": "string",
+                                    "description": "Data de inscri\u00e7\u00e3o do assinante"
+                                },
+                                "transaction_id": {
+                                    "type": "string",
+                                    "description": "Id da transa\u00e7\u00e3o"
+                                },
+                                "next_payment_date": {
+                                    "type": "string",
+                                    "description": "Data da pr\u00f3xima cobran\u00e7a em formato ISO-8601"
+                                },
+                                "address": {
+                                    "$ref": "#\/components\/schemas\/Address2"
+                                },
+                                "subscriber": {
+                                    "$ref": "#\/components\/schemas\/Subscriber2"
+                                },
+                                "plan": {
+                                    "$ref": "#\/components\/schemas\/Plan"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#\/components\/responses\/Success"
+                    },
+                    "402": {
+                        "$ref": "#\/components\/responses\/Error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Address": {
+                "title": "Address (V1 - Deprecated)",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Id do endere\u00e7o",
+                        "example": 123
+                    },
+                    "account_id": {
+                        "type": "string",
+                        "description": "Id do assinante",
+                        "example": 9876542
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "status do endere\u00e7o",
+                        "example": "ACTIVE"
+                    },
+                    "address_name": {
+                        "type": "string",
+                        "description": "Apelido do endere\u00e7o",
+                        "example": "Minha Casa"
+                    },
+                    "icon_name": {
+                        "type": "string",
+                        "description": "nome do \u00edcone do endere\u00e7o",
+                        "example": "home"
+                    },
+                    "is_primary": {
+                        "type": "boolean",
+                        "description": "endere\u00e7o \u00e9 prim\u00e1rio",
+                        "example": true
+                    },
+                    "zip_code": {
+                        "type": "string",
+                        "description": "C\u00f3digo Postal",
+                        "example": "49000-123"
+                    },
+                    "street_name": {
+                        "type": "string",
+                        "description": "Logradouro",
+                        "example": "Rua da Lapa"
+                    },
+                    "street_number": {
+                        "type": "string",
+                        "description": "N\u00famero",
+                        "example": "s\/n"
+                    },
+                    "address_complement": {
+                        "type": "string",
+                        "description": "Complemento"
+                    },
+                    "neighborhood": {
+                        "type": "string",
+                        "description": "Bairro",
+                        "example": "Vila Madalena"
+                    },
+                    "city": {
+                        "type": "string",
+                        "description": "Cidade",
+                        "example": "S\u00e3o Paulo"
+                    },
+                    "state": {
+                        "type": "string",
+                        "description": "C\u00f3digo do Estado",
+                        "example": "SP"
+                    },
+                    "country": {
+                        "type": "string",
+                        "description": "Pa\u00eds",
+                        "example": "Brasil"
+                    }
+                }
+            },
+            "Subscriber": {
+                "title": "Subscriber (V1 - Deprecated)",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id do assinante"
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "Usu\u00e1rio do assinante",
+                        "example": "ze.silva"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Nome do assinante",
+                        "example": "Jos\u00e9 Silva"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "E-mail do assinante",
+                        "example": "ze.silva@picpay.com"
+                    },
+                    "birth_date": {
+                        "type": "string",
+                        "description": "Data de nascimento do assinante em formato ISO-8601"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": [
+                            "M",
+                            "F",
+                            null
+                        ],
+                        "description": "G\u00eanero do assinante",
+                        "example": "F"
+                    },
+                    "cpf": {
+                        "type": "string",
+                        "description": "CPF do assinante",
+                        "example": "123.456.789-01"
+                    },
+                    "phone_number": {
+                        "title": "Dados do telefone do assinante",
+                        "type": "object",
+                        "properties": {
+                            "country": {
+                                "type": "integer",
+                                "description": "DDI",
+                                "example": 55
+                            },
+                            "area": {
+                                "type": "integer",
+                                "description": "DDD",
+                                "example": 11
+                            },
+                            "number": {
+                                "type": "string",
+                                "description": "N\u00famero do telefone",
+                                "example": 123451234
+                            }
+                        }
+                    },
+                    "image_url_small": {
+                        "type": "string",
+                        "description": "URL do avatar em tamanho pequeno"
+                    },
+                    "image_url_large": {
+                        "type": "string",
+                        "description": "URL do avatar em tamanho grande"
+                    },
+                    "pro": {
+                        "type": "boolean",
+                        "description": "Informa se usu\u00e1rio \u00e9 Pro",
+                        "example": true
+                    },
+                    "verified": {
+                        "type": "boolean",
+                        "description": "Informa se usu\u00e1rio \u00e9 verificado",
+                        "example": true
+                    },
+                    "blocked": {
+                        "type": "boolean",
+                        "description": "Informa se usu\u00e1rio est\u00e1 bloqueado",
+                        "example": false
+                    },
+                    "archived": {
+                        "type": "boolean",
+                        "description": "Informa se usu\u00e1rio est\u00e1 arquivado",
+                        "example": false
+                    },
+                    "mobile_phone_verified": {
+                        "type": "string",
+                        "description": "N\u00famero de telefone que est\u00e1 verificado",
+                        "example": 11912345678
+                    }
+                }
+            },
+            "Plan": {
+                "title": "Plan",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id do plano"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Nome do plano",
+                        "example": "Plano Exemplar"
+                    },
+                    "value": {
+                        "type": "number",
+                        "description": "Valor (m\u00ednimo) do plano",
+                        "example": 5.5
+                    },
+                    "periodicity": {
+                        "type": "string",
+                        "enum": [
+                            "monthly"
+                        ],
+                        "description": "Periodicidade de cobran\u00e7a (por ex., mensal = monthly)",
+                        "example": "monthly"
+                    },
+                    "max_members": {
+                        "type": "integer",
+                        "description": "N\u00famero m\u00e1ximo de pessoas que o plano pode ter",
+                        "example": "40"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "description": "Id da categoria do plano",
+                        "example": "1"
+                    },
+                    "is_fixed_price": {
+                        "type": "boolean",
+                        "description": "For\u00e7ar a cobrar somente o valor m\u00ednimo do plano (n\u00e3o permitir valores acima)",
+                        "example": true
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "open",
+                            "closed",
+                            "deleted"
+                        ],
+                        "description": "Situa\u00e7\u00e3o do plano (dispon\u00edvel = open)",
+                        "example": "open"
+                    },
+                    "address_required": {
+                        "type": "boolean",
+                        "description": "For\u00e7ar o assinante a vincular um endere\u00e7o ao assinar",
+                        "example": true
+                    },
+                    "max_value": {
+                        "type": "number",
+                        "description": "Valor m\u00e1ximo que um plano pode arrecadar",
+                        "example": "1590.0"
+                    },
+                    "receipt_additional_info": {
+                        "type": "string",
+                        "description": "Informa\u00e7\u00f5es adicionais de recibo",
+                        "example": null
+                    },
+                    "unique_consumer": {
+                        "type": "boolean",
+                        "description": "Planos permite apenas uma assinatura por usu\u00e1rio",
+                        "example": true
+                    }
+                }
+            },
+            "Subscription": {
+                "title": "Subscription",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "active",
+                            "cancelled",
+                            "payment_delayed",
+                            "pending_cancellation",
+                            "under_analysis"
+                        ],
+                        "description": "Situa\u00e7\u00e3o da assinatura",
+                        "example": "active"
+                    }
+                }
+            },
+            "Subscriber2": {
+                "title": "Subscriber (V2)",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id do assinante"
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "Usu\u00e1rio do assinante",
+                        "example": "ze.silva"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Nome do assinante",
+                        "example": "Jos\u00e9 Silva"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "E-mail do assinante",
+                        "example": "ze.silva@picpay.com"
+                    },
+                    "cpf": {
+                        "type": "string",
+                        "description": "CPF do assinante",
+                        "example": "123.456.789-01"
+                    },
+                    "phone_number": {
+                        "title": "Dados do telefone do assinante",
+                        "type": "object",
+                        "properties": {
+                            "country": {
+                                "type": "integer",
+                                "description": "DDI",
+                                "example": 55
+                            },
+                            "area": {
+                                "type": "integer",
+                                "description": "DDD",
+                                "example": 11
+                            },
+                            "number": {
+                                "type": "string",
+                                "description": "N\u00famero do telefone",
+                                "example": 123451234
+                            }
+                        }
+                    },
+                    "pro": {
+                        "type": "boolean",
+                        "description": "Informa se usu\u00e1rio \u00e9 Pro",
+                        "example": true
+                    },
+                    "verified": {
+                        "type": "boolean",
+                        "description": "Informa se usu\u00e1rio \u00e9 verificado",
+                        "example": true
+                    },
+                    "blocked": {
+                        "type": "boolean",
+                        "description": "Informa se usu\u00e1rio est\u00e1 bloqueado",
+                        "example": false
+                    },
+                    "archived": {
+                        "type": "boolean",
+                        "description": "Informa se usu\u00e1rio est\u00e1 arquivado",
+                        "example": false
+                    },
+                    "mobile_phone_verified": {
+                        "type": "string",
+                        "description": "N\u00famero de telefone que est\u00e1 verificado",
+                        "example": 11912345678
+                    }
+                }
+            },
+            "Address2": {
+                "title": "Address (V2)",
+                "properties": {
+                    "address_name": {
+                        "type": "string",
+                        "description": "Apelido do endere\u00e7o",
+                        "example": "Minha Casa"
+                    },
+                    "zip_code": {
+                        "type": "string",
+                        "description": "C\u00f3digo Postal",
+                        "example": "49000-123"
+                    },
+                    "street_name": {
+                        "type": "string",
+                        "description": "Logradouro",
+                        "example": "Rua da Lapa"
+                    },
+                    "street_number": {
+                        "type": "string",
+                        "description": "N\u00famero",
+                        "example": "s\/n"
+                    },
+                    "address_complement": {
+                        "type": "string",
+                        "description": "Complemento"
+                    },
+                    "neighborhood": {
+                        "type": "string",
+                        "description": "Bairro",
+                        "example": "Vila Madalena"
+                    },
+                    "city": {
+                        "type": "string",
+                        "description": "Cidade",
+                        "example": "S\u00e3o Paulo"
+                    },
+                    "state": {
+                        "type": "string",
+                        "description": "C\u00f3digo do Estado",
+                        "example": "SP"
+                    },
+                    "country": {
+                        "type": "string",
+                        "description": "Pa\u00eds",
+                        "example": "Brasil"
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "verification_key": {
+                "in": "header",
+                "name": "X-Verification-Key",
+                "description": "C\u00f3digo de valida\u00e7\u00e3o do Webhook",
+                "example": "1fe523a0-20f1-4591-985e-ca3e8c2e6808",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "date": {
+                "in": "query",
+                "name": "date",
+                "description": "Data de quando o evento aconteceu em formato ISO-8601",
+                "example": "2021-09-17T14:48:04-03:00",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "event_id": {
+                "in": "query",
+                "name": "event_id",
+                "description": "Identifica\u00e7\u00e3o \u00fanica do evento para que possa tratar duplicatas no back-end",
+                "example": "b89eaac7e61417341b710b727768294d0e6a277b",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "subscription_cancelled": {
+                "in": "query",
+                "name": "event",
+                "description": "Detalhes do evento",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "subscription_id": {
+                            "type": "string",
+                            "description": "Id da assinatura gerada"
+                        },
+                        "value": {
+                            "type": "number",
+                            "description": "valor assinado"
+                        },
+                        "status": {
+                            "$ref": "#\/components\/schemas\/Subscription\/properties\/status"
+                        },
+                        "last_payment_date": {
+                            "type": "string",
+                            "description": "Data do \u00faltimo pagamento"
+                        },
+                        "subscriber_id": {
+                            "type": "string",
+                            "description": "Id do assinante"
+                        },
+                        "plan": {
+                            "$ref": "#\/components\/schemas\/Plan"
+                        },
+                        "refund_policy": {
+                            "type": "string",
+                            "enum": [
+                                "no_refund",
+                                "full_refund"
+                            ],
+                            "description": "Pol\u00edtica de reembolso",
+                            "example": "no_refund"
+                        },
+                        "refund_value": {
+                            "type": "number",
+                            "description": "Valor reembolsado",
+                            "example": 0
+                        },
+                        "cancel_date": {
+                            "type": "string",
+                            "description": "Data\/hora do cancelamento"
+                        },
+                        "cancel_reason": {
+                            "type": "string",
+                            "enum": [
+                                "consumer_request",
+                                "producer_request",
+                                "plan_cancelled",
+                                "missing_payment"
+                            ],
+                            "description": "Motivo do cancelamento",
+                            "example": "consumer_request"
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "Success": {
+                "description": "Voc\u00ea deve retornar **HTTP status 200** em caso de sucesso"
+            },
+            "Error": {
+                "description": "Voc\u00ea deve retornar qualquer outro HTTP status em caso de erro"
+            }
+        }
+    }
+}

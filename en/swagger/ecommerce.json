@@ -1,0 +1,954 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "https://appws.picpay.com/ecommerce/public/",
+      "description": "Endereço de produção do PicPay"
+    }
+  ],
+  "info": {
+    "version": "3.0",
+    "title": "PicPay - E-commerce Public API",
+    "description": "\n\n# Introdução\n\nAs APIs do PicPay foram desenvolvidas baseadas na tecnologia REST, seguindo os atuais padrões\ntécnicos de mercado. Todas as URLs são amigáveis e orientadas a recursos, utilizam os padrões do\nprotocolo HTTP como autenticação, verbos e códigos de retorno. \n\nComo pode ser visto abaixo, as APIs foram cuidadosamente trabalhadas para que os termos de negócios contidos sejam facilmente entendidos por desenvolvedores que não tenham conhecimento prévio do sistema. Elas foram meticulosamente estudadas para que um nome de campo em um endpoint tenha rigorosamente o mesmo significado em outros recursos.\n\n\n# Autenticação\n\n  Toda a comunicação (recebimento e envio de dados) utiliza tokens para autenticação. Consulte\n  a tabela abaixo, para saber quais são os tokens e os fluxos:\n\n  | Header | Fluxo |\n  | - | - |\n  |`x-picpay-token` | Requests do E-Commerce para o PicPay.|\n  |`x-seller-token` | Requests PicPay para o E-Commerce (Callback).|\n\n  *Ambos os tokens serão fornecidos pelo PicPay, após a finalização do cadastro da loja.*\n\n\n# Ambiente de testes\n\n Atualmente o PicPay não possui ambiente de homologação para testes de integração do cliente. Todos\n as validações devem ser realizadas em produção, **sem ônus à pessoa desenvolvedora.** \n Os pagamentos realizados durante os testes podem ser imediatamente estornados, tanto pela API\n quanto pelo [painel do lojista](https://painel-empresas.picpay.com/).\n\n\n # Suporte\n Caso tenha dúvida, consulte a nossa FAQ ou entre em contato com a central de\n relacionamento do PicPay Empresas através do e-mail **relacionamento-empresas@picpay.com.**\n\n\n **Informação:** o time de desenvolvimento do PicPay não presta serviços de consultoria, por isso não\n são analisados códigos em nosso suporte.\n \nCaso precise,\n[consulte aqui](/picpay-docs-digital-payments/checkout/resources/api-reference-legacy) nossa documentação antiga.\n "
+  },
+  "tags": [
+    {
+      "name": "Criar pedido para pagamento"
+    },
+    {
+      "name": "Capturar pagamento"
+    },
+    {
+      "name": "Cancelar pedido de pagamento"
+    },
+    {
+      "name": "Consultar status do pedido"
+    },
+    {
+      "name": "Notificação de mudança no pedido"
+    }
+  ],
+  "paths": {
+    "/payments": {
+      "post": {
+        "tags": [
+          "Criar pedido para pagamento"
+        ],
+        "description": "\nA criação do pedido de pagamento é executada no checkout, na  tela de pagamento. É a última etapa da \ncompra que a pessoa consumidora realiza. Nesse processo é feita a escolha da forma de pagamento, \npodendo escolher pagar com o PicPay. \n\nApós escolher pagar com o PicPay, são disponibilizadas 2 formas de integração com o checkout para gerar \na requisição de criação do pedido de pagamento:\n  \n  - **Link de pagamento:** o pedido gerado oferece um endereço URL, informado no campo `paymentUrl`, \n  para que a pessoa consumidora seja direcionada para a tela de pagamento do PicPay. Caso opte pelo \n  redirecionamento, utilizando o link de pagamento, a pessoa consumidora voltará para a loja virtual, \n  conforme endereço informado no campo `returnUrl`, assim que concluído o pagamento;\n\n  - **QRCode:** retornado no campo `qrcode`, é gerada imagem no formato base64 para uso diretamente no \n  sistema do comerciante, possibilitando montagem de um checkout transparente. Não existirá diferença \n  visual entre a loja virtual e a página de pagamento.\n\nO processo de identificação da pessoa consumidora na base do PicPay é feito a partir das informações \ncontidas no campo `buyer`. Após localizada, a pessoa consumidora pode concluir o pagamento a partir do \npush notification do aplicativo PicPay.\n\nA informação de pagamento é enviada para o e-mail cadastrado no aplicativo e/ou e-mail informado na \nrequisição, no campo `email`. Por isso, é recomendado informar todos os dados da pessoa consumidora na \nrequisição.\n\nCaso o ecommerce necessite de confirmação do valor posterior à autorização da pessoa consumidora, \né preciso enviar o campo `autoCapture` com valor `false`, indicando que o valor autorizado será apenas \nreservado temporariamente (captura tardia). Consulte a requisição de captura abaixo para maiores \ndetalhes.",
+        "summary": "Requisição para criar pedido de pagamento",
+        "operationId": "postPayments",
+        "security": [
+          {
+            "PicpayApiToken": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentResponse200"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/payments/{referenceId}/capture": {
+      "post": {
+        "tags": [
+          "Capturar pagamento"
+        ],
+        "description": "\nA captura de pagamento, parcial ou total, é realizada na condição em que o pedido de pagamento é \ncriado com o campo `autoCapture` com valor `false` e a pessoa consumidora tenha realizado o pagamento. \nSerá aguardada a requisição para efetivar a cobrança, com o valor correto, informado no campo `amount`. \nO valor pode ser igual ou inferior ao autorizado. Capturas com valor superior ao autorizado serão \nrejeitadas.\n\nO retorno da requisição informa os valores atualizados pertinentes à transação, localizados no\ncampo `summary`:\n- **Campo `authorized`:** consta o valor autorizado;\n- **Campo `paid`:** registra o valor pago (capturado).\n\n\n**Informações:**\n- A requisição de captura só é permitida quando a transação é autorizada. Na situação em que a \nrequisição de captura não ocorre em até 5 dias corridos, a contar da autorização, o pedido é cancelado \nautomaticamente;\n\n- Após realizada a captura com sucesso, ainda que de valor parcial, não será possível solicitar\nnova captura do mesmo pedido/transação.",
+        "summary": "Requisição de captura parcial ou total",
+        "operationId": "capturePayments",
+        "security": [
+          {
+            "PicpayApiToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "referenceId",
+            "in": "path",
+            "required": true,
+            "description": "Id do pedido",
+            "example": "102030",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapturePaymentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentResponse200"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "$ref": "#/components/responses/CapturePaymentUnprocessable"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/payments/{referenceId}/refunds": {
+      "post": {
+        "tags": [
+          "Cancelar pedido de pagamento"
+        ],
+        "description": "\nO cancelamento do pedido de pagamento é feito pela pessoa lojista de forma parcial ou total, mesmo \nque o pagamento já tenha ocorrido, através de uma requisição de cancelamento. \n\nO retorno da requisição informa os valores atualizados pertinentes à transação, localizados no\ncampo `summary`:\n- **Campo `paid`:** valor pago;\n- **Campo `refunded`:** valor cancelado.\n\n## Cancelar pedido que não possui solicitação de pagamento\nQuando o cancelamento é feito em um pedido que ainda não possui autorização do pagamento não é \npermitido realizar nova tentativa de pagamento.\n\n## Cancelar pedido de pagamento autorizado e aguardando captura\nPara os pedidos com pagamento autorizado e aguardando captura, é permitido encerrar a requisição com \nantecedência, sempre do valor total, desde que a espera esteja dentro dos 5 dias de solicitação da \ncaptura. Isso evita qualquer possibilidade de cobrança e disponibiliza o saldo da pessoa consumidora \npara novas compras.\n\n## Cancelar pedido de pagamento efetivado\nCaso o pagamento tenha sido efetivado, o valor informado no campo `amount` será devolvido à pessoa \nconsumidora, não sendo permitida devolução superior ao valor pago. O cancelamento pode ser parcial, \nou seja, quando o valor da devolução é inferior ao valor pago disponível (valor pago menos valor \ncancelado). \n\n## Cancelar pedido de pagamento devolvido parcialmente\nOs pagamentos devolvidos de forma parcial continuam sendo considerados pagos e são permitidos novos \ncancelamentos, até que todo o valor pago tenha sido cancelado. É considerado cancelamento total quando \na pessoa consumidora recebe de volta todo o valor pago.\n\n## Cancelar pagamento já recebido\nPara cancelamentos de transações que a pessoa lojista já recebeu o valor, será confirmada a \ndisponibilidade de valores em seus lançamentos futuros, sendo possível uma recusa do cancelamento caso \nnão haja disponibilidade de recursos para que o cancelamento ocorra.\n\n## Cancelar pagamento que possui cashback\nO processo de cancelamento de pagamento com promoção de cashback ocorre quando há\ndisponibilidade de saldo na conta da pessoa consumidora. Nesse caso, é feita a requisição para\nque o valor do cashback seja devolvido de forma proporcional ao valor cancelado.\n\n**Informação:** o cancelamento de pagamento com promoções de cashback depende da finalização da compra.  ",
+        "summary": "Requisição de cancelamento / reembolso parcial ou total",
+        "operationId": "postRefunds",
+        "security": [
+          {
+            "PicpayApiToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "referenceId",
+            "in": "path",
+            "required": true,
+            "description": "Id do pedido",
+            "example": "102030",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelResponse201"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "description": "Problemas com a requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/UnprocessableRefunds2"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnprocessableRefunds3"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnprocessableRefunds4"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/payments/{referenceId}/status": {
+      "get": {
+        "tags": [
+          "Consultar status do pedido"
+        ],
+        "description": "Permite consultar e identificar o atual estado do pedido de pagamento, através do campo `status`.        \nO retorno da requisição informa os valores atualizados pertinentes ao pedido de pagamento, localizados \nno campo `summary`:\n- **Campo `authorized`:** valor autorizado;\n- **Campo `paid`:** valor pago (capturado);\n- **Campo `refunded`:** valor cancelado.",
+        "summary": "Requisição de detalhes sobre o pedido",
+        "operationId": "getStatus",
+        "security": [
+          {
+            "PicpayApiToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "referenceId",
+            "in": "path",
+            "required": true,
+            "description": "Id do pedido",
+            "example": "102030",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resultado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse200"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/callback": {
+      "post": {
+        "servers": [
+          {
+            "url": "http://www.sualoja.com.br/",
+            "description": "Aqui chamaremos sua loja"
+          }
+        ],
+        "tags": [
+          "Notificação de mudança no pedido"
+        ],
+        "description": "\nPor meio do callback, o sistema do comerciante é notificado quando ocorre uma mudança de estado \n(status) no pedido.\nA mensagem é enviada para o endereço identificado na criação do pedido, através do campo\n`callbackUrl`. Desta forma, é possível saber quando algo mudou e consultar o pedido novamente para \natualizar os registros.\n\nPor medida de segurança, as atualizações não são informadas diretamente para o sistema do comerciante \nna chamada do`callbackUrl`. Isso serve como garantia para que apenas a pessoa lojista tenha acesso \naos dados dos seus pedidos e não cheguem ao conhecimento de terceiros, em especial pessoas mal \nintencionadas.\n\nO sistema do comerciante deve sempre retornar uma resposta de sucesso (status http 200) para esta \nchamada.\n\nCaso o sistema do comerciante esteja inoperante, haverão outras 21 tentativas de callback.",
+        "summary": "Notificação para informar atualização do pedido",
+        "operationId": "postCallbacks",
+        "security": [
+          {
+            "SellerApiToken": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CallbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CallbackResponse200"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "Unauthorized": {
+        "description": "Token Inválido",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Mensagem de erro",
+                  "type": "string",
+                  "example": "O Token informado é inválido"
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "Unprocessable": {
+        "description": "Validação de Dados",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Mensagem de erro",
+                  "type": "string",
+                  "example": "Algumas propriedades não passaram no teste de validação."
+                },
+                "errors": {
+                  "description": "Array contendo os erros (opcional)",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "description": "Propriedade",
+                        "example": "callbackUrl"
+                      },
+                      "message": {
+                        "type": "string",
+                        "description": "O que aconteceu",
+                        "example": "O campo callback url é obrigatório."
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "UnprocessableRefunds": {
+        "description": "Validação de Dados",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Mensagem de erro",
+                  "type": "string",
+                  "example": "Algumas propriedades não passaram no teste de validação."
+                },
+                "errors": {
+                  "description": "Array contendo os erros (opcional)",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "description": "Propriedade",
+                        "example": "amount"
+                      },
+                      "message": {
+                        "type": "string",
+                        "description": "O que aconteceu",
+                        "example": "O valor do cancelamento é maior do que o valor total do pagamento."
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "CapturePaymentUnprocessable": {
+        "description": "Validação de Dados",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Mensagem de erro",
+                  "type": "string",
+                  "example": "Algumas propriedades não passaram no teste de validação."
+                },
+                "errors": {
+                  "description": "Array contendo os erros (opcional)",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "description": "Propriedade",
+                        "example": "amount"
+                      },
+                      "message": {
+                        "type": "string",
+                        "description": "O que aconteceu",
+                        "example": "O valor enviado é maior do que o valor total da transação original."
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "Error": {
+        "description": "Erro Interno",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Mensagem de erro (campo opcional)",
+                  "type": "string",
+                  "example": "Problema geral, verifique se a transação foi criada ou cancele a mesma."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "PicpayApiToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-picpay-token",
+        "description": "Token gerado e fornecido pelo PicPay."
+      },
+      "SellerApiToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-seller-token",
+        "description": "Token gerado e fornecido pelo PicPay."
+      }
+    },
+    "schemas": {
+      "PaymentRequest": {
+        "title": "Requisição de pagamento",
+        "properties": {
+          "referenceId": {
+            "description": "O referenceId é o código identificador único do pedido, utilizado para informar à pessoa consumidora o seu ID no momento do pagamento. O código serve também para que a pessoa lojista consulte o status de pagamento, solicitação de cancelamento, etc.",
+            "example": "102030",
+            "type": "string"
+          },
+          "callbackUrl": {
+            "description": "Url para o qual o PicPay retorna a situação do pagamento.",
+            "example": "http://www.sualoja.com.br/callback",
+            "type": "string"
+          },
+          "returnUrl": {
+            "description": "Url para o qual a pessoa consumidora será redirecionada após o pagamento.",
+            "example": "http://www.sualoja.com.br/cliente/pedido/102030",
+            "type": "string"
+          },
+          "leaveUrl": {
+            "description": "Url de retorno para quando o cliente deseja desistir ou quando não pode pagar por estar expirado o pedido",
+            "example": "http://www.sualoja.com.br/cliente/pedido/102030/desistir",
+            "type": "string"
+          },
+          "value": {
+            "description": "Valor do pagamento em reais.",
+            "example": 20.51,
+            "type": "number",
+            "format": "double"
+          },
+          "expiresAt": {
+            "description": "Quando a ordem de pagamento irá expirar. Formato ISO 8601. Exemplo: 2022-05-01T16:00:00-03:00 (significa que expirará em 01/05/2022 às 16h no fuso horário -03:00)",
+            "example": "2022-05-01T16:00:00-03:00",
+            "type": "string"
+          },
+          "channel": {
+            "description": "Campo de uso exclusivo à integradores que possuem mais de um estabelecimento comercial (cada um com a sua chave de integração).",
+            "example": "my-channel",
+            "type": "string"
+          },
+          "purchaseMode": {
+            "description": "Identifica se a compra é presencial ou online. Caso não seja enviado, assume o valor padrão de `online`.",
+            "example": "in-store",
+            "type": "string",
+            "enum": [
+              "online",
+              "in-store"
+            ]
+          },
+          "buyer": {
+            "description": "Objeto contendo as informações da pessoa consumidora.",
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string",
+                "description": "Primeiro nome da pessoa consumidora."
+              },
+              "lastName": {
+                "type": "string",
+                "description": "Sobrenome da pessoa consumidora."
+              },
+              "document": {
+                "type": "string",
+                "description": "CPF da pessoa consumidora no formato 123.456.789-10."
+              },
+              "email": {
+                "type": "string",
+                "description": "E-mail da pessoa consumidora."
+              },
+              "phone": {
+                "type": "string",
+                "description": "Número de telefone da pessoa consumidora no formato +55 27 12345-6789."
+              }
+            },
+            "required": [
+              "document"
+            ],
+            "example": {
+              "firstName": "João",
+              "lastName": "Da Silva",
+              "document": "123.456.789-10",
+              "email": "teste@picpay.com",
+              "phone": "+55 27 12345-6789"
+            }
+          },
+          "notification": {
+            "type": "object",
+            "description": "Objeto para escolher qual será o meio de notificação. Caso não seja informado serão feitas as notificações padrão.",
+            "properties": {
+              "disablePush": {
+                "description": "Desativar notificação no aplicativo do PicPay.",
+                "example": "true"
+              },
+              "disableEmail": {
+                "description": "Desativar notificação via e-mail.",
+                "example": "true"
+              }
+            },
+            "example": {
+              "disablePush": true,
+              "disableEmail": true
+            }
+          },
+          "softDescriptor": {
+            "description": "Descrição adicional que será enviada na identificação da transação para a fatura da pessoa consumidora.",
+            "example": "MinhaLoja",
+            "type": "string"
+          },
+          "autoCapture": {
+            "description": "Flag para informar se a captura do pagamento será automática ou não. Por padrão a transação é capturada automaticamente.",
+            "example": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "referenceId",
+          "callbackUrl",
+          "value",
+          "buyer"
+        ]
+      },
+      "PaymentResponse200": {
+        "title": "Resposta à requisição de pagamentos",
+        "type": "object",
+        "properties": {
+          "referenceId": {
+            "description": "Seu referenceId",
+            "example": "102030",
+            "type": "string"
+          },
+          "paymentUrl": {
+            "description": "URL na qual a loja deve redirecionar a pessoa consumidora para conclusão do pagamento.",
+            "example": "https://app.picpay.com/checkout/NWFmMGRjNmViZDc0Y2EwMDMwNzZlYzEw",
+            "type": "string"
+          },
+          "expiresAt": {
+            "description": "Quando a ordem de pagamento irá expirar. Formato ISO 8601. Exemplo: 2022-05-01T16:00:00-03:00 (significa que expirará em 01/05/2022 às 16h no fuso horário -03:00)",
+            "example": "2022-05-01T16:00:00-03:00",
+            "type": "string"
+          },
+          "qrcode": {
+            "description": "Objeto que contém o valor do QR Code e, também a imagem pronta do QR Code em formato base64.",
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "Conteúdo do QR Code."
+              },
+              "base64": {
+                "type": "string",
+                "description": "Imagem do QR Code em formato base64 (válido para exibir no frontend sem depender de plugins externos)."
+              }
+            },
+            "example": {
+              "content": "https://app.picpay.com/checkout/NWNlYzMxOTM1MDg1NGEwMDIwMzUxODcy",
+              "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGbAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAIHklEQVR4nO3dwW4bORRFQcfI/3+yMYsBZmfCYTjUO62qbRC5LckHvbhg//r6+voAKPh89QUA/JRgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARm/X30B3/r8DMf06+vru3/a+70WL7jn+GUsXnDv4o+/4M2f9dRv78uF31bg3QgWkCFYQIZgARmCBWQIFpAhWECGYAEZc4ejC0OGbUMmoHuOT1sX9maZQ+amx19wyBcgOm1NXjTwngQLyBAsIEOwgAzBAjIEC8gQLCBDsICM5HB04fgc7g0Pt7y5hxxy8TdfcGH+u/Fy7rCADMECMgQLyBAsIEOwgAzBAjIEC8gQLCDjacPRtCGHW96cL+4dfHrz7NDjl8HfcIcFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZhqMNNx8fv3DzAfdDnizPKO6wgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwg42nD0fnjwPQZm8cd36+mPfX3OsgdFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZCSHozeXjcd5YPoPHX83hryH6W/vy3nvgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwg49dTZ4dF8/eQN48wvXnxe/zt3OcOC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMuYOR28ezDjkQfDpcy+Pv4fHDZnR7r3gnvnfwz/lDgvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjLmDkePG7KUG3L85nE3Z7RD5qZDPsohG+A73GEBGYIFZAgWkCFYQIZgARmCBWQIFpAhWEDG71dfwLeGrPIW3mqw9zeGvFFDzvOc/8WezB0WkCFYQIZgARmCBWQIFpAhWECGYAEZggVkzD1xdMjacM/NcWD6jdoz//DY4x/lkBd8OXdYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQMXc4etzNVd5xQ572fnO++Iaf1/Gf9TzusIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIMOj6m//rD1DHrO+kN5D3tyvHr+M+d/eg9xhARmCBWQIFpAhWECGYAEZggVkCBaQIVhAxtwTR4fM4eZfxpDR40J6U3r8C3DzBcf+dW9zhwVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARlzTxzd89Tntt/01JHqzcfH8z/xOQEZggVkCBaQIVhAhmABGYIFZAgWkCFYQEbyxNEhxznuveBxQ3aeQ15wyP9amL9fHduED3dYQIhgARmCBWQIFpAhWECGYAEZggVkCBaQMXc4uvCGjz5fmL+HXEgfEPrUK5zchBFvK8BPCBaQIVhAhmABGYIFZAgWkCFYQIZgARlzH1WfPupzYcjOc2HvZw0ZIqankkNOUp3MHRaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWTMHY4uPPUJ7HuGbEoXhlzGnvTFP29T6g4LyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIy5j6q/uaw7eZxjkOOFV24+RT7IfPFIR/lkG3zZO6wgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgI3ni6M0V5UJ6UnjT8ct46qj45mUsTJ6bjvhCA/yEYAEZggVkCBaQIVhAhmABGYIFZAgWkDH3xNE9N5dyQ+aLx6WP+hxi/jp0YXITpn/wAP8RLCBDsIAMwQIyBAvIECwgQ7CADMECMpLD0fkPTHc+5EBDZpkL88+wfTl3WECGYAEZggVkCBaQIVhAhmABGYIFZAgWkDF3ODpk8zbkcMs33K8OeeeHuPn2jm3ChzssIESwgAzBAjIEC8gQLCBDsIAMwQIyBAvImDscfaqbp5su3Dzc8uZlLMx/pPuQye5k7rCADMECMgQLyBAsIEOwgAzBAjIEC8gQLCDj96sv4FvpAycXW76bU8n5P2vvU745Ut0TPc9zvnAUgHcjWECGYAEZggVkCBaQIVhAhmABGYIFZMwdji4Mmd49ddo6/2TOheMj1T1DfuUhfykHhf/kgHcjWECGYAEZggVkCBaQIVhAhmABGYIFZCSHowvp0ePC8cfHH/+9hixRhxwretzx3ys6N3WHBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGU8bjs43ZG148wX3/teQs0MXhgwshyyH7xjxwQP8hGABGYIFZAgWkCFYQIZgARmCBWQIFpBhONpwfOZ3/JjKhZtz04WbFz//Z0W90a8K1AkWkCFYQIZgARmCBWQIFpAhWECGYAEZTxuORs9R/Nfxx5EPeTeGXPze23v80M4hx8BGDyN1hwVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARnJ4ehTj1icv+WbfyTm/J3nwvE3anHxQ75Rf+qZf/nAIwkWkCFYQIZgARmCBWQIFpAhWECGYAEZv6L7MeANucMCMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIOMfNhb2ttAasncAAAAASUVORK5CYII="
+            }
+          }
+        },
+        "required": [
+          "referenceId",
+          "paymentUrl",
+          "expiresAt"
+        ]
+      },
+      "CapturePaymentRequest": {
+        "title": "Requisição para captura de pagamento",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "description": "Valor a ser capturado da transação. Usado para captura parcial, deve ser sempre menor ou igual ao valor total da transação original.",
+            "example": 12.04,
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "authorizationId"
+        ]
+      },
+      "CapturePaymentResponse200": {
+        "title": "Resposta à requisição de captura do pagamento",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Identificador único da atualização.",
+            "example": "5b008cef7f321d00ef236444",
+            "type": "string"
+          },
+          "referenceId": {
+            "description": "É o `referenceId` da requisição de pagamento da pessoa lojista.",
+            "example": "102030",
+            "type": "string"
+          },
+          "status": {
+            "description": "- \"created\": registro criado\n\n- \"expired\": prazo para pagamento expirado\n\n- \"authorized\": autorizado e aguardando captura\n\n- \"paid\": pago (capturado)\n\n- \"refunded\": pago e devolvido\n\n- \"chargeback\": pago e com chargeback",
+            "type": "string",
+            "enum": [
+              "created",
+              "expired",
+              "authorized",
+              "paid",
+              "refunded",
+              "chargeback"
+            ],
+            "example": "paid"
+          },
+          "summary": {
+            "title": "Resumo dos valores do pagamento",
+            "type": "object",
+            "properties": {
+              "authorized": {
+                "description": "Valor autorizado do pagamento.",
+                "example": 12.04,
+                "type": "number",
+                "format": "double"
+              },
+              "paid": {
+                "description": "Valor pago (capturado) pela pessoa consumidora.",
+                "example": 12.04,
+                "type": "number",
+                "format": "double"
+              },
+              "refunded": {
+                "description": "Valor cancelado.",
+                "example": 0,
+                "type": "number",
+                "format": "double"
+              }
+            }
+          }
+        },
+        "required": [
+          "referenceId",
+          "id",
+          "status",
+          "summary"
+        ]
+      },
+      "CancelRequest": {
+        "title": "Requisição de cancelamento",
+        "type": "object",
+        "properties": {
+          "authorizationId": {
+            "description": "ID da autorização que o e-commerce recebeu na notificação de pedido pago. Caso o pedido não esteja pago, não é necessário enviar este parâmetro.",
+            "example": "555008cef7f321d00ef236333",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Valor a ser cancelado da transação. Usado em casos de cancelamento parcial, deve ser sempre menor ou igual ao valor total da transação original.",
+            "example": 50.05,
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "authorizationId"
+        ]
+      },
+      "CancelResponse201": {
+        "title": "Resposta à requisição de cancelamento",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Identificador único do cancelamento.",
+            "example": "5b008cef7f321d00ef236444",
+            "type": "string"
+          },
+          "referenceId": {
+            "description": "É o `referenceId` da requisição de pagamento.",
+            "example": "102030",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Resumo dos valores do pagamento",
+            "type": "object",
+            "properties": {
+              "authorized": {
+                "description": "Valor autorizado do pagamento.",
+                "example": 100,
+                "type": "number",
+                "format": "double"
+              },
+              "paid": {
+                "description": "Valor pago (capturado) pela pessoa consumidora.",
+                "example": 100,
+                "type": "number",
+                "format": "double"
+              },
+              "refunded": {
+                "description": "Valor cancelado.",
+                "example": 50.05,
+                "type": "number",
+                "format": "double"
+              }
+            }
+          }
+        },
+        "required": [
+          "referenceId",
+          "id"
+        ]
+      },
+      "StatusResponse200": {
+        "title": "Resposta à requisição de status",
+        "type": "object",
+        "properties": {
+          "authorizationId": {
+            "description": "Número da autorização de pagamento (caso esteja pago).",
+            "type": "string",
+            "example": "555008cef7f321d00ef236333"
+          },
+          "referenceId": {
+            "description": "Seu ID.",
+            "type": "string",
+            "example": "102030"
+          },
+          "status": {
+            "description": "- \"created\": registro criado.\n\n- \"expired\": prazo para pagamento expirado.\n\n- \"authorized\": autorizado e aguardando captura.\n\n- \"paid\": pago (capturado).\n\n- \"refunded\": pago e devolvido.\n\n- \"chargeback\": pago e com chargeback.",
+            "type": "string",
+            "enum": [
+              "created",
+              "expired",
+              "authorized",
+              "paid",
+              "refunded",
+              "chargeback"
+            ],
+            "example": "authorized"
+          },
+          "summary": {
+            "title": "Resumo dos valores do pagamento",
+            "type": "object",
+            "properties": {
+              "authorized": {
+                "description": "Valor autorizado do pagamento.",
+                "example": 100,
+                "type": "number",
+                "format": "double"
+              },
+              "paid": {
+                "description": "Valor pago (capturado) pela pessoa consumidora.",
+                "example": 95.99,
+                "type": "number",
+                "format": "double"
+              },
+              "refunded": {
+                "description": "Valor cancelado.",
+                "example": 5.99,
+                "type": "number",
+                "format": "double"
+              }
+            }
+          }
+        },
+        "required": [
+          "referenceId",
+          "status"
+        ]
+      },
+      "CallbackRequest": {
+        "title": "Requisição de callback",
+        "type": "object",
+        "properties": {
+          "referenceId": {
+            "description": "Identificador da transação.",
+            "example": "102030",
+            "type": "string"
+          },
+          "authorizationId": {
+            "description": "Identificador único da autorização. Esse valor é utilizado realizar estornos em nossa API.",
+            "example": "5b01780ba8914c001a007673",
+            "type": "string"
+          }
+        },
+        "required": [
+          "referenceId"
+        ]
+      },
+      "CallbackResponse200": {
+        "title": "Resposta da requisição de callback",
+        "type": "string",
+        "example": "Vamos apenas validar o status HTTP 200."
+      },
+      "UnprocessableRefunds2": {
+        "title": "Valor do cancelamento excede valor do pagamento",
+        "type": "object",
+        "properties": {
+          "message": {
+            "description": "Mensagem de erro.",
+            "type": "string",
+            "example": "Algumas propriedades não passaram no teste de validação."
+          },
+          "errors": {
+            "description": "Array contendo os erros (opcional).",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "description": "Propriedade.",
+                  "example": "amount."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "O que aconteceu.",
+                  "example": "O valor do cancelamento, é maior que o valor total do pagamento."
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "UnprocessableRefunds3": {
+        "title": "Valor do cancelamento é menor que 0",
+        "type": "object",
+        "properties": {
+          "message": {
+            "description": "Mensagem de erro.",
+            "type": "string",
+            "example": "Algumas propriedades não passaram no teste de validação."
+          },
+          "errors": {
+            "description": "Array contendo os erros (opcional).",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "description": "Propriedade.",
+                  "example": "amount."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "O que aconteceu.",
+                  "example": "O valor do cancelamento é menor que 0."
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "UnprocessableRefunds4": {
+        "title": "Pagamento já cancelado",
+        "type": "object",
+        "properties": {
+          "message": {
+            "description": "Mensagem de erro.",
+            "type": "string",
+            "example": "Algumas propriedades não passaram no teste de validação."
+          },
+          "errors": {
+            "description": "Array contendo os erros (opcional).",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "description": "Propriedade.",
+                  "example": "amount."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "O que aconteceu.",
+                  "example": "O pagamento já foi totalmente cancelado."
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "message"
+        ]
+      }
+    }
+  }
+}
