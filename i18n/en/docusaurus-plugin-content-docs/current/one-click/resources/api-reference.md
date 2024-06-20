@@ -10,4 +10,4 @@ To consume the following resources you need to had done all te steps into [Authe
 
 import APIReference from '@site/src/components/APIReference'
 
-<APIReference url="/picpay-docs-digital-payments/swagger/picpay-1-click-en.json" />
+<APIReference url="/picpay-docs-digital-payments/en/swagger/picpay-1-click-en.json" />

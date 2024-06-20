@@ -122,7 +122,7 @@ curl -X GET \ https://appws.picpay.com/ecommerce/public/payments/{referenceId}/s
 
 _Example of notification that PicPay sends to the e-commerce._
 
-**Passo 9:** If the payment is confirmed, display confirmation on your e-commerce site.
+**Step 9:** If the payment is confirmed, display confirmation on your e-commerce site.
 
 ## Next steps
 

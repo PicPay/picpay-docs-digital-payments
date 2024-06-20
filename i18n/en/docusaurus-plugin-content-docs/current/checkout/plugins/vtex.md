@@ -25,10 +25,6 @@ These keys must be copied and inserted into your VTEX configuration panel.
 Every time new tokens are generated using the **Generate Tokens** button, old tokens will be invalidated.
 :::
 
-:::warning Issues obtaining keys.
-Due to an instability in our new merchant panel (https://painel-empresas.picpay.com/), we recommend obtaining VTEX integration keys through the old merchant panel(https://lojista.picpay.com/ecommerce-token).
-:::
-
 ### Enabling PicPay as a payment method
 
 Within your VTEX panel, you will need to configure PicPay as a new payment gateway.
