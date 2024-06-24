@@ -1,6 +1,7 @@
 const path = require('path');
 
-module.exports = {
+/** @type {import('@docusaurus/types').Config} */
+const config = {
   title: 'PicPay - Pagamentos Digitais',
   tagline: 'Documentação - Pagamentos Online',
   url: 'https://picpay.github.io',
@@ -46,21 +47,6 @@ module.exports = {
     },
     gtag: {
       trackingID: 'G-52VCWRLND8',
-    },
-    navbar: {
-      // title: 'PicPay',
-      logo: {
-        alt: 'Logo PicPay',
-        src: 'img/PP-logo.png',
-      },
-      items: [
-        { to: '/checkout/intro/getting-started', label: 'QR Code e Push' },
-        { to: '/one-click/intro/overview', label: 'PicPay 1-Click' },
-        {
-          type: 'localeDropdown',
-          position: 'right',
-        },
-      ],
     },
     languageTabs: [{
       highlight: "bash",
@@ -112,6 +98,9 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} PicPay. Built with Docusaurus.`,
     },
   },
+  customFields: {
+    customNavbarComponent: 'src/components/NavBarCustom',
+  },
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -134,3 +123,5 @@ module.exports = {
     },
   ],
 };
+
+module.exports = config;
