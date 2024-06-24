@@ -1,0 +1,18 @@
+/* src/css/customNavbar.css */
+.navbar_custom_link {
+    color: #28a745;
+    font-size: 1.1em;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.navbar_custom_link_with_border {
+    border-right-style: solid;
+    border-right-width: 2px;
+    border-right-color: #28a745;
+}
+
+.navbar_custom_link:hover {
+    font-weight: bolder;
+    color: #28a745;
+}
