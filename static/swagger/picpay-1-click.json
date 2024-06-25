@@ -146,6 +146,7 @@
     },
     "/payments/cancel": {
       "post": {
+        "deprecated": true,
         "summary": "Realizar o cancelamento de uma transação não capturada",
         "description": "Este recurso permite ao vendedor realizar o cancelamento de uma transação autorizada e aguardando captura.\nPara as transações autorizadas e aguardando captura, é permitido cancelar a transação com \nantecedência, sempre do valor total, desde que a espera esteja dentro dos 5 dias de solicitação da \ncaptura. Isso evita qualquer possibilidade de cobrança e disponibiliza o saldo da pessoa consumidora \npara novas compras.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
         "operationId": "cancelPayment",
@@ -899,6 +900,7 @@
     },
     "/sandbox/payments/cancel": {
       "post": {
+        "deprecated": true,
         "summary": "Realizar o cancelamento de uma transação não capturada.",
         "description": "Este recurso permite ao vendedor realizar o cancelamento de uma transação autorizada e aguardando captura.\nPara as transações autorizadas e aguardando captura, é permitido cancelar a transação com \nantecedência, sempre do valor total, desde que a espera esteja dentro dos 5 dias de solicitação da \ncaptura. Isso evita qualquer possibilidade de cobrança e disponibiliza o saldo da pessoa consumidora \npara novas compras.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
         "operationId": "SandboxCancel",
