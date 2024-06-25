@@ -794,7 +794,7 @@
               "refunded",
               "chargeback"
             ],
-            "example": "authorized"
+            "example": "refunded"
           },
           "summary": {
             "title": "Resumo dos valores do pagamento",
