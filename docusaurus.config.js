@@ -48,6 +48,35 @@ const config = {
     gtag: {
       trackingID: 'G-52VCWRLND8',
     },
+    navbar: {
+      logo: {
+        alt: 'Logo PicPay',
+        src: 'img/logo.png',
+      },
+      items: [
+        {
+          to: '/checkout/intro/getting-started',
+          label: 'QR Code e Push',
+          className: 'navbar_custom_link_with_border',
+        },
+        {
+          to: '/one-click/intro/overview',
+          label: 'PicPay 1-Click',
+          className: 'navbar_custom_link_with_border',
+        },
+        {
+          href: 'https://picpay.github.io/picpay-docs-ms-ecommerce-checkout/docs/introduction',
+          label: 'Gateway PicPay',
+          hrefEn: 'https://picpay.github.io/picpay-docs-ms-ecommerce-checkout/en/docs/introduction',
+          target: '_self',
+          className: 'navbar_custom_link',
+        },
+        {
+          type: 'localeDropdown',
+          position: 'right',
+        },
+      ],
+    },
     languageTabs: [{
       highlight: "bash",
       language: "curl",
@@ -97,9 +126,6 @@ const config = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} PicPay. Built with Docusaurus.`,
     },
-  },
-  customFields: {
-    customNavbarComponent: 'src/components/NavBarCustom',
   },
   presets: [
     [
