@@ -19,6 +19,7 @@ function NavLink({
   label,
   activeClassName = 'navbar__link--active',
   prependBaseUrlToHref,
+  basePath,
   ...props
 }) {
   // const { i18n } = useDocusaurusContext();
@@ -34,6 +35,16 @@ function NavLink({
     href = props.hrefEn;
   }
 
+  const isActive = () => {
+    if (basePath && locale.pathname.includes(basePath)) {
+      return true;
+    }
+    if (activeBaseRegex) {
+      return new RegExp(activeBaseRegex).test(locale.pathname);
+    }
+    return locale.pathname.startsWith(activeBaseUrl);
+  };
+
   return (
     <Link
       {...(href
@@ -46,14 +57,12 @@ function NavLink({
             to: toUrl,
             ...(activeBasePath || activeBaseRegex
               ? {
-                  isActive: (_match, location) =>
-                    activeBaseRegex
-                      ? new RegExp(activeBaseRegex).test(location.pathname)
-                      : location.pathname.startsWith(activeBaseUrl),
+                isActive: isActive(),
                 }
               : null),
           })}
-      {...props}>
+      {...props}
+      className={clsx(props.className, { [activeClassName]: isActive() })}>
       {label}
     </Link>
   );
