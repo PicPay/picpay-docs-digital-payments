@@ -30,7 +30,6 @@ const getNavbarItemComponent = (type = 'default') => {
   const navbarItemComponent = NavbarItemComponents[type];
 
   if (!navbarItemComponent) {
-    console.log("navbarItemComponent type", type);
     throw new Error(`No NavbarItem component found for type=${type}.`);
   }
 
@@ -39,6 +38,5 @@ const getNavbarItemComponent = (type = 'default') => {
 
 export default function NavbarItem({type, ...props}) {
   const NavbarItemComponent = getNavbarItemComponent(type);
-  console.log("navbarItemComponent type", type);
   return <NavbarItemComponent {...props} />;
 }

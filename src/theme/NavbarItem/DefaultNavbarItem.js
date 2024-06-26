@@ -30,13 +30,7 @@ function NavLink({
     forcePrependBaseUrl: true,
   });
 
-  console.log('locale', locale)
-  // console.log('props', props)
-  // console.log('props.props', props.props)
-
   if (locale.pathname.includes('/en/') && props.hrefEn !== undefined) {
-    // console.log('href EN existe', props.props)
-    // console.log('href EN existe', props.props.hrefEn)
     href = props.hrefEn;
   }
 
