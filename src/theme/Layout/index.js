@@ -13,7 +13,7 @@ import LayoutProviders from '@theme/LayoutProviders';
 import LayoutHead from '@theme/LayoutHead';
 import useKeyboardNavigation from '@theme/hooks/useKeyboardNavigation';
 import './styles.css';
-import NavBarCustom from '../../components/NavBarCustom';
+import Navbar from '@theme/Navbar';
 
 function Layout(props) {
   const {
@@ -29,7 +29,7 @@ function Layout(props) {
 
       <AnnouncementBar />
 
-      <NavBarCustom />
+      <Navbar />
 
       <div className={clsx('main-wrapper', wrapperClassName)}>{children}</div>
 
