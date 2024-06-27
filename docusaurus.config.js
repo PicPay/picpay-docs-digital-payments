@@ -90,7 +90,7 @@ const config = {
           title: 'Documentações',
           items: [
             {
-              label: 'E-commerce',
+              label: 'QR Code e Push',
               to: '/',
             },
             {
