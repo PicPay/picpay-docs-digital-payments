@@ -111,7 +111,6 @@
 }
 
 .navbar_custom_link {
-  /* red 1px border (debug) */
   padding-left: 2rem;
   padding-right: 2rem;
   position: relative;
@@ -130,6 +129,10 @@
 
 .navbar__link:hover.navbar_custom_link, .navbar__link--active.navbar_custom_link {
   font-weight: 800;
+}
+
+.navbar__link:hover.navbar_custom_link::after, .navbar__link--active.navbar_custom_link::after {
+  font-weight: inherit;
 }
 
 @media (min-width: 1014px) and (max-width: 1130px) {
