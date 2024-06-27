@@ -39,7 +39,7 @@ function NavLink({
   }
 
   const isActive = () => {
-    if (sidebarId == activeDoc.sidebar) {
+    if (sidebarId != undefined && activeDoc && sidebarId == activeDoc.sidebar) {
       return true;
     }
     if (activeBaseRegex) {
