@@ -10,6 +10,7 @@ import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import {useLocation} from '@docusaurus/router';
 import {isSamePath} from '@docusaurus/theme-common';
+import {useActiveDocContext} from '@theme/hooks/useDocs';
 
 function NavLink({
   activeBasePath,
@@ -19,7 +20,7 @@ function NavLink({
   label,
   activeClassName = 'navbar__link--active',
   prependBaseUrlToHref,
-  basePath,
+  sidebarId,
   ...props
 }) {
   // const { i18n } = useDocusaurusContext();
@@ -31,12 +32,14 @@ function NavLink({
     forcePrependBaseUrl: true,
   });
 
+  const {activeDoc} = useActiveDocContext();
+
   if (locale.pathname.includes('/en/') && props.hrefEn !== undefined) {
     href = props.hrefEn;
   }
 
   const isActive = () => {
-    if (basePath && locale.pathname.includes(basePath)) {
+    if (sidebarId == activeDoc.sidebar) {
       return true;
     }
     if (activeBaseRegex) {

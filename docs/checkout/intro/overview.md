@@ -2,6 +2,7 @@
 id: overview
 title: Visão geral
 description: Aprenda como oferecer pagamentos digitais com PicPay.
+slug: /
 ---
 
 ## O que é
