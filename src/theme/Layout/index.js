@@ -8,12 +8,12 @@ import React from 'react';
 import clsx from 'clsx';
 import SkipToContent from '@theme/SkipToContent';
 import AnnouncementBar from '@theme/AnnouncementBar';
-import Navbar from '@theme/Navbar';
 import Footer from '@theme/Footer';
 import LayoutProviders from '@theme/LayoutProviders';
 import LayoutHead from '@theme/LayoutHead';
 import useKeyboardNavigation from '@theme/hooks/useKeyboardNavigation';
 import './styles.css';
+import Navbar from '@theme/Navbar';
 
 function Layout(props) {
   const {

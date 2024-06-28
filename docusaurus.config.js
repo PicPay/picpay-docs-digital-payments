@@ -1,6 +1,7 @@
 const path = require('path');
 
-module.exports = {
+/** @type {import('@docusaurus/types').Config} */
+const config = {
   title: 'PicPay - Pagamentos Digitais',
   tagline: 'Documentação - Pagamentos Online',
   url: 'https://picpay.github.io',
@@ -48,14 +49,30 @@ module.exports = {
       trackingID: 'G-52VCWRLND8',
     },
     navbar: {
-      // title: 'PicPay',
       logo: {
         alt: 'Logo PicPay',
-        src: 'img/PP-logo.png',
+        src: 'img/logo.png',
       },
       items: [
-        { to: '/checkout/intro/getting-started', label: 'QR Code e Push' },
-        { to: '/one-click/intro/overview', label: 'PicPay 1-Click' },
+        {
+          to: '/checkout/intro/getting-started',
+          label: 'QR Code e Push',
+          className: 'navbar_custom_link',
+          sidebarId: 'docs',
+        },
+        {
+          to: '/one-click/intro/overview',
+          label: 'PicPay 1-Click',
+          className: 'navbar_custom_link',
+          sidebarId: 'pagamentoLogado',
+        },
+        {
+          href: 'https://picpay.github.io/picpay-docs-ms-ecommerce-checkout/docs/introduction',
+          label: 'Gateway PicPay',
+          hrefEn: 'https://picpay.github.io/picpay-docs-ms-ecommerce-checkout/en/docs/introduction',
+          target: '_self',
+          className: 'navbar_custom_link',
+        },
         {
           type: 'localeDropdown',
           position: 'right',
@@ -73,7 +90,7 @@ module.exports = {
           title: 'Documentações',
           items: [
             {
-              label: 'E-commerce',
+              label: 'QR Code e Push',
               to: '/',
             },
             {
@@ -134,3 +151,5 @@ module.exports = {
     },
   ],
 };
+
+module.exports = config;

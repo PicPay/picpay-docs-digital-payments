@@ -6,5 +6,9 @@
   "item.label.PicPay 1-Click": {
     "message": "PicPay 1-Click",
     "description": "Navbar item with label PicPay 1-Click"
+  },
+  "item.label.Gateway PicPay": {
+    "message": "Gateway PicPay",
+    "description": "Navbar item with label Gateway PicPay"
   }
 }
