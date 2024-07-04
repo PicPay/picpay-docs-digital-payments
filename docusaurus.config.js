@@ -74,6 +74,13 @@ const config = {
           className: 'navbar_custom_link',
         },
         {
+          href: 'https://picpay.github.io/picpay-docs-ms-ecommerce-pix/docs/introduction',
+          label: 'Pix',
+          hrefEn: 'https://picpay.github.io/picpay-docs-ms-ecommerce-pix/en/docs/introduction',
+          target: '_self',
+          className: 'navbar_custom_link',
+        },
+        {
           type: 'localeDropdown',
           position: 'right',
         },
