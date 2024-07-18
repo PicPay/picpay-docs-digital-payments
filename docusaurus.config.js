@@ -55,17 +55,17 @@ const config = {
       },
       items: [
         {
-          to: '/',
-          label: 'Carteira PicPay',
-          className: 'navbar_custom_link',
-          sidebarId: 'walletPicPay',
-        },
-        {
           href: 'https://picpay.github.io/picpay-docs-ms-ecommerce-checkout/docs/introduction',
           label: 'Gateway PicPay',
           hrefEn: 'https://picpay.github.io/picpay-docs-ms-ecommerce-checkout/en/docs/introduction',
           target: '_self',
           className: 'navbar_custom_link',
+        },
+        {
+          to: '/',
+          label: 'Carteira PicPay',
+          className: 'navbar_custom_link',
+          sidebarId: 'walletPicPay',
         },
         {
           href: 'https://picpay.github.io/picpay-docs-ms-ecommerce-pix/docs/introduction',
