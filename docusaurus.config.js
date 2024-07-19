@@ -55,23 +55,17 @@ const config = {
       },
       items: [
         {
-          to: '/checkout/intro/getting-started',
-          label: 'QR Code e Push',
-          className: 'navbar_custom_link',
-          sidebarId: 'docs',
-        },
-        {
-          to: '/one-click/intro/overview',
-          label: 'PicPay 1-Click',
-          className: 'navbar_custom_link',
-          sidebarId: 'pagamentoLogado',
-        },
-        {
           href: 'https://picpay.github.io/picpay-docs-ms-ecommerce-checkout/docs/introduction',
           label: 'Gateway PicPay',
           hrefEn: 'https://picpay.github.io/picpay-docs-ms-ecommerce-checkout/en/docs/introduction',
           target: '_self',
           className: 'navbar_custom_link',
+        },
+        {
+          to: '/',
+          label: 'Carteira PicPay',
+          className: 'navbar_custom_link',
+          sidebarId: 'walletPicPay',
         },
         {
           href: 'https://picpay.github.io/picpay-docs-ms-ecommerce-pix/docs/introduction',

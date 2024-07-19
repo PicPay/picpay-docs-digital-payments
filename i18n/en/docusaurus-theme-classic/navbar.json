@@ -10,5 +10,13 @@
   "item.label.Gateway PicPay": {
     "message": "Gateway PicPay",
     "description": "Navbar item with label Gateway PicPay"
+  },
+  "item.label.Carteira PicPay": {
+    "message": "Wallet PicPay",
+    "description": "Navbar item with label Carteira PicPay"
+  },
+  "item.label.Pix": {
+    "message": "Pix",
+    "description": "Navbar item with label Pix"
   }
 }
