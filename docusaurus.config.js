@@ -5,7 +5,7 @@ const config = {
   title: 'PicPay - Pagamentos Digitais',
   tagline: 'Documentação - Pagamentos Online',
   url: 'https://picpay.github.io',
-  baseUrl: '/picpay-docs-digital-payments/',
+  baseUrl: '/wallet/',
   onBrokenLinks: 'error',
   onBrokenMarkdownLinks: 'error',
   favicon: 'img/favicon.png',
