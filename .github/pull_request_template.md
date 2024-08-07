@@ -14,16 +14,7 @@
 - Desativação de cadastro
 - Alteração no nome do seller)
 
-### Documentação
-[//]: [Link](https://docs.google.com/)
-
-### Checklist
-- [ ] Validei a alteração com o time responsável pelo microsserviço
-- [ ] Criei testes automatizados
-- [ ] Rodei toda a suíte de testes
-- [ ] Fiz testes no ambiente de QA
-
 ---
 [//]: <> (Deixe a linha abaixo para cada code owner ser notificado)
 Podem fazer o review, por favor?
-@alice-rodriguess @andrebparpaiola @ARD @camilaPereiraOliveira @michael-picpay @r-freitas-ppay @wanderson-lima-picpay
+@alice-rodriguess @anderson-carlos @andrebparpaiola @ARD @artur-fortunato @camilaPereiraOliveira @cleiton-lima-ppay @edmararubin @michael-picpay @omangipp @ryansm
