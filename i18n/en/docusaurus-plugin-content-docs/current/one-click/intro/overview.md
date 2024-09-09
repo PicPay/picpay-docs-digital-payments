@@ -9,10 +9,6 @@ PicPay 1-Click offers a synchronous payment method to your customers by charging
 
 After logging into your application, the customer authorizes charges to their wallet, and your application manages these charges accordingly.
 
-## Fees
-
-As the feature is not yet available to the public, we do not have a standard fee. To learn more about our fees or the PicPay 1-Click solution, please contact us at relacionamento-negocios@picpay.com.
-
 ## Available features
 
 Currently, the PicPay 1-Click API offers the following functionalities:
