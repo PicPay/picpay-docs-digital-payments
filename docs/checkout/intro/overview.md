@@ -13,16 +13,6 @@ Oferecendo PicPay no seu e-commerce, seus clientes efetuam o pagamento de forma 
 
 ![img](../../../static/img/guides/qrcode.png)
 
-## Taxas
-
-Você não paga taxa de adesão ou de cancelamento e seus primeiros 30 dias são gratuitos! Nos meses seguintes, é só escolher a taxa que melhor se adapta ao seu momento e quando quer receber, e vamos solicitar o pagamento de uma taxa de intermediação.
-
-| DIAS A RECEBER | TAXA |
-|--|--|
-| 1 dia | 5,19% |
-| 14 dias | 4,61% |
-| 30 dias | 3,89% |
-
 ## Funcionalidades disponíveis
 
 Atualmente, a API de e-commerce do PicPay oferece as seguintes funcionalidades:

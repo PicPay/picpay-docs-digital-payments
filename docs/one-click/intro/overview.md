@@ -9,10 +9,6 @@ O PicPay 1-Click oferece uma forma de pagamento síncrona aos seus clientes efet
 
 Após efetuar o login em sua aplicação, o cliente autoriza cobranças em sua carteira e sua aplicação então gerencia as cobranças.
 
-## Taxas
-
-Como a funcionalidade ainda não está aberta ao público, não temos uma taxa padrão. Para saber mais sobre nossas taxas ou a solução PicPay 1-Click, entre em contato através do e-mail relacionamento-negocios@picpay.com
-
 ## Funcionalidades disponíveis.
 
 Atualmente, a API do PicPay 1-Click oferece as seguintes funcionalidades:
