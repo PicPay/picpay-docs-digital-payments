@@ -43,9 +43,8 @@ Abaixo um resumo sobre os status explicados acima, assim como outros status rele
 
 -   `created`: registro criado;
 -   `expired`: prazo para pagamento expirado ou ordem cancelada;
--   `analysis`: pago e em processo de análise anti-fraude;
+-   `authorized`: autorizado e aguardando captura;
 -   `paid`: pago;
--   `completed`: pago e saldo disponível;
 -   `refunded`: pago e devolvido;
 -   `chargeback`: pago e com chargeback;
     

@@ -45,9 +45,8 @@ Below is a summary of the statuses explained above, as well as other relevant st
 
 - `created`: payment order created;
 - `expired`: payment deadline expired or order canceled;
-- `analysis`: paid and undergoing anti-fraud analysis;
+- `authorized`: authorized and awaiting capture;
 - `paid`: paid;
-- `completed`: paid and balance available;
 - `refunded`: paid and refunded;
 - `chargeback`: paid and with chargeback;
 
