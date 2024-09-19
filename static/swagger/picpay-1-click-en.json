@@ -5,7 +5,7 @@
   },
   "info": {
     "title": "PicPay 1-Click",
-    "description": "# Introduction\nA API do PicPay 1-Click was developed \ncom based on REST model, following current standard \ntechnical of market. All the URLs use the protocol \nHTTP  as authentication,  verbs and return codes.\n\n## AUTHENTICATION AND AUTHORIZATION\nAll communication uses tokens for authorization, in \ncompliance withOpenID Connect and \nOAuth 2.0 specifications. The tokens are created from authentication \nwith the credentials provided by PicPay, and from \nuser authorization as shown in our guide.\n",
+    "description": "# Introduction\nA API do PicPay 1-Click was developed \ncom based on REST model, following current standard \ntechnical of market. All the URLs use the protocol \nHTTP  as authentication,  verbs and return codes.\n\n## AUTHENTICATION AND AUTHORIZATION\nAll communication uses tokens for authorization, in \ncompliance withOpenID Connect and \nOAuth 2.0 specifications. The tokens are created from authentication \nwith the credentials provided by PicPay, and from \nuser authorization as shown in our guide.\n \n\n## Idempotency\nThis API has idempotency, which ensures that the same request is not processed more than once. The **x-Idempotency-Key** key sent in the header prevents duplicate processing, ensuring data integrity. If the client has doubts about whether a particular request was accepted or not, simply execute the request again with the same **x-Idempotency-Key** value. If there is a request that has already been processed, the result will be repeated without processing the request again, thus, there will be no duplicate charge or refund. If there is no request that has already been processed for the key sent, the request will be processed normally.",
     "version": "1.0.0"
   },
   "servers": [
@@ -41,6 +41,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NewTransactionCreatedData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Duplicated transaction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuplicatedTransaction"
                 }
               }
             }
@@ -88,8 +98,61 @@
               }
             }
           },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FundingSourceUnavailable"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found"
+          },
+          "406": {
+            "description": "Balance, card and account related errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "Insufficient Funds": {
+                    "description": "Insufficient funds",
+                    "value": {
+                      "message": "Insufficient funds"
+                    }
+                  },
+                  "Invalid Funding Source": {
+                    "description": "Response when there is an error related to the card",
+                    "value": {
+                      "message": "Invalid funding source."
+                    }
+                  },
+                  "Account Closed": {
+                    "description": "Response when there is an error related to the user account",
+                    "value": {
+                      "message": "The account is closed."
+                    }
+                  },
+                  "Account On Hold": {
+                    "description": "Response when user account is locked or limited",
+                    "value": {
+                      "message": "The account is on hold."
+                    }
+                  }
+                }
+              }
+            }
           },
           "408": {
             "description": "Request Timeout",
@@ -127,6 +190,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service temporarily unavailable. Please try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -615,6 +688,16 @@
               }
             }
           },
+          "406": {
+            "description": "Refund value is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundExceedsLimit"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Response for validation errors",
             "content": {
@@ -641,6 +724,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service temporarily unavailable. Please try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -808,6 +901,16 @@
               }
             }
           },
+          "400": {
+            "description": "Duplicated transaction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuplicatedTransaction"
+                }
+              }
+            }
+          },
           "401": {
             "description": "Access Token Erros",
             "content": {
@@ -851,8 +954,61 @@
               }
             }
           },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FundingSourceUnavailable"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found"
+          },
+          "406": {
+            "description": "Balance, card and account related errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "Insufficient Funds": {
+                    "description": "Insufficient funds",
+                    "value": {
+                      "message": "Insufficient funds"
+                    }
+                  },
+                  "Invalid Funding Source": {
+                    "description": "Response when there is an error related to the card",
+                    "value": {
+                      "message": "Invalid funding source."
+                    }
+                  },
+                  "Account Closed": {
+                    "description": "Response when there is an error related to the user account",
+                    "value": {
+                      "message": "The account is closed."
+                    }
+                  },
+                  "Account On Hold": {
+                    "description": "Response when user account is locked or limited",
+                    "value": {
+                      "message": "The account is on hold."
+                    }
+                  }
+                }
+              }
+            }
           },
           "422": {
             "description": "Response validation errors",
@@ -880,6 +1036,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service temporarily unavailable. Please try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -1368,6 +1534,16 @@
               }
             }
           },
+          "406": {
+            "description": "Refund value is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundExceedsLimit"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Response for validation errors",
             "content": {
@@ -1394,6 +1570,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service temporarily unavailable. Please try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -1900,6 +2086,21 @@
           }
         }
       },
+      "ServiceUnavailable": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "format": "string",
+            "example": "Service temporarily unavailable. Please try again later."
+          },
+          "business_code": {
+            "type": "string",
+            "format": "string",
+            "example": "SERVICE_UNAVAILABLE"
+          }
+        }
+      },
       "InternalServerErrorResponse": {
         "type": "object",
         "properties": {
@@ -1912,6 +2113,45 @@
             "type": "string",
             "format": "string",
             "example": "INTERNAL_ERROR"
+          }
+        }
+      },
+      "DuplicatedTransaction": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Duplicated transaction."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "DUPLICATED_TRANSACTION"
+          }
+        }
+      },
+      "FundingSourceUnavailable": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Funding source unavailable"
+          },
+          "business_code": {
+            "type": "string",
+            "example": "FUNDING_SOURCE_UNAVAILABLE"
+          }
+        }
+      },
+      "RefundExceedsLimit": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Refund value is invalid."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "REFUND_EXCEEDS_LIMIT"
           }
         }
       },
