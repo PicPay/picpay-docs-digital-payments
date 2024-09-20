@@ -58,6 +58,7 @@ module.exports = {
             'one-click/guides/process-payments',
             'one-click/guides/refund-payments',
             'one-click/guides/user-info',
+            'one-click/guides/idempotency-key',
           ],
         },
 
