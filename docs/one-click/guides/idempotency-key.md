@@ -36,7 +36,7 @@ Caso exista algum tipo de processamento em andamento no momento da requisição 
 
 É importante destacar que, caso o erro seja do tipo retentável, uma nova requisição com a mesma chave de idempotência resultará em uma retentativa da requisição. Caso o erro não seja retentável, o resultado da requisição para o mesmo `x-Idempotency-Key` será sempre o mesmo.
 
-A tabela a seguir contém uma classificação dos tipos de erros retentáveis.
+A tabela a seguir contém uma classificação dos tipos de erros não retentáveis.
 
 | Erro Type PicPay | Status Code | Message |
 |---|--|--|
@@ -46,9 +46,7 @@ A tabela a seguir contém uma classificação dos tipos de erros retentáveis.
 | Invalid_funding_source | (406) Not Acceptable | Invalid founding source |
 | Account_closed | (406) Not Acceptable | The account is closed |
 | Account_on_hold | (406) Not Acceptable | The account is on hold |
-| Refund_exceeds_limit | (406) Not Acceptable | Refund value is invalid |
-| Request_timeout | (408) Request Timeout | Request took too long to process |
-| Service_unavailable | (503) Service Unavailable | Service temporarily unavailable. Please try again later |
+| Invalid_Permission_refund | (406) Not Acceptable | Invalid Permission |
 
 ## Próximos passos
 
