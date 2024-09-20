@@ -36,7 +36,7 @@ If there is any type of processing in progress at the time of the request (billi
 
 It is important to note that if the error is of the retryable type, a new request with the same idempotency key will result in a retry of the request. If the error is not retryable, the result of the request for the same `x-Idempotency-Key` will always be the same.
 
-The following table contains a classification of the types of retainable errors.
+The following table contains a classification of error types that cannot be retried.
 
 | Erro Type PicPay | Status Code | Message |
 |---|--|--|
@@ -46,9 +46,7 @@ The following table contains a classification of the types of retainable errors.
 | Invalid_funding_source | (406) Not Acceptable | Invalid founding source |
 | Account_closed | (406) Not Acceptable | The account is closed |
 | Account_on_hold | (406) Not Acceptable | The account is on hold |
-| Refund_exceeds_limit | (406) Not Acceptable | Refund value is invalid |
-| Request_timeout | (408) Request Timeout | Request took too long to process |
-| Service_unavailable | (503) Service Unavailable | Service temporarily unavailable. Please try again later |
+| Invalid_Permission_refund | (406) Not Acceptable | Invalid Permission |
 
 ## Next steps
 
