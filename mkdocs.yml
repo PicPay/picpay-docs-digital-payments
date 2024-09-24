@@ -1,0 +1,8 @@
+site_name: "picpay-docs-digital-payments"
+nav:
+  - 'Visão Geral': checkout/intro/getting-started.md
+  - 'Recursos': swagger/ecommerce.json
+  - 'Começar': checkout/intro/getting-started.md
+  - 'Contato': checkout/resources/faq.md
+plugins:
+  - picpay-docs-digital-payments
