@@ -1,0 +1,26 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: picpay-docs-digital-payments
+  annotations:
+    github.com/project-slug: PicPay/picpay-docs-digital-payments
+    backstage.io/kubernetes-id: "picpay-docs-digital-payments"
+    sonarqube.org/project-key: "PicPay_picpay-docs-digital-payments"
+  labels:
+    moonlight.picpay/language: javascript
+    moonlight.picpay/framework: react
+    moonlight.picpay/monitoring: dynatrace
+    moonlight.picpay/monitoring-strategy: apm
+  tags:
+    - public-documentation
+    - sfpj
+  description: |
+    A public documentation about the PicPay Ecommerce Wallet and One-Click
+  links:
+    - url: https://picpay.atlassian.net/wiki/spaces/PAC/overview?homepageId=1186988638
+      title: Confluence Docs
+      icon: dashboard
+spec:
+  lifecycle: production
+  owner: squad-ecommerce
+  type: public-documentation
