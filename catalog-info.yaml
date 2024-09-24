@@ -20,6 +20,9 @@ metadata:
     - url: https://picpay.atlassian.net/wiki/spaces/PAC/overview?homepageId=1186988638
       title: Confluence Docs
       icon: dashboard
+    - url: https://picpay.atlassian.net/wiki/spaces/EAA/overview
+      title: Confluence Docs
+      icon: dashboard
 spec:
   lifecycle: production
   owner: squad-ecommerce
