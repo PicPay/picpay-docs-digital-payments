@@ -42,5 +42,9 @@
   "link.item.label.QR Code and Push": {
     "message": "QR Code and Push",
     "description": "The label of footer link with label=QR Code and Push linking to /"
+  },
+  "link.item.label.QR Code e Push": {
+    "message": "QR Code and Push",
+    "description": "The label of footer link with label=QR Code and Push linking to /"
   }
 }
