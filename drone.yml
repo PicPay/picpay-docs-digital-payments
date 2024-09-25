@@ -1,0 +1,20 @@
+kind: pipeline
+type: kubernetes
+name: update-doc
+
+trigger:
+  branch:
+    - main
+  event:
+    - pull_request
+    - tag
+
+steps:
+  - name: check-build
+    image: node:18.0.0
+    commands:
+      - npm install
+      - npm run clean-create-build
+    when:
+      event:
+        - pull_request
