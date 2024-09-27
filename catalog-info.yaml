@@ -4,8 +4,8 @@ metadata:
   name: picpay-docs-digital-payments-api
   annotations:
     github.com/project-slug: PicPay/picpay-docs-digital-payments
-    backstage.io/kubernetes-id: "picpay-docs-digital-payments"
-    sonarqube.org/project-key: "PicPay_picpay-docs-digital-payments"
+    backstage.io/kubernetes-id: "picpay-docs-sfpj-digital"
+    sonarqube.org/project-key: "PicPay_picpay-docs-sfpj-digital"
   labels:
     moonlight.picpay/language: javascript
     moonlight.picpay/framework: react
