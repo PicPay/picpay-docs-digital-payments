@@ -12,11 +12,11 @@ keywords:
 
 ## Antes de começar
 
-Antes de iniciar sua integração, você deve possuir credenciais válidas. Atualmente, a solução de **PicPay 1-Click** não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-negocios@picpay.com demonstrando interesse.
+Para integrar o **PicPay 1-Click**, é necessário possuir credenciais válidas. No momento, essa solução não está disponível para todos os lojistas. Caso tenha interesse, entre em contato com nossa equipe pelo e-mail: relacionamento-negocios@picpay.com.
 
 ## Testando sua integração
 
-Atualmente o PicPay não disponibiliza ambiente de SandBox. Todos os testes serão feitos no ambiente de produção e não geram qualquer ônus ao desenvolvedor/lojista, sendo que todos os pagamentos realizados podem ser imediatamente estornados (através de nossa API de cancelamento ou pelo painel lojista).
+Atualmente, o PicPay não oferece um ambiente SandBox. Todos os testes devem ser realizados diretamente no ambiente de produção. Não há custos associados aos testes, e os pagamentos efetuados podem ser estornados imediatamente, seja por nossa API de cancelamento ou pelo painel do lojista.
 
 ![img](../../../static/img/guides/cancel-transactions.gif)
 
