@@ -14,36 +14,31 @@ keywords:
 
 ## Sobre este guia
 
-Neste guia vamos descrever o passo-a-passo para que você obtenha um token de acesso para processar pagamentos online com o PicPay através de nossa solução de pagamentos logada.
+Neste guia, vamos detalhar o passo a passo para obter um token de acesso, permitindo que você processe pagamentos online usando a solução de pagamentos logada do PicPay.
 
 ## Antes de começar
 
 ### Registro do aplicativo
 
-Antes de iniciar sua integração, você deve possuir credenciais válidas. Atualmente, para este produto, o processo de criação de credenciais é realizado diretamente pelo time do PicPay.
-
-Para esta solução de pagamentos, o e-commerce já deve ser um parceiro do PicPay. Os dados necessários para realizar o registro do aplicativo são:
-- E-mail de cadastro;
-- URL de redirecionamento ou URL de callback;
-
 :::info
 
-A solução de **PicPay 1-Click** não está disponível para todos os nossos lojistas. Se interessou? Basta entrar em contato através do e-mail relacionamento-negocios@picpay.com demonstrando interesse.
+**PicPay 1-Click** está disponível apenas para lojistas parceiros. Interessado? Entre em contato pelo e-mail: relacionamento-negocios@picpay.com.
 
 :::
 
-### Obtenção do `client_id`, `client_secret` e `api_key` 
+O e-commerce precisa ser um parceiro aprovado pelo PicPay para utilizar esta solução de pagamentos. Os dados necessários para registrar o aplicativo são:
 
-Após o registro do aplicativo, o PicPay compartilhará com o e-commerce as credenciais de acesso, na forma de um `client_id`, `client_secret` e `api_key`. 
+- E-mail de cadastro;
+- URL de redirecionamento ou URL de callback.
 
-#### Um pouco mais sobre o `client_id`
-O client ID é uma sequência exposta publicamente usada pela API de serviço para identificar o aplicativo e também para criar URLs de autorização que são apresentadas aos usuários.
 
-#### Um pouco mais sobre o `client_secret`
- O client secret é usado para autenticar a identidade do aplicativo na API de serviço quando o aplicativo solicita o acesso à conta de um usuário e deve ser mantido privado entre o aplicativo e a API.
+### Obtenção do `client_id` e `client_secret`
 
-#### Um pouco mais sobre o `api_key`
-O api key é um identificador único que possibilita a identificação de seu serviço durante uma requisição. Ele será utilizado no momento de gerar cobranças.
+Após o registro do aplicativo, o PicPay compartilhará com o e-commerce as credenciais de acesso, na forma de um `client_id` e `client_secret`. 
+
+**client_id:** O client ID é uma sequência exposta publicamente usada pela API de serviço para identificar o aplicativo e também para criar URLs de autorização que são apresentadas aos usuários.
+
+**client_secret:** O client secret é usado para autenticar a identidade do aplicativo na API de serviço quando o aplicativo solicita o acesso à conta de um usuário e deve ser mantido privado entre o aplicativo e a API.
 
 ## Como funciona?
 

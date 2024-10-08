@@ -12,7 +12,7 @@ keywords:
 
 ## Sobre este guia
 
-Neste guia vamos descrever o passo-a-passo para que você solicite reembolsos de pagamentos gerados através de nossa solução de pagamentos logada.
+Este guia descreve o passo a passo para processar reembolsos utilizando a solução de pagamentos logada **PicPay 1-Click**.
 
 ## Antes de começar
 
@@ -22,15 +22,18 @@ Antes de processar pagamentos online através de nossa solução de **PicPay 1-C
 
 ### Autenticação
 
-Além do `access_token`, gerado dinamicamente, o end-point de pagamentos necessita também de uma `Api-Key` que lhe será informada junto com seu `client_id` e `client_secret`.
+Além do `access_token`, gerado dinamicamente, o endpoint de pagamentos requer também um `client_id` e `client_secret`, que serão fornecidos durante o processo de integração.
 
-:::caution Sobre o Api-Key
-O `Api-Key` não deverá ser compartilhado de forma alguma e deverá ficar armazenado de forma segura em seus servidores.
+:::caution Atenção 
+Seus dados de autenticação, como `client_id` e `client_secret`, não devem ser compartilhados de forma alguma e devem ser armazenados de maneira segura em seus servidores. 
 :::
+
+### Idempotência
+A idempotência é uma forma de garantir que a mesma solicitação não seja processada mais de uma vez, evitando duplicações de pagamento ou reembolso. Isso é feito através do envio do header `x-Idempotency-Key` em cada requisição. Você pode conferir o funcionamento da idempotência [neste artigo](/one-click/guides/idempotency-key).
 
 ### Solicitando um reembolso de uma cobrança à carteira do usuário
 
-A solicitação de reembolso deverá ser gerada com o `transaction_id` ou `reference_id` através do end-point `v1/payments/refund`, indicando o valor a ser reembolsado no corpo da requisição. No exemplo abaixo, estamos solicitando o reembolso de R$ 3,00 na carteira do usuário.
+A solicitação de reembolso deverá ser gerada com o `transaction_id` ou `reference_id` através do end-point `v1/payments/refund`, indicando o valor a ser reembolsado no corpo da requisição. No exemplo abaixo, estamos solicitando o reembolso de R$ 0,10 na carteira do usuário.
 
 :::info Informação
 O campo `transaction_id` é gerado no momento da criação do pagamento.
@@ -38,14 +41,13 @@ O campo `transaction_id` é gerado no momento da criação do pagamento.
 
 ```bash
 curl --location 'https://api.picpay.com/v1/payments/refund' \
---header 'Api-Key: {{api_key}}' \
 --header 'Authorization: Bearer {{access_token}}' \
 --header 'x-Idempotency-Key: {{idempotency_key}}' \
 --header 'Content-Type: application/json' \
 --data '{
-  "value": 3,
-  "transaction_id": "daef8a44-b408-4df1-b726-c579723f1116",
-  "reference_id": "f997bbef-8e17-4e59-b1a9-de1fe1dedd51"
+  "value": 0.10,
+  "transaction_id": "e646263b-2b4d-4b2c-93d8-2568fbffb744",
+  "reference_id": "04c923a4-34d6-43e8-89db-1b563f887b53"
 }'
 ```
 

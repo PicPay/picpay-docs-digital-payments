@@ -5,9 +5,17 @@ title: Visão geral
 
 ## O que é o PicPay 1-Click?
 
-O PicPay 1-Click oferece uma forma de pagamento síncrona aos seus clientes efetuando cobranças na carteira de seus usuários, de forma transparente, após um consentimento inicial.
+O **PicPay 1-Click** é uma solução de pagamento destinada a lojistas, oferecendo uma forma rápida e sem atritos de cobrar consumidores. A solução é baseada no consentimento prévio do usuário e utiliza o fluxo OAuth 2.0 Authorization Code Grant, garantindo segurança e praticidade para realizar cobranças na carteira digital do consumidor.
 
-Após efetuar o login em sua aplicação, o cliente autoriza cobranças em sua carteira e sua aplicação então gerencia as cobranças.
+## Como funciona?
+
+O funcionamento segue três etapas principais:
+
+**Autorização**: O consumidor deve autorizar a loja a efetuar cobranças em sua carteira PicPay. Para isso, o lojista redireciona o consumidor para o fluxo de autorização, onde ele efetua login e confirma as permissões necessárias.
+
+**Login e Autenticação**: O consumidor realiza o login na plataforma do PicPay, que utiliza o Keycloak como ferramenta de autenticação e gerenciamento de identidades. 
+
+**Cobrança**: Após o consumidor autorizar o lojista, este poderá gerar cobranças automáticas através da API, utilizando o Access Token gerado no fluxo de autorização.
 
 ## Funcionalidades disponíveis.
 
