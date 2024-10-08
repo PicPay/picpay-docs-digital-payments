@@ -14,18 +14,11 @@ keywords:
 
 ## Sobre este guia
 
-Neste guia vamos descrever o passo-a-passo para que você obtenha um token de acesso para processar pagamentos online com o PicPay através de nossa solução de pagamentos logada.
+Neste guia, vamos detalhar o passo a passo para obter um token de acesso, permitindo que você processe pagamentos online usando a solução de pagamentos logada do PicPay.
 
 ## Antes de começar
 
 ### Registro do aplicativo
-
-Antes de iniciar a integração, é essencial que você tenha credenciais válidas. No momento, o processo de criação dessas credenciais é realizado diretamente pelo time do PicPay.
-
-Além disso, o e-commerce precisa ser um parceiro aprovado pelo PicPay para utilizar esta solução de pagamentos. Os dados necessários para registrar o aplicativo são:
-
-- E-mail de cadastro;
-- URL de redirecionamento ou URL de callback.
 
 :::info
 
@@ -33,15 +26,19 @@ Além disso, o e-commerce precisa ser um parceiro aprovado pelo PicPay para util
 
 :::
 
-### Obtenção do `client_id`, `client_secret` e `api_key` 
+O e-commerce precisa ser um parceiro aprovado pelo PicPay para utilizar esta solução de pagamentos. Os dados necessários para registrar o aplicativo são:
 
-Após o registro do aplicativo, o PicPay compartilhará com o e-commerce as credenciais de acesso, na forma de um `client_id`, `client_secret` e `api_key`. 
+- E-mail de cadastro;
+- URL de redirecionamento ou URL de callback.
+
+
+### Obtenção do `client_id` e `client_secret`
+
+Após o registro do aplicativo, o PicPay compartilhará com o e-commerce as credenciais de acesso, na forma de um `client_id` e `client_secret`. 
 
 **client_id:** O client ID é uma sequência exposta publicamente usada pela API de serviço para identificar o aplicativo e também para criar URLs de autorização que são apresentadas aos usuários.
 
 **client_secret:** O client secret é usado para autenticar a identidade do aplicativo na API de serviço quando o aplicativo solicita o acesso à conta de um usuário e deve ser mantido privado entre o aplicativo e a API.
-
-**api_key:** O api key é uma chave única que identifica e autentica uma aplicação de forma direta. Incluída nas requisições para dar permissão de acesso à API, garantindo que apenas clientes autorizados façam requisições.
 
 ## Como funciona?
 

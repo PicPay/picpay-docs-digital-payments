@@ -22,10 +22,10 @@ Antes de processar pagamentos online através de nossa solução de **PicPay 1-C
 
 ### Autenticação
 
-Além do `access_token`, gerado dinamicamente, o end-point de pagamentos necessita também de uma `Api-Key` que lhe será informada junto com seu `client_id` e `client_secret`.
+Além do `access_token`, gerado dinamicamente, o endpoint de pagamentos requer também um `client_id` e `client_secret`, que serão fornecidos durante o processo de integração.
 
-:::caution Sobre o Api-Key
-O `Api-Key` não deverá ser compartilhado de forma alguma e deverá ficar armazenado de forma segura em seus servidores.
+:::caution Atenção 
+Seus dados de autenticação, como `client_id` e `client_secret`, não devem ser compartilhados de forma alguma e devem ser armazenados de maneira segura em seus servidores. 
 :::
 
 ### Idempotência
@@ -41,7 +41,6 @@ O campo `transaction_id` é gerado no momento da criação do pagamento.
 
 ```bash
 curl --location 'https://api.picpay.com/v1/payments/refund' \
---header 'Api-Key: {{api_key}}' \
 --header 'Authorization: Bearer {{access_token}}' \
 --header 'x-Idempotency-Key: {{idempotency_key}}' \
 --header 'Content-Type: application/json' \

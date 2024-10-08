@@ -22,10 +22,10 @@ Antes de processar pagamentos online através de nossa solução de **PicPay 1-C
 
 ### Autenticação
 
-Além do `access_token`, gerado dinamicamente, o end-point de pagamentos necessita também de uma `Api-Key` que lhe será informada junto com seu `client_id` e `client_secret`.
+Além do `access_token`, gerado dinamicamente, o endpoint de pagamentos requer também um `client_id` e `client_secret`, que serão fornecidos durante o processo de integração.
 
-:::caution Sobre o Api-Key
-O `Api-Key` não deverá ser compartilhado de forma alguma e deve ficar armazenado de forma segura em seus servidores. 
+:::caution Atenção 
+Seus dados de autenticação, como `client_id` e `client_secret`, não devem ser compartilhados de forma alguma e devem ser armazenados de maneira segura em seus servidores. 
 :::
 
 ### Idempotência
@@ -33,12 +33,11 @@ A idempotência é uma forma de garantir que a mesma solicitação não seja pro
 
 ### Gerando uma cobrança na carteira do usuário
 
-Com um `access_token`, `api_key` válidos e uma `idempotency_key` para garantir a unicidade da solicitação, o processo de geração de uma cobrança na carteira de clientes é simples e direto. A solicitação de cobrança deve ser feita por meio do endpoint `v1/payments/charge`, informando o valor a ser debitado no corpo da requisição. No exemplo abaixo, é realizada uma cobrança de R$ 0,10 na carteira do usuário.
+Com um `access_token` válido e uma `idempotency_key` para garantir a unicidade da solicitação, o processo de geração de uma cobrança na carteira de clientes é simples e direto. A solicitação de cobrança deve ser feita por meio do endpoint `v1/payments/charge`, informando o valor a ser debitado no corpo da requisição. No exemplo abaixo, é realizada uma cobrança de R$ 0,10 na carteira do usuário.
 
 ```bash
 
 curl --location --request POST 'https://api.picpay.com/v1/payments/charge' \
---header 'Api-Key: {{api_key}}' \
 --header 'Authorization: Bearer {{access_token}}' \
 --header 'Content-Type: application/json' \
 --header 'x-Idempotency-Key: {{idempotency_key}}' \
