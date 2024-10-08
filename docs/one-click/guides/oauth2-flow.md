@@ -41,7 +41,7 @@ Após o registro do aplicativo, o PicPay compartilhará com o e-commerce as cred
 
 **client_secret:** O client secret é usado para autenticar a identidade do aplicativo na API de serviço quando o aplicativo solicita o acesso à conta de um usuário e deve ser mantido privado entre o aplicativo e a API.
 
-**api_key:** O api key é um identificador único que possibilita a identificação de seu serviço durante uma requisição. Ele será utilizado no momento de gerar cobranças.
+**api_key:** O api key é uma chave única que identifica e autentica uma aplicação de forma direta. Incluída nas requisições para dar permissão de acesso à API, garantindo que apenas clientes autorizados façam requisições.
 
 ## Como funciona?
 

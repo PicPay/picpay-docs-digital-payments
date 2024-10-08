@@ -29,7 +29,7 @@ O `Api-Key` não deverá ser compartilhado de forma alguma e deve ficar armazena
 :::
 
 ### Idempotência
-A idempotência é uma forma de garantir que a mesma solicitação não seja processada mais de uma vez, evitando duplicações de pagamento ou reembolso. Isso é feito através do envio do header `x-Idempotency-Key` em cada requisição, o que permite recuperar o resultado de uma solicitação anterior sem processá-la novamente. Você pode conferir o funcionamento da idempotência [neste artigo](/one-click/guides/idempotency-key).
+A idempotência é uma forma de garantir que a mesma solicitação não seja processada mais de uma vez, evitando duplicações de pagamento ou reembolso. Isso é feito através do envio do header `x-Idempotency-Key` em cada requisição. Você pode conferir o funcionamento da idempotência [neste artigo](/one-click/guides/idempotency-key).
 
 ### Gerando uma cobrança na carteira do usuário
 
