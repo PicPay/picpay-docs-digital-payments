@@ -7,5 +7,16 @@ build:
 steps:
   - name: unit-tests
     image: 289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay/node:18-slim
+    environment:
+      trigger_event: $(params.triggered-event)
     commands:
-      - echo 0
+      - echo branch:$trigger_event
+      - if [[ "$trigger_event" == "pull_request" ]]; then sh ./build.sh; else echo "Skipped"; fi
+
+  - name: upload-config-s3
+    image: 289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay/node:18-slim
+    environment:
+      trigger_event: $(params.triggered-event)
+    commands:
+      - echo branch:$trigger_event
+      - if [[ "$trigger_event" == "release" ]]; then sh ./deploy.sh; else echo "Skipped"; fi
