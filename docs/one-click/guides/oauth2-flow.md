@@ -114,8 +114,7 @@ https://api.picpay.com/oauth2/token \
 -H "Content-Type='application/x-www-form-urlencoded'" \  
 -d "grant_type=authorization_code" \  
 -d "client_id=CLIENT_ID" \  
--d "code=AUTHORIZATION_CODE"  
--d "redirect_uri=REDIRECT_URI" 
+-d "code=AUTHORIZATION_CODE"
 ``` 
 
 Caso esteja tudo certo, enviaremos o token como no exemplo abaixo:

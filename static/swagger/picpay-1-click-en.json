@@ -5,7 +5,7 @@
   },
   "info": {
     "title": "PicPay 1-Click",
-    "description": "# Introduction\nA API do PicPay 1-Click was developed \ncom based on REST model, following current standard \ntechnical of market. All the URLs use the protocol \nHTTP  as authentication,  verbs and return codes.\n\n## AUTHENTICATION AND AUTHORIZATION\nAll communication uses tokens for authorization, in \ncompliance withOpenID Connect and \nOAuth 2.0 specifications. The tokens are created from authentication \nwith the credentials provided by PicPay, and from \nuser authorization as shown in our guide.\n",
+    "description": "# Introduction\nA API do PicPay 1-Click was developed \n based on REST model, following current standard \ntechnical of market. All the URLs use the protocol \nHTTP  as authentication,  verbs and return codes.\n\n## AUTHENTICATION AND AUTHORIZATION\nAll communication uses tokens for authorization, in \ncompliance withOpenID Connect and \nOAuth 2.0 specifications. The tokens are created from authentication \nwith the credentials provided by PicPay, and from \nuser authorization as shown in our guide.\n \n\n## Idempotency\nThis API has idempotency, which ensures that the same request is not processed more than once. The **x-Idempotency-Key** key sent in the header prevents duplicate processing, ensuring data integrity. If the client has doubts about whether a particular request was accepted or not, simply execute the request again with the same **x-Idempotency-Key** value. If there is a request that has already been processed, the result will be repeated without processing the request again, thus, there will be no duplicate charge or refund. If there is no request that has already been processed for the key sent, the request will be processed normally.",
     "version": "1.0.0"
   },
   "servers": [
@@ -16,8 +16,8 @@
   "paths": {
     "/payments/charge": {
       "post": {
-        "summary": "Billing Create",
-        "description": "This feature enables the seller to charge the user's wallet. If the seller chooses to confirm the amount after the customer's authorization, \nit is necessary to send the parameter `autoCapture` with the value `false`, indicating that the authorized amount will only be temporarily reserved (delayed capture).\n If the `autoCapture` parameter is not specified, it will automatically assume the value `true`, following the automatic capture flow.\n For more details on how the `capture` endpoint works, refer to [_Capture Charge_](#operations-Payments-cancelPayment).",
+        "summary": "Charge Create",
+        "description": "This feature enables the seller to charge the user's wallet. If the seller chooses to confirm the amount after the customer's authorization, \nit is necessary to send the parameter `auto_capture` with the value `false`, indicating that the authorized amount will only be temporarily reserved (delayed capture).\n If the `auto_capture` parameter is not specified, it will automatically assume the value `true`, following the automatic capture flow.\n For more details on how the `capture` endpoint works, refer to [_Capture Charge_](#operations-Payments-cancelPayment).",
         "operationId": "charge",
         "security": [
           {
@@ -41,6 +41,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NewTransactionCreatedData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Duplicated transaction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuplicatedTransaction"
                 }
               }
             }
@@ -88,8 +98,61 @@
               }
             }
           },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FundingSourceUnavailable"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found"
+          },
+          "406": {
+            "description": "Balance, card and account related errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "Insufficient Funds": {
+                    "description": "Insufficient funds",
+                    "value": {
+                      "message": "Insufficient funds"
+                    }
+                  },
+                  "Invalid Funding Source": {
+                    "description": "Response when there is an error related to the card",
+                    "value": {
+                      "message": "Invalid funding source."
+                    }
+                  },
+                  "Account Closed": {
+                    "description": "Response when there is an error related to the user account",
+                    "value": {
+                      "message": "The account is closed."
+                    }
+                  },
+                  "Account On Hold": {
+                    "description": "Response when user account is locked or limited",
+                    "value": {
+                      "message": "The account is on hold."
+                    }
+                  }
+                }
+              }
+            }
           },
           "408": {
             "description": "Request Timeout",
@@ -127,6 +190,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service temporarily unavailable. Please try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -270,7 +343,7 @@
     "/payments/capture": {
       "post": {
         "summary": "Capture Charge",
-        "description": "\nThe payment capture, whether partial or total, is performed under the condition that the transaction is \ncreated with the `autoCapture` field set to `false` and the consumer has made the payment. \nA request will be awaited to finalize the charge, with the correct value indicated in the `value` field. \nThe value can be equal to or less than the authorized amount. If the `value` field is not provided, the transaction will be captured for the total amount. \nCaptures with a value higher than the authorized amount will be \nrejected.\n\n\n**Information:**\n- Capture request is only allowed when the transaction is authorized. In the event that the \ncapture request does not occur within 5 calendar days from authorization, the transaction is automatically canceled. \n\n- After a successful capture, even if partial, it will not be possible to request\na new capture of the same transaction.\n\nTwo possible identifiers can be used: `transaction_id` or `reference_id`. The `transaction_id` is PicPay's identifier returned in a successful charge. The `reference_id` is the identifier generated by the partner and sent in the charge request. At least one of the identifiers **needs** to be sent. When both are sent, both will be validated.",
+        "description": "\nThe payment capture, whether partial or total, is performed under the condition that the transaction is \ncreated with the `auto_capture` field set to `false` and the consumer has made the payment. \nA request will be awaited to finalize the charge, with the correct value indicated in the `value` field. \nThe value can be equal to or less than the authorized amount. If the `value` field is not provided, the transaction will be captured for the total amount. \nCaptures with a value higher than the authorized amount will be \nrejected.\n\n\n**Information:**\n- Capture request is only allowed when the transaction is authorized. In the event that the \ncapture request does not occur within 5 calendar days from authorization, the transaction is automatically canceled. \n\n- After a successful capture, even if partial, it will not be possible to request\na new capture of the same transaction.\n\nTwo possible identifiers can be used: `transaction_id` or `reference_id`. The `transaction_id` is PicPay's identifier returned in a successful charge. The `reference_id` is the identifier generated by the partner and sent in the charge request. At least one of the identifiers **needs** to be sent. When both are sent, both will be validated.",
         "operationId": "capture",
         "security": [
           {
@@ -615,6 +688,16 @@
               }
             }
           },
+          "406": {
+            "description": "Refund value is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundExceedsLimit"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Response for validation errors",
             "content": {
@@ -641,6 +724,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service temporarily unavailable. Please try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -779,8 +872,8 @@
     },
     "/sandbox/payments/charge": {
       "post": {
-        "summary": "Billing Create",
-        "description": "This feature enables the seller to charge the user's wallet. If the seller chooses to confirm the amount after the customer's authorization, \nit is necessary to send the parameter `autoCapture` with the value `false`, indicating that the authorized amount will only be temporarily reserved (delayed capture).\n If the `autoCapture` parameter is not specified, it will automatically assume the value `true`, following the automatic capture flow.\n For more details on how the `capture` endpoint works, refer to [_Capture Charge_](#operations-Sandbox-SandboxCancel).",
+        "summary": "Charge Create",
+        "description": "This feature enables the seller to charge the user's wallet. If the seller chooses to confirm the amount after the customer's authorization, \nit is necessary to send the parameter `auto_capture` with the value `false`, indicating that the authorized amount will only be temporarily reserved (delayed capture).\n If the `auto_capture` parameter is not specified, it will automatically assume the value `true`, following the automatic capture flow.\n For more details on how the `capture` endpoint works, refer to [_Capture Charge_](#operations-Sandbox-SandboxCancel).",
         "operationId": "Sandbox Charge",
         "security": [
           {
@@ -804,6 +897,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NewTransactionCreatedData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Duplicated transaction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuplicatedTransaction"
                 }
               }
             }
@@ -851,8 +954,61 @@
               }
             }
           },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FundingSourceUnavailable"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found"
+          },
+          "406": {
+            "description": "Balance, card and account related errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "Insufficient Funds": {
+                    "description": "Insufficient funds",
+                    "value": {
+                      "message": "Insufficient funds"
+                    }
+                  },
+                  "Invalid Funding Source": {
+                    "description": "Response when there is an error related to the card",
+                    "value": {
+                      "message": "Invalid funding source."
+                    }
+                  },
+                  "Account Closed": {
+                    "description": "Response when there is an error related to the user account",
+                    "value": {
+                      "message": "The account is closed."
+                    }
+                  },
+                  "Account On Hold": {
+                    "description": "Response when user account is locked or limited",
+                    "value": {
+                      "message": "The account is on hold."
+                    }
+                  }
+                }
+              }
+            }
           },
           "422": {
             "description": "Response validation errors",
@@ -880,6 +1036,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service temporarily unavailable. Please try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -1023,7 +1189,7 @@
     "/sandbox/payments/capture": {
       "post": {
         "summary": "Capture Charge",
-        "description": "\nThe payment capture, whether partial or total, is performed under the condition that the transaction is \ncreated with the `autoCapture` field set to `false` and the consumer has made the payment. \nA request will be awaited to finalize the charge, with the correct value indicated in the `value` field. \nThe value can be equal to or less than the authorized amount. If the `value` field is not provided, the transaction will be captured for the total amount. \nCaptures with a value higher than the authorized amount will be \nrejected.\n\n\n**Information:**\n- Capture request is only allowed when the transaction is authorized. In the event that the \ncapture request does not occur within 5 calendar days from authorization, the transaction is automatically canceled. \n\n- After a successful capture, even if partial, it will not be possible to request\na new capture of the same transaction.\n\nTwo possible identifiers can be used: `transaction_id` or `reference_id`. The `transaction_id` is PicPay's identifier returned in a successful charge. The `reference_id` is the identifier generated by the partner and sent in the charge request. At least one of the identifiers **needs** to be sent. When both are sent, both will be validated.",
+        "description": "\nThe payment capture, whether partial or total, is performed under the condition that the transaction is \ncreated with the `auto_capture` field set to `false` and the consumer has made the payment. \nA request will be awaited to finalize the charge, with the correct value indicated in the `value` field. \nThe value can be equal to or less than the authorized amount. If the `value` field is not provided, the transaction will be captured for the total amount. \nCaptures with a value higher than the authorized amount will be \nrejected.\n\n\n**Information:**\n- Capture request is only allowed when the transaction is authorized. In the event that the \ncapture request does not occur within 5 calendar days from authorization, the transaction is automatically canceled. \n\n- After a successful capture, even if partial, it will not be possible to request\na new capture of the same transaction.\n\nTwo possible identifiers can be used: `transaction_id` or `reference_id`. The `transaction_id` is PicPay's identifier returned in a successful charge. The `reference_id` is the identifier generated by the partner and sent in the charge request. At least one of the identifiers **needs** to be sent. When both are sent, both will be validated.",
         "operationId": "Sandbox Capture",
         "security": [
           {
@@ -1368,6 +1534,16 @@
               }
             }
           },
+          "406": {
+            "description": "Refund value is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundExceedsLimit"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Response for validation errors",
             "content": {
@@ -1394,6 +1570,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service temporarily unavailable. Please try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -1556,7 +1742,7 @@
     },
     "schemas": {
       "ChargeRequestBody": {
-        "title": "Billing Create",
+        "title": "Charge Create",
         "type": "object",
         "x-examples": {
           "Charge BRL 99.99 from the customer's wallet.": {
@@ -1575,6 +1761,11 @@
             "type": "string",
             "example": "dfecee7e-2414-4966-8911-104f6389b071",
             "description": "Partner unique payment identifier."
+          },
+          "auto_capture": {
+            "type": "boolean",
+            "example": true,
+            "description": "Identifies the capture type, default is true."
           }
         },
         "required": [
@@ -1582,7 +1773,7 @@
         ]
       },
       "CaptureRequestBody": {
-        "title": "Capturar cobrança",
+        "title": "Capture charge",
         "type": "object",
         "x-examples": {
           "Capturar R$ 99,99 da carteira do cliente.": {
@@ -1711,7 +1902,7 @@
         }
       },
       "SandboxCancelRequestBody": {
-        "title": "Cancelar uma transação.",
+        "title": "Cancel a transaction",
         "type": "object",
         "properties": {
           "transaction_id": {
@@ -1736,7 +1927,7 @@
         }
       },
       "SandboxCaptureRequestBody": {
-        "title": "Capturar cobrança",
+        "title": "Capture charge",
         "type": "object",
         "properties": {
           "value": {
@@ -1811,7 +2002,7 @@
         }
       },
       "SandboxChargeRequestBody": {
-        "title": "Create billing",
+        "title": "Create charge",
         "type": "object",
         "properties": {
           "value": {
@@ -1895,6 +2086,21 @@
           }
         }
       },
+      "ServiceUnavailable": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "format": "string",
+            "example": "Service temporarily unavailable. Please try again later."
+          },
+          "business_code": {
+            "type": "string",
+            "format": "string",
+            "example": "SERVICE_UNAVAILABLE"
+          }
+        }
+      },
       "InternalServerErrorResponse": {
         "type": "object",
         "properties": {
@@ -1907,6 +2113,45 @@
             "type": "string",
             "format": "string",
             "example": "INTERNAL_ERROR"
+          }
+        }
+      },
+      "DuplicatedTransaction": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Duplicated transaction."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "DUPLICATED_TRANSACTION"
+          }
+        }
+      },
+      "FundingSourceUnavailable": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Funding source unavailable"
+          },
+          "business_code": {
+            "type": "string",
+            "example": "FUNDING_SOURCE_UNAVAILABLE"
+          }
+        }
+      },
+      "RefundExceedsLimit": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Refund value is invalid."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "REFUND_EXCEEDS_LIMIT"
           }
         }
       },

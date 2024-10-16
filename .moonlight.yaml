@@ -1,0 +1,11 @@
+sonar:
+  enabled: false
+
+build:
+  enabled: false
+
+steps:
+  - name: unit-tests
+    image: 289208114389.dkr.ecr.us-east-1.amazonaws.com/picpay/node:18-slim
+    commands:
+      - echo 0
