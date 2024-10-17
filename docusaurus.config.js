@@ -5,7 +5,7 @@ const config = {
   title: 'PicPay - Pagamentos Digitais',
   tagline: 'Documentação - Pagamentos Online',
   url: 'https://picpay.github.io',
-  baseUrl: '/picpay-docs-digital-payments/',
+  baseUrl: '/wallet/',
   onBrokenLinks: 'error',
   onBrokenMarkdownLinks: 'error',
   favicon: 'img/favicon.png',
@@ -55,9 +55,9 @@ const config = {
       },
       items: [
         {
-          href: 'https://picpay.github.io/picpay-docs-ms-ecommerce-checkout/docs/introduction',
+          href: 'https://developers-business.picpay.com/checkout',
           label: 'Gateway PicPay',
-          hrefEn: 'https://picpay.github.io/picpay-docs-ms-ecommerce-checkout/en/docs/introduction',
+          hrefEn: 'https://developers-business.picpay.com/checkout/en',
           target: '_self',
           className: 'navbar_custom_link',
         },
@@ -68,9 +68,9 @@ const config = {
           sidebarId: 'walletPicPay',
         },
         {
-          href: 'https://picpay.github.io/picpay-docs-ms-ecommerce-pix/docs/introduction',
+          href: 'https://developers-business.picpay.com/pix',
           label: 'Pix',
-          hrefEn: 'https://picpay.github.io/picpay-docs-ms-ecommerce-pix/en/docs/introduction',
+          hrefEn: 'https://developers-business.picpay.com/pix/en',
           target: '_self',
           className: 'navbar_custom_link',
         },
