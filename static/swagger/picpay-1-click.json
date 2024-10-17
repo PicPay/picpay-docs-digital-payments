@@ -5,7 +5,7 @@
   },
   "info": {
     "title": "PicPay 1-Click",
-    "description": "# Introdução\nA API do PicPay 1-Click foi desenvolvida \ncom base na tecnologia REST, seguindo os atuais padrões \ntécnicos de mercado. Todas as URLs utilizam o protocolo \nHTTP como autenticação, verbos e códigos de retorno.\n\n## Autenticação e Autorização\nToda a comunicação utiliza tokens para autorização, em \nconformidade com as especificações do OpenID Connect e \nOAuth 2.0. Os tokens são criados a partir da autenticação \ncom as credenciais fornecidas pelo PicPay, e da autorização \ndo usuário, como mostrado no nosso guia.\n",
+    "description": "# Introdução\nA API do PicPay 1-Click foi desenvolvida \ncom base na tecnologia REST, seguindo os atuais padrões \ntécnicos de mercado. Todas as URLs utilizam o protocolo \nHTTP como autenticação, verbos e códigos de retorno.\n\n## Autenticação e Autorização\nToda a comunicação utiliza tokens para autorização, em \nconformidade com as especificações do OpenID Connect e \nOAuth 2.0. Os tokens são criados a partir da autenticação \ncom as credenciais fornecidas pelo PicPay, e da autorização \ndo usuário, como mostrado no nosso guia.\n\n## Idempotência\nEssa API possui idempotência, que garante que uma mesma solicitação não seja processada mais de uma vez. A chave **x-Idempotency-Key** enviada no header, evita que ocorram processamentos duplicados, garantindo a integridade dos dados. Se o cliente tiver dúvidas se uma determinada solicitação foi acatada ou não, basta reexecutar a requisição com o mesmo valor de **x-Idempotency-Key**. Caso exista uma requisição já processada, o resultado será repetido sem processar a requisição novamente, assim, não haverá duplicação de charge ou refund. Caso não exista uma requisição já processada para a chave enviada, a requisição será processada normalmente. ",
     "version": "1.0.0"
   },
   "servers": [
@@ -17,7 +17,7 @@
     "/payments/charge": {
       "post": {
         "summary": "Criar cobrança",
-        "description": "Este recurso possibilita que o vendedor efetue uma cobrança na carteira do usuário. Se o vendedor optar por confirmar o valor após a autorização do cliente, \né necessário enviar o parâmetro `autoCapture` com o valor `false`, indicando que o valor autorizado será apenas reservado temporariamente (captura tardia).\n Caso o parâmetro `autoCapture` não seja especificado, assumirá automaticamente o valor `true`, seguindo o fluxo de captura automática.\n Para mais detalhes de como funciona o endpoint `capture`, consulte em [_Capturar transação_](#operations-Pagamentos-cancelPayment).",
+        "description": "Este recurso possibilita que o vendedor efetue uma cobrança na carteira do usuário. Se o vendedor optar por confirmar o valor após a autorização do cliente, \né necessário enviar o parâmetro `auto_capture` com o valor `false`, indicando que o valor autorizado será apenas reservado temporariamente (captura tardia).\n Caso o parâmetro `auto_capture` não seja especificado, assumirá automaticamente o valor `true`, seguindo o fluxo de captura automática.\n Para mais detalhes de como funciona o endpoint `capture`, consulte em [_Capturar transação_](#operations-Pagamentos-cancelPayment).",
         "operationId": "charge",
         "security": [
           {
@@ -41,6 +41,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NewTransactionCreatedData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Transação duplicada",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/DuplicatedTransaction"
                 }
               }
             }
@@ -88,12 +98,65 @@
               }
             }
           },
+          "403": {
+            "description": "Forbidden - Transação Não Autorizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FundingSourceUnavailable"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TransactionNotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Erros relacionados a saldo, cartão e conta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "Insufficient Funds": {
+                    "description": "Saldo insuficiente",
+                    "value": {
+                      "message": "Insufficient funds"
+                    }
+                  },
+                  "Invalid Funding Source": {
+                    "description": "Resposta quando há algum erro relacionado ao cartão",
+                    "value": {
+                      "message": "Invalid funding source."
+                    }
+                  },
+                  "Account Closed": {
+                    "description": "Resposta quando há algum erro relacionado a conta do usuário",
+                    "value": {
+                      "message": "The account is closed."
+                    }
+                  },
+                  "Account On Hold": {
+                    "description": "Resposta quando a conta do usuário está bloqueada ou limitada",
+                    "value": {
+                      "message": "The account is on hold."
+                    }
+                  }
                 }
               }
             }
@@ -134,6 +197,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço temporariamente indisponível",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -277,7 +350,7 @@
     "/payments/capture": {
       "post": {
         "summary": "Capturar transação",
-        "description": "\nA captura de pagamento, parcial ou total, é realizada na condição em que a transação é \ncriada com o campo `autoCapture` com valor `false` e a pessoa consumidora tenha realizado o pagamento. \nSerá aguardada a requisição para efetivar a cobrança, com o valor correto, informado no campo `value`. \nO valor pode ser igual ou inferior ao autorizado. Se o campo `value` não for informado, a transação será capturada pelo valor total. \nCapturas com valor superior ao autorizado serão \nrejeitadas.\n\n\n**Informações:**\n- A requisição de captura só é permitida quando a transação é autorizada. Na situação em que a \nrequisição de captura não ocorre em até 5 dias corridos, a contar da autorização, a transação é cancelada \nautomaticamente;\n\n- Após realizada a captura com sucesso, ainda que de valor parcial, não será possível solicitar\nnova captura da mesma transação.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
+        "description": "\nA captura de pagamento, parcial ou total, é realizada na condição em que a transação é \ncriada com o campo `auto_capture` com valor `false` e a pessoa consumidora tenha realizado o pagamento. \nSerá aguardada a requisição para efetivar a cobrança, com o valor correto, informado no campo `value`. \nO valor pode ser igual ou inferior ao autorizado. Se o campo `value` não for informado, a transação será capturada pelo valor total. \nCapturas com valor superior ao autorizado serão \nrejeitadas.\n\n\n**Informações:**\n- A requisição de captura só é permitida quando a transação é autorizada. Na situação em que a \nrequisição de captura não ocorre em até 5 dias corridos, a contar da autorização, a transação é cancelada \nautomaticamente;\n\n- Após realizada a captura com sucesso, ainda que de valor parcial, não será possível solicitar\nnova captura da mesma transação.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
         "operationId": "capture",
         "security": [
           {
@@ -622,6 +695,16 @@
               }
             }
           },
+          "406": {
+            "description": "Valor não permitido para o reembolso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundExceedsLimit"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Resposta para erros de validação",
             "content": {
@@ -648,6 +731,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço temporariamente indisponível",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -787,7 +880,7 @@
     "/sandbox/payments/charge": {
       "post": {
         "summary": "Criar cobrança",
-        "description": "Este recurso possibilita que o vendedor efetue uma cobrança na carteira do usuário. Se o vendedor optar por confirmar o valor após a autorização do cliente, \né necessário enviar o parâmetro `autoCapture` com o valor `false`, indicando que o valor autorizado será apenas reservado temporariamente (captura tardia).\n Caso o parâmetro `autoCapture` não seja especificado, assumirá automaticamente o valor `true`, seguindo o fluxo de captura automática.\n Para mais detalhes de como funciona o endpoint `capture`, consulte em [_Capturar transação_](#operations-Sandbox-SandboxCancel).",
+        "description": "Este recurso possibilita que o vendedor efetue uma cobrança na carteira do usuário. Se o vendedor optar por confirmar o valor após a autorização do cliente, \né necessário enviar o parâmetro `auto_capture` com o valor `false`, indicando que o valor autorizado será apenas reservado temporariamente (captura tardia).\n Caso o parâmetro `auto_capture` não seja especificado, assumirá automaticamente o valor `true`, seguindo o fluxo de captura automática.\n Para mais detalhes de como funciona o endpoint `capture`, consulte em [_Capturar transação_](#operations-Sandbox-SandboxCancel).",
         "operationId": "Sandbox Charge",
         "security": [
           {
@@ -811,6 +904,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NewTransactionCreatedData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Transação duplicada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuplicatedTransaction"
                 }
               }
             }
@@ -858,8 +961,61 @@
               }
             }
           },
+          "403": {
+            "description": "Forbidden - Transação Não Autorizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FundingSourceUnavailable"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found"
+          },
+          "406": {
+            "description": "Erros relacionados a saldo, cartão e conta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "format": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                },
+                "examples": {
+                  "Insufficient Funds": {
+                    "description": "Saldo insuficiente",
+                    "value": {
+                      "message": "Insufficient funds"
+                    }
+                  },
+                  "Invalid Funding Source": {
+                    "description": "Resposta quando há algum erro relacionado ao cartão",
+                    "value": {
+                      "message": "Invalid funding source."
+                    }
+                  },
+                  "Account Close": {
+                    "description": "Resposta quando há algum erro relacionado a conta do usuário",
+                    "value": {
+                      "message": "The account is closed."
+                    }
+                  },
+                  "Account On Hold": {
+                    "description": "Resposta quando a conta do usuário está bloqueada ou limitada",
+                    "value": {
+                      "message": "The account is on hold."
+                    }
+                  }
+                }
+              }
+            }
           },
           "422": {
             "description": "Resposta para erros de validação",
@@ -887,6 +1043,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço temporariamente indisponível",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -1030,7 +1196,7 @@
     "/sandbox/payments/capture": {
       "post": {
         "summary": "Capturar cobrança",
-        "description": "\nA captura de pagamento, parcial ou total, é realizada na condição em que a transação é \ncriada com o campo `autoCapture` com valor `false` e a pessoa consumidora tenha realizado o pagamento. \nSerá aguardada a requisição para efetivar a cobrança, com o valor correto, informado no campo `value`. \nO valor pode ser igual ou inferior ao autorizado. Se o campo `value` não for informado, a transação será capturada pelo valor total. \nCapturas com valor superior ao autorizado serão \nrejeitadas.\n\n\n**Informações:**\n- A requisição de captura só é permitida quando a transação é autorizada. Na situação em que a \nrequisição de captura não ocorre em até 5 dias corridos, a contar da autorização, a transação é cancelada \nautomaticamente;\n\n- Após realizada a captura com sucesso, ainda que de valor parcial, não será possível solicitar\nnova captura da mesma transação.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
+        "description": "\nA captura de pagamento, parcial ou total, é realizada na condição em que a transação é \ncriada com o campo `auto_capture` com valor `false` e a pessoa consumidora tenha realizado o pagamento. \nSerá aguardada a requisição para efetivar a cobrança, com o valor correto, informado no campo `value`. \nO valor pode ser igual ou inferior ao autorizado. Se o campo `value` não for informado, a transação será capturada pelo valor total. \nCapturas com valor superior ao autorizado serão \nrejeitadas.\n\n\n**Informações:**\n- A requisição de captura só é permitida quando a transação é autorizada. Na situação em que a \nrequisição de captura não ocorre em até 5 dias corridos, a contar da autorização, a transação é cancelada \nautomaticamente;\n\n- Após realizada a captura com sucesso, ainda que de valor parcial, não será possível solicitar\nnova captura da mesma transação.\n\nDois possíveis identificadores poderão ser usados: `transaction_id` ou `reference_id`. O `transaction_id` é o identificador PicPay retornado na cobrança realizada com sucesso. O `reference_id` é o identificador gerado pelo parceiro e enviado na requisição de cobrança. Ao menos um dos identificadores **precisa** ser enviado. Quando os dois forem enviados, ambos serão validados.",
         "operationId": "Sandbox Capture",
         "security": [
           {
@@ -1375,6 +1541,16 @@
               }
             }
           },
+          "406": {
+            "description": "Valor não permitido para o reembolso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundExceedsLimit"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Resposta para erros de validação",
             "content": {
@@ -1401,6 +1577,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Serviço temporariamente indisponível",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceUnavailable"
                 }
               }
             }
@@ -1907,6 +2093,21 @@
           }
         }
       },
+      "ServiceUnavailable": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "format": "string",
+            "example": "Service temporarily unavailable. Please try again later."
+          },
+          "business_code": {
+            "type": "string",
+            "format": "string",
+            "example": "SERVICE_UNAVAILABLE"
+          }
+        }
+      },
       "InternalServerErrorResponse": {
         "type": "object",
         "properties": {
@@ -1919,6 +2120,45 @@
             "type": "string",
             "format": "string",
             "example": "INTERNAL_ERROR"
+          }
+        }
+      },
+      "DuplicatedTransaction": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Duplicated transaction."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "DUPLICATED_TRANSACTION"
+          }
+        }
+      },
+      "FundingSourceUnavailable": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Funding source unavailable"
+          },
+          "business_code": {
+            "type": "string",
+            "example": "FUNDING_SOURCE_UNAVAILABLE"
+          }
+        }
+      },
+      "RefundExceedsLimit": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Refund value is invalid."
+          },
+          "business_code": {
+            "type": "string",
+            "example": "REFUND_EXCEEDS_LIMIT"
           }
         }
       },

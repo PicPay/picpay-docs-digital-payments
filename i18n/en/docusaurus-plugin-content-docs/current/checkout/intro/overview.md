@@ -13,16 +13,6 @@ By offering PicPay on your e-commerce platform, your customers can make secure p
 
 ![img](../../../../../../static/img/guides/qrcode.png)
 
-## Fees
-
-You don't pay an enrollment or cancellation fee, and your first 30 days are free! In the following months, you just choose the fee that best suits your situation and when you want to receive payments, and we'll charge an intermediary fee.
-
-| DAYS TO RECEIVE | FEE |
-|--|--|
-| 1 day | 5,19% |
-| 14 days | 4,61% |
-| 30 days | 3,89% |
-
 ## Available features
 
 Currently, PicPay's e-commerce API offers the following functionalities:

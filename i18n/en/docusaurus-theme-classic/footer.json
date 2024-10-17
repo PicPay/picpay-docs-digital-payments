@@ -35,8 +35,12 @@
     "message": "Copyright © 2024 PicPay. Built with Docusaurus.",
     "description": "The footer copyright"
   },
-  "link.item.label.Qr Code e Push": {
+  "link.item.label.Qr Code and Push": {
     "message": "QR Code and Push",
-    "description": "The label of footer link with label=Qr Code e Push linking to /"
+    "description": "The label of footer link with label=Qr Code and Push linking to /"
+  },
+  "link.item.label.QR Code and Push": {
+    "message": "QR Code and Push",
+    "description": "The label of footer link with label=QR Code and Push linking to /"
   }
 }
